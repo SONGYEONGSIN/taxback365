@@ -27,3 +27,19 @@ dist-ssr
 .next
 
 .vercel
+
+# Claude Code (vibe-flow) — 휘발성/머신별 데이터만 무시
+.claude/session-logs/
+.claude/metrics/
+.claude/messages/inbox/
+.claude/messages/archive/
+.claude/messages/broadcast/
+.claude/messages/.last-debate-trigger
+.claude/events.jsonl
+.claude/store.db
+# 추적 대상: .claude/memory/, .claude/messages/debates/, .claude/plans/
+# settings.local.json은 *.local 패턴으로 이미 무시됨
+
+# Playwright
+playwright-report/
+test-results/

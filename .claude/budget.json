@@ -1,0 +1,11 @@
+{
+  "version": "1.0.0",
+  "limits": {
+    "pair_session":   {"daily": 5, "weekly": 20},
+    "discuss":        {"daily": 5, "weekly": 20},
+    "skill_evolve":   {"daily": 3, "weekly": 10},
+    "design_sync":    {"daily": 5, "weekly": 20},
+    "retrospective":  {"daily": 1, "weekly": 5}
+  },
+  "warn_threshold": 0.8
+}

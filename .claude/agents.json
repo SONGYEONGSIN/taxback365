@@ -1,0 +1,14 @@
+{
+  "agents": [
+    "comparator",
+    "designer",
+    "developer",
+    "feedback",
+    "moderator",
+    "planner",
+    "qa",
+    "retrospective",
+    "security",
+    "validator"
+  ]
+}
