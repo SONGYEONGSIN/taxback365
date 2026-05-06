@@ -1,11 +1,6 @@
 import NextAuth from "next-auth";
 import Google from "next-auth/providers/google";
-import { createClient } from "@supabase/supabase-js";
-
-const supabase = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-);
+import { supabaseAdmin } from "@/lib/supabase";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
     providers: [
@@ -28,7 +23,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         async signIn({ user }) {
             // 로그인 시 users 테이블에 upsert
             try {
-                await supabase
+                await supabaseAdmin
                     .from("users")
                     .upsert(
                         {
