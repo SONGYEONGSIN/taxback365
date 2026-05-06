@@ -1,7 +1,18 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
+import { z } from "zod";
+import { withApiGuard } from "@/lib/api-guard";
+import { createLimiter } from "@/lib/rate-limit";
 
 const HOSPITAL_API_KEY = process.env.PHARMACY_API_KEY; // 동일 키 사용
 const BASE_URL = "http://apis.data.go.kr/B551182/hospInfoServicev2/getHospBasisList";
+
+const hospitalSinglesSchema = z.object({ name: z.string().min(1).max(200) });
+const hospitalBatchSchema = z.object({ names: z.array(z.string().min(1).max(200)).min(1).max(500) });
+
+type HospitalSingleRequest = z.infer<typeof hospitalSinglesSchema>;
+type HospitalBatchRequest = z.infer<typeof hospitalBatchSchema>;
+
+const limiter = createLimiter("hospital", 30);
 
 interface HospitalItem {
     yadmNm: string;      // 병원명
@@ -34,7 +45,7 @@ interface HospitalResponse {
  * 병원명으로 병원 정보 검색 (단건)
  * POST /api/hospital
  */
-export async function POST(request: NextRequest) {
+export const POST = withApiGuard<HospitalSingleRequest>(async (_req, ctx) => {
     try {
         if (!HOSPITAL_API_KEY) {
             return NextResponse.json(
@@ -43,17 +54,7 @@ export async function POST(request: NextRequest) {
             );
         }
 
-        const body = await request.json();
-        const { name } = body;
-
-        if (!name) {
-            return NextResponse.json(
-                { error: "name is required" },
-                { status: 400 }
-            );
-        }
-
-        const result = await checkHospitalByApi(name);
+        const result = await checkHospitalByApi(ctx.body.name);
         return NextResponse.json(result);
 
     } catch (error) {
@@ -63,24 +64,16 @@ export async function POST(request: NextRequest) {
             { status: 500 }
         );
     }
-}
+}, { limiter, schema: hospitalSinglesSchema });
 
 /**
  * 여러 가맹점명 일괄 체크 (실제 API 호출)
  * PUT /api/hospital
  * Body: { names: string[] }
  */
-export async function PUT(request: NextRequest) {
+export const PUT = withApiGuard<HospitalBatchRequest>(async (_req, ctx) => {
     try {
-        const body = await request.json();
-        const { names } = body;
-
-        if (!names || !Array.isArray(names)) {
-            return NextResponse.json(
-                { error: "names array is required" },
-                { status: 400 }
-            );
-        }
+        const { names } = ctx.body;
 
         if (!HOSPITAL_API_KEY) {
             console.warn("[Hospital API Batch] API key not configured, falling back to keyword matching");
@@ -131,7 +124,7 @@ export async function PUT(request: NextRequest) {
             { status: 500 }
         );
     }
-}
+}, { limiter, schema: hospitalBatchSchema });
 
 /**
  * 개별 가맹점명을 실제 건강보험심사평가원 API로 검증

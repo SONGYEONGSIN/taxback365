@@ -1,6 +1,17 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
+import { z } from "zod";
+import { withApiGuard } from "@/lib/api-guard";
+import { createLimiter } from "@/lib/rate-limit";
 
 const PHARMACY_API_KEY = process.env.PHARMACY_API_KEY;
+
+const pharmacySinglesSchema = z.object({ name: z.string().min(1).max(200) });
+const pharmacyBatchSchema = z.object({ names: z.array(z.string().min(1).max(200)).min(1).max(500) });
+
+type PharmacySingleRequest = z.infer<typeof pharmacySinglesSchema>;
+type PharmacyBatchRequest = z.infer<typeof pharmacyBatchSchema>;
+
+const limiter = createLimiter("pharmacy", 30);
 const BASE_URL = "http://apis.data.go.kr/B551182/pharmacyInfoService/getParmacyBasisList";
 
 interface PharmacyItem {
@@ -32,7 +43,7 @@ interface PharmacyResponse {
  * 약국명으로 약국 정보 검색 (단건)
  * POST /api/pharmacy
  */
-export async function POST(request: NextRequest) {
+export const POST = withApiGuard<PharmacySingleRequest>(async (_req, ctx) => {
     try {
         if (!PHARMACY_API_KEY) {
             return NextResponse.json(
@@ -41,17 +52,7 @@ export async function POST(request: NextRequest) {
             );
         }
 
-        const body = await request.json();
-        const { name } = body;
-
-        if (!name) {
-            return NextResponse.json(
-                { error: "name is required" },
-                { status: 400 }
-            );
-        }
-
-        const result = await checkPharmacyByApi(name);
+        const result = await checkPharmacyByApi(ctx.body.name);
         return NextResponse.json(result);
 
     } catch (error) {
@@ -61,17 +62,16 @@ export async function POST(request: NextRequest) {
             { status: 500 }
         );
     }
-}
+}, { limiter, schema: pharmacySinglesSchema });
 
 /**
  * 여러 가맹점명 일괄 체크 (실제 API 호출)
  * PUT /api/pharmacy
  * Body: { names: string[] }
  */
-export async function PUT(request: NextRequest) {
+export const PUT = withApiGuard<PharmacyBatchRequest>(async (_req, ctx) => {
     try {
-        const body = await request.json();
-        const { names } = body;
+        const { names } = ctx.body;
 
         if (!names || !Array.isArray(names)) {
             return NextResponse.json(
@@ -128,7 +128,7 @@ export async function PUT(request: NextRequest) {
             { status: 500 }
         );
     }
-}
+}, { limiter, schema: pharmacyBatchSchema });
 
 /**
  * 개별 가맹점명을 실제 약국 API로 검증

@@ -1,6 +1,17 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
+import { z } from "zod";
+import { withApiGuard } from "@/lib/api-guard";
+import { createLimiter } from "@/lib/rate-limit";
 
 const MARKET_API_KEY = process.env.MARKET_API_KEY;
+
+const marketSinglesSchema = z.object({ name: z.string().min(1).max(200) });
+const marketBatchSchema = z.object({ names: z.array(z.string().min(1).max(200)).min(1).max(500) });
+
+type MarketSingleRequest = z.infer<typeof marketSinglesSchema>;
+type MarketBatchRequest = z.infer<typeof marketBatchSchema>;
+
+const limiter = createLimiter("market", 30);
 // 최신 버전 (20250731) - 소상공인시장진흥공단_전국 온누리상품권 가맹점 현황
 const BASE_URL = "https://api.odcloud.kr/api/3060079/v1/uddi:7ffa42f8-01d1-4329-aa94-aefb67c53cf1";
 
@@ -26,7 +37,7 @@ interface MarketResponse {
  * POST /api/market
  * Body: { name: string }
  */
-export async function POST(request: NextRequest) {
+export const POST = withApiGuard<MarketSingleRequest>(async (_req, ctx) => {
     try {
         if (!MARKET_API_KEY) {
             return NextResponse.json(
@@ -35,17 +46,7 @@ export async function POST(request: NextRequest) {
             );
         }
 
-        const body = await request.json();
-        const { name } = body;
-
-        if (!name) {
-            return NextResponse.json(
-                { error: "name is required" },
-                { status: 400 }
-            );
-        }
-
-        const result = await checkMarketMerchantByApi(name);
+        const result = await checkMarketMerchantByApi(ctx.body.name);
         return NextResponse.json(result);
 
     } catch (error) {
@@ -55,24 +56,16 @@ export async function POST(request: NextRequest) {
             { status: 500 }
         );
     }
-}
+}, { limiter, schema: marketSinglesSchema });
 
 /**
  * 여러 가맹점명 일괄 체크 (실제 API 호출)
  * PUT /api/market
  * Body: { names: string[] }
  */
-export async function PUT(request: NextRequest) {
+export const PUT = withApiGuard<MarketBatchRequest>(async (_req, ctx) => {
     try {
-        const body = await request.json();
-        const { names } = body;
-
-        if (!names || !Array.isArray(names)) {
-            return NextResponse.json(
-                { error: "names array is required" },
-                { status: 400 }
-            );
-        }
+        const { names } = ctx.body;
 
         if (!MARKET_API_KEY) {
             console.warn("[Market API Batch] API key not configured, falling back to keyword matching");
@@ -122,7 +115,7 @@ export async function PUT(request: NextRequest) {
             { status: 500 }
         );
     }
-}
+}, { limiter, schema: marketBatchSchema });
 
 /**
  * 개별 가맹점명을 전통시장 가맹점 API로 검증

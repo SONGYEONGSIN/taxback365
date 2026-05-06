@@ -1,4 +1,7 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
+import { z } from 'zod';
+import { withApiGuard } from '@/lib/api-guard';
+import { createLimiter } from '@/lib/rate-limit';
 
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 // gemini-2.0-flash 모델 사용 (Vision 지원)
@@ -10,7 +13,16 @@ interface OcrItem {
     amount: number;
 }
 
-export async function POST(request: NextRequest) {
+// base64 이미지 1장의 상한: 약 4MB raw → ≈ 5.5MB base64. 안전하게 6_000_000자.
+const ocrSchema = z.object({
+    images: z.array(z.string().max(6_000_000)).min(1).max(10),
+});
+
+type OcrRequest = z.infer<typeof ocrSchema>;
+
+const limiter = createLimiter('ocr', 5);
+
+export const POST = withApiGuard<OcrRequest>(async (_req, ctx) => {
     try {
         if (!GEMINI_API_KEY) {
             return NextResponse.json(
@@ -19,15 +31,7 @@ export async function POST(request: NextRequest) {
             );
         }
 
-        const { images } = await request.json();
-
-        if (!images || !Array.isArray(images) || images.length === 0) {
-            return NextResponse.json(
-                { error: '이미지가 제공되지 않았습니다.' },
-                { status: 400 }
-            );
-        }
-
+        const { images } = ctx.body;
         const allItems: OcrItem[] = [];
 
         for (const imageBase64 of images) {
@@ -127,4 +131,4 @@ export async function POST(request: NextRequest) {
             { status: 500 }
         );
     }
-}
+}, { limiter, schema: ocrSchema });

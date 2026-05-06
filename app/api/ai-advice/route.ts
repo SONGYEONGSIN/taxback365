@@ -1,24 +1,29 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
+import { z } from 'zod';
+import { withApiGuard } from '@/lib/api-guard';
+import { createLimiter } from '@/lib/rate-limit';
 
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent';
 
-interface DeductionItem {
-    category: string;
-    type: string;
-    amount: number;
-    limit: number;
-    status: string;
-}
+const aiAdviceSchema = z.object({
+    salary: z.number().nonnegative().max(1_000_000_000),
+    deductionItems: z.array(z.object({
+        category: z.string().max(50),
+        type: z.string().max(50),
+        amount: z.number().nonnegative(),
+        limit: z.number().nonnegative(),
+        status: z.string().max(50),
+    })).max(50),
+    currentRefund: z.number(),
+    prepaidTax: z.number().nonnegative(),
+});
 
-interface AIAdviceRequest {
-    salary: number;
-    deductionItems: DeductionItem[];
-    currentRefund: number;
-    prepaidTax: number;
-}
+type AIAdviceRequest = z.infer<typeof aiAdviceSchema>;
 
-export async function POST(request: NextRequest) {
+const limiter = createLimiter('ai-advice', 10);
+
+export const POST = withApiGuard<AIAdviceRequest>(async (_req, ctx) => {
     try {
         if (!GEMINI_API_KEY) {
             return NextResponse.json(
@@ -27,15 +32,7 @@ export async function POST(request: NextRequest) {
             );
         }
 
-        const data: AIAdviceRequest = await request.json();
-        const { salary, deductionItems, currentRefund, prepaidTax } = data;
-
-        if (!salary || !deductionItems) {
-            return NextResponse.json(
-                { error: '필수 데이터가 누락되었습니다.' },
-                { status: 400 }
-            );
-        }
+        const { salary, deductionItems, currentRefund, prepaidTax } = ctx.body;
 
         // 공제 항목별 요약 생성
         const deductionSummary = deductionItems.map(item => {
@@ -110,4 +107,4 @@ ${deductionSummary}
             { status: 500 }
         );
     }
-}
+}, { limiter, schema: aiAdviceSchema });

@@ -1,4 +1,7 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
+import { z } from "zod";
+import { withApiGuard } from "@/lib/api-guard";
+import { createLimiter } from "@/lib/rate-limit";
 
 const NTS_API_KEY = process.env.NTS_API_KEY;
 const BASE_URL = "https://api.odcloud.kr/api/nts-businessman/v1";
@@ -11,27 +14,27 @@ interface BizStatusResult {
     statusCode: string;     // 상태코드: "01"=계속, "02"=휴업, "03"=폐업
 }
 
+const bizCheckSchema = z.object({
+    bizNumbers: z.array(z.string().regex(/^\d{10}$/)).min(1).max(500),
+});
+
+type BizCheckRequest = z.infer<typeof bizCheckSchema>;
+
+const limiter = createLimiter("biz-check", 30);
+
 /**
  * 사업자등록번호 일괄 상태 조회
  * POST /api/biz-check
  * Body: { bizNumbers: string[] }
- * 
+ *
  * 국세청 사업자등록정보 상태조회 API를 활용하여
  * 과세유형(일반/간이/면세)과 사업 상태를 조회합니다.
- * 
+ *
  * 면세사업자 = 의료기관/교육기관/농업 등의 가능성이 높음
  */
-export async function POST(request: NextRequest) {
+export const POST = withApiGuard<BizCheckRequest>(async (_req, ctx) => {
     try {
-        const body = await request.json();
-        const { bizNumbers } = body;
-
-        if (!bizNumbers || !Array.isArray(bizNumbers) || bizNumbers.length === 0) {
-            return NextResponse.json(
-                { error: "bizNumbers array is required" },
-                { status: 400 }
-            );
-        }
+        const { bizNumbers } = ctx.body;
 
         if (!NTS_API_KEY) {
             console.warn("[Biz Check] NTS_API_KEY not configured, skipping NTS verification");
@@ -88,7 +91,7 @@ export async function POST(request: NextRequest) {
             { status: 500 }
         );
     }
-}
+}, { limiter, schema: bizCheckSchema });
 
 /**
  * 국세청 사업자등록정보 상태조회 API 호출
