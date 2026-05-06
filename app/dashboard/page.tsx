@@ -2,6 +2,9 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import rehypeSanitize from "rehype-sanitize";
 import { TrendingUp, Sparkles, Bell, Target, ChevronUp, ChevronDown, AlertCircle, CheckCircle2, Lightbulb, PiggyBank, CreditCard, Home, Heart, GraduationCap, Gift, Building, Loader2, Users } from "lucide-react";
 import { Badge } from "@/components/ui/Badge";
 import { loadTaxData, loadAdminData, generateDeductionAnalysis, DeductionAnalysis } from "@/lib/tax-store";
@@ -1013,16 +1016,26 @@ export default function DashboardPage() {
                                     </button>
                                 </div>
                             ) : aiAdvice ? (
-                                <div
-                                    className="whitespace-pre-wrap text-neo-black leading-relaxed"
-                                    dangerouslySetInnerHTML={{
-                                        __html: aiAdvice
-                                            .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-                                            .replace(/###\s?(.*)/g, '<h4 class="font-black text-lg mt-4 mb-2 text-neo-cyan">$1</h4>')
-                                            .replace(/##\s?(.*)/g, '<h3 class="font-black text-xl mt-4 mb-2 border-b-2 border-black pb-1">$1</h3>')
-                                            .replace(/\n/g, '<br/>')
-                                    }}
-                                />
+                                <div className="text-neo-black leading-relaxed">
+                                    <ReactMarkdown
+                                        remarkPlugins={[remarkGfm]}
+                                        rehypePlugins={[rehypeSanitize]}
+                                        components={{
+                                            h1: ({ children }) => <h2 className="font-black text-xl mt-4 mb-2 border-b-2 border-black pb-1">{children}</h2>,
+                                            h2: ({ children }) => <h3 className="font-black text-xl mt-4 mb-2 border-b-2 border-black pb-1">{children}</h3>,
+                                            h3: ({ children }) => <h4 className="font-black text-lg mt-4 mb-2 text-neo-cyan">{children}</h4>,
+                                            h4: ({ children }) => <h5 className="font-black text-base mt-3 mb-1 text-neo-cyan">{children}</h5>,
+                                            strong: ({ children }) => <strong className="font-bold">{children}</strong>,
+                                            p: ({ children }) => <p className="mb-2">{children}</p>,
+                                            ul: ({ children }) => <ul className="list-disc pl-6 mb-2">{children}</ul>,
+                                            ol: ({ children }) => <ol className="list-decimal pl-6 mb-2">{children}</ol>,
+                                            li: ({ children }) => <li className="mb-1">{children}</li>,
+                                            code: ({ children }) => <code className="px-1 py-0.5 bg-gray-200 font-mono text-sm">{children}</code>,
+                                        }}
+                                    >
+                                        {aiAdvice}
+                                    </ReactMarkdown>
+                                </div>
                             ) : null}
                         </div>
 
