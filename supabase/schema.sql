@@ -1,6 +1,10 @@
 -- =============================================
--- TAXAI Supabase Schema
+-- taxback365 Supabase Schema
 -- Supabase SQL Editor에서 실행하세요
+--
+-- RLS 정책: anon deny (no policy). service_role bypasses.
+-- 모든 서버 라우트는 lib/supabase.ts의 supabaseAdmin (service_role)을 사용한다.
+-- 신규 환경 부트스트랩 시 본 파일을 실행하면 운영 상태(2026-05-06 lockdown 적용 후)와 동일.
 -- =============================================
 
 -- =============================================
@@ -18,11 +22,7 @@ CREATE TABLE IF NOT EXISTS users (
 );
 
 ALTER TABLE users ENABLE ROW LEVEL SECURITY;
-
-CREATE POLICY "Allow all operations for anon"
-  ON users FOR ALL
-  USING (true)
-  WITH CHECK (true);
+COMMENT ON TABLE users IS 'RLS: anon deny (no policy). service_role bypasses. Server routes use supabaseAdmin.';
 
 CREATE INDEX IF NOT EXISTS idx_users_email ON users(email);
 
@@ -47,24 +47,11 @@ CREATE TABLE IF NOT EXISTS tax_data (
   UNIQUE(user_id)
 );
 
--- RLS (Row Level Security) 활성화
+-- RLS (Row Level Security): anon에 대해 deny. server route가 service_role 통해 우회.
 ALTER TABLE admin_data ENABLE ROW LEVEL SECURITY;
 ALTER TABLE tax_data ENABLE ROW LEVEL SECURITY;
-
--- 모든 인증된 사용자가 자기 데이터만 접근 가능
--- 참고: NextAuth 사용 시 서버 API에서 user_id를 직접 필터링하므로
--- anon key로 접근할 때는 service_role 또는 별도 정책 필요
--- 여기서는 API Route에서 인증을 처리하므로 anon key에 대한 접근을 허용
-
-CREATE POLICY "Allow all operations for anon"
-  ON admin_data FOR ALL
-  USING (true)
-  WITH CHECK (true);
-
-CREATE POLICY "Allow all operations for anon"
-  ON tax_data FOR ALL
-  USING (true)
-  WITH CHECK (true);
+COMMENT ON TABLE admin_data IS 'RLS: anon deny. Server-only via service_role.';
+COMMENT ON TABLE tax_data IS 'RLS: anon deny. Server-only via service_role.';
 
 -- =============================================
 -- 게시판 (Board)
@@ -83,11 +70,7 @@ CREATE TABLE IF NOT EXISTS board_posts (
 );
 
 ALTER TABLE board_posts ENABLE ROW LEVEL SECURITY;
-
-CREATE POLICY "Allow all operations for anon"
-  ON board_posts FOR ALL
-  USING (true)
-  WITH CHECK (true);
+COMMENT ON TABLE board_posts IS 'RLS: anon deny. Server-only via service_role (read/write all flow through API routes).';
 
 -- 인덱스 (빠른 조회)
 CREATE INDEX IF NOT EXISTS idx_admin_data_user_year ON admin_data(user_id, year);
