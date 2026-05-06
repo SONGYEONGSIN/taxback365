@@ -1,24 +1,9 @@
 import NextAuth from "next-auth";
-import Google from "next-auth/providers/google";
+import { authConfig } from "./auth.config";
 import { supabaseAdmin } from "@/lib/supabase";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
-    providers: [
-        Google({
-            clientId: process.env.GOOGLE_CLIENT_ID,
-            clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-        }),
-    ],
-    pages: {
-        signIn: "/login",
-    },
-    session: {
-        strategy: "jwt",
-        maxAge: 30 * 60, // 30분 (초 단위)
-    },
-    jwt: {
-        maxAge: 30 * 60, // 30분
-    },
+    ...authConfig,
     callbacks: {
         async signIn({ user }) {
             // 로그인 시 users 테이블에 upsert

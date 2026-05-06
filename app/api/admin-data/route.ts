@@ -1,16 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
-import { auth } from "@/auth";
+import { requireAdminSession } from "@/lib/auth-guard";
 import { supabaseAdmin as supabase } from "@/lib/supabase";
 
 // GET /api/admin-data?year=2026
 export async function GET(request: NextRequest) {
     try {
-        const session = await auth();
-        if (!session?.user?.email) {
-            return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-        }
-
-        const userId = session.user.email;
+        // middleware.ts가 1차 차단하지만 defense-in-depth로 라우트 핸들러에도 가드.
+        const guard = await requireAdminSession();
+        if (guard.response) return guard.response;
+        const userId = guard.email;
         const year = request.nextUrl.searchParams.get("year");
 
         if (!year) {
@@ -40,12 +38,9 @@ export async function GET(request: NextRequest) {
 // POST /api/admin-data
 export async function POST(request: NextRequest) {
     try {
-        const session = await auth();
-        if (!session?.user?.email) {
-            return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-        }
-
-        const userId = session.user.email;
+        const guard = await requireAdminSession();
+        if (guard.response) return guard.response;
+        const userId = guard.email;
         const body = await request.json();
         const { year, data } = body;
 

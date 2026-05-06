@@ -1,4 +1,7 @@
 import type { Metadata } from "next";
+import { redirect } from "next/navigation";
+import { auth } from "@/auth";
+import { isAdmin } from "@/lib/admin";
 
 export const metadata: Metadata = {
     title: "기초자료 등록",
@@ -8,10 +11,19 @@ export const metadata: Metadata = {
     },
 };
 
-export default function AdminLayout({
+// middleware.ts가 /admin/** 진입을 1차 차단한다.
+// 본 layout의 가드는 미들웨어 우회 시(matcher 누락 등)를 대비한 defense-in-depth.
+export default async function AdminLayout({
     children,
 }: {
     children: React.ReactNode;
 }) {
+    const session = await auth();
+    if (!session?.user?.email) {
+        redirect("/login?callbackUrl=/admin");
+    }
+    if (!isAdmin(session.user.email)) {
+        redirect("/");
+    }
     return children;
 }
