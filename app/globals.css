@@ -1,43 +1,70 @@
 @import "tailwindcss";
+@import "pretendard/dist/web/variable/pretendardvariable-dynamic-subset.css";
 
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  /* Neo-Brutalism PRD Specs */
-  --font-size: 16px;
-  --background: #FFFFFF;
-  --foreground: #000000;
-  --card: #FFFFFF;
-  --card-foreground: #000000;
-  --popover: #FFFFFF;
-  --popover-foreground: #000000;
+  /* Base */
+  --font-size: 15px;
 
-  /* PRD Accents */
-  --primary: #000000;
-  --primary-foreground: #FFFFFF;
-  --secondary: #FFFFFF;
-  --secondary-foreground: #000000;
+  /* Surfaces */
+  --background: oklch(0.978 0.003 247);
+  --foreground: oklch(0.18 0.04 262);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.18 0.04 262);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.18 0.04 262);
 
-  /* Accents */
-  --accent-orange: #FF6B35;
-  --accent-yellow: #F7CB15;
-  --accent-cyan: #00D9FF;
-  --accent-pink: #FF85A1;
+  /* Primary (Navy scale) */
+  --primary: oklch(0.235 0.058 262);
+  --primary-foreground: oklch(1 0 0);
+  --primary-700: oklch(0.345 0.073 262);
+  --primary-600: oklch(0.435 0.08 262);
 
-  --muted: #e0e0e0;
-  --muted-foreground: #555555;
+  /* Secondary surface */
+  --secondary: oklch(1 0 0);
+  --secondary-foreground: oklch(0.18 0.04 262);
 
-  --destructive: #FF0000;
-  --destructive-foreground: #FFFFFF;
+  /* Mint accent (환급 / 성공) */
+  --accent-mint: oklch(0.745 0.155 158);
+  --accent-mint-dark: oklch(0.605 0.145 158);
 
-  --border: #000000;
-  --input: #FFFFFF;
-  --ring: #00D9FF;
+  /* Semantic */
+  --warning: oklch(0.64 0.135 70);
+  --danger: oklch(0.555 0.165 28);
+  --success: oklch(0.605 0.145 158);
+  --destructive: oklch(0.555 0.165 28);
+  --destructive-foreground: oklch(1 0 0);
 
-  --radius: 0px;
-  --shadow-hard: 4px 4px 0px 0px #000000;
-  --shadow-hover: 2px 2px 0px 0px #000000;
-  --border-width: 3px;
+  /* Neutral scale (Slate, slightly cool) */
+  --neutral-50: oklch(0.978 0.003 247);
+  --neutral-100: oklch(0.943 0.006 247);
+  --neutral-200: oklch(0.89 0.01 247);
+  --neutral-300: oklch(0.785 0.013 247);
+  --neutral-500: oklch(0.555 0.018 247);
+  --neutral-700: oklch(0.355 0.02 247);
+  --neutral-900: oklch(0.18 0.04 262);
+
+  /* Component-level */
+  --muted: var(--neutral-100);
+  --muted-foreground: var(--neutral-500);
+  --border: var(--neutral-200);
+  --input: var(--card);
+  --ring: var(--primary-600);
+
+  /* Radius */
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-pill: 9999px;
+  --radius: var(--radius-md);
+
+  /* Shadow tiers (Navy-tinted, soft) */
+  --shadow-resting: 0 1px 2px 0 rgb(15 37 71 / 0.04);
+  --shadow-raised:
+    0 1px 3px 0 rgb(15 37 71 / 0.06), 0 1px 2px -1px rgb(15 37 71 / 0.04);
+  --shadow-floating:
+    0 10px 15px -3px rgb(15 37 71 / 0.08), 0 4px 6px -4px rgb(15 37 71 / 0.05);
 }
 
 @theme inline {
@@ -47,42 +74,76 @@
   --color-card-foreground: var(--card-foreground);
   --color-popover: var(--popover);
   --color-popover-foreground: var(--popover-foreground);
+
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
+  --color-primary-700: var(--primary-700);
+  --color-primary-600: var(--primary-600);
+
   --color-secondary: var(--secondary);
   --color-secondary-foreground: var(--secondary-foreground);
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-accent: var(--accent-cyan);
-  --color-accent-foreground: var(--primary);
+
+  --color-accent: var(--accent-mint);
+  --color-accent-foreground: var(--accent-mint-dark);
+  --color-mint: var(--accent-mint);
+  --color-mint-dark: var(--accent-mint-dark);
+
+  --color-warning: var(--warning);
+  --color-danger: var(--danger);
+  --color-success: var(--success);
   --color-destructive: var(--destructive);
   --color-destructive-foreground: var(--destructive-foreground);
+
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
 
-  /* Custom Neo-Brutalism Accents */
-  --color-neo-orange: var(--accent-orange);
-  --color-neo-yellow: var(--accent-yellow);
-  --color-neo-cyan: var(--accent-cyan);
-  --color-neo-pink: var(--accent-pink);
-  --color-neo-black: #000000;
-  --color-neo-white: #FFFFFF;
+  --color-neutral-50: var(--neutral-50);
+  --color-neutral-100: var(--neutral-100);
+  --color-neutral-200: var(--neutral-200);
+  --color-neutral-300: var(--neutral-300);
+  --color-neutral-500: var(--neutral-500);
+  --color-neutral-700: var(--neutral-700);
+  --color-neutral-900: var(--neutral-900);
 
-  /* Fonts */
-  --font-head: var(--font-lexend), "Lexend", sans-serif;
-  --font-body: var(--font-inter), "Inter", sans-serif;
+  --radius-sm: var(--radius-sm);
+  --radius-md: var(--radius-md);
+  --radius-lg: var(--radius-lg);
+  --radius-pill: var(--radius-pill);
+
+  --shadow-resting: var(--shadow-resting);
+  --shadow-raised: var(--shadow-raised);
+  --shadow-floating: var(--shadow-floating);
+
+  /* Fonts: Pretendard handles 한글, Inter handles 영문/숫자, Inter Mono for displays */
+  --font-display:
+    var(--font-inter), "Pretendard Variable", Pretendard, system-ui, sans-serif;
+  --font-body:
+    "Pretendard Variable", Pretendard, var(--font-inter), system-ui, sans-serif;
+  --font-mono:
+    var(--font-inter), "JetBrains Mono", "SF Mono", ui-monospace, monospace;
 }
 
 @layer base {
-  * {
+  *,
+  *::before,
+  *::after {
     @apply border-border box-border;
   }
 
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
   body {
-    @apply bg-background text-foreground font-body;
-    background-image: radial-gradient(#000000 1px, transparent 1px);
-    background-size: 24px 24px;
+    @apply bg-background text-foreground font-body antialiased;
+    font-size: var(--font-size);
+    line-height: 1.6;
+    font-feature-settings: "ss06", "case";
+    /* Tabular numerals 강제: 모든 숫자 정렬 일관성 */
+    font-variant-numeric: tabular-nums;
   }
 
   h1,
@@ -91,40 +152,103 @@
   h4,
   h5,
   h6 {
-    @apply font-head font-black tracking-tighter uppercase;
-  }
-}
-
-@layer components {
-
-  /* Neo-Brutalism Component Styles */
-  .neo-btn {
-    @apply bg-neo-orange text-neo-black border-[3px] border-neo-black px-8 py-4 font-bold cursor-pointer transition-transform shadow-[4px_4px_0px_0px_#000000] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_0px_#000000] active:translate-x-[4px] active:translate-y-[4px] active:shadow-none flex items-center justify-center gap-2;
+    @apply font-display text-foreground;
+    font-weight: 600;
+    letter-spacing: -0.02em;
   }
 
-  .neo-card {
-    @apply bg-white border-[3px] border-neo-black shadow-[8px_8px_0px_0px_#000000] p-6;
+  h1 {
+    letter-spacing: -0.025em;
+    font-weight: 700;
   }
 
-  .neo-input {
-    @apply w-full bg-white border-[3px] border-neo-black p-3 font-semibold text-lg focus:outline-none focus:shadow-[0_0_0_4px_#00D9FF] placeholder:text-gray-400;
-    height: 56px;
+  /* Form 요소 기본 reset (Tailwind preflight 보강) */
+  input,
+  textarea,
+  select,
+  button {
+    font-family: inherit;
+    font-variant-numeric: tabular-nums;
   }
 
-  .neo-badge {
-    @apply inline-flex items-center px-3 py-1 border-[2px] border-neo-black font-bold text-xs uppercase;
+  /* Focus ring 기본 (키보드 포커스만) */
+  :focus-visible {
+    outline: 2px solid var(--primary-600);
+    outline-offset: 2px;
   }
 
-  .neo-nav-item {
-    @apply px-4 py-2 font-bold border-[2px] border-transparent hover:border-neo-black hover:bg-neo-yellow transition-all cursor-pointer;
-  }
-
-  .neo-nav-item.active {
-    @apply bg-neo-black text-white border-neo-black;
+  ::selection {
+    background-color: oklch(0.745 0.155 158 / 0.25);
+    color: var(--foreground);
   }
 }
 
 @layer utilities {
+  /* Mono 디스플레이 숫자 (DESIGN.md §3 탈템플릿 결정 #1) */
+  .text-mono-display {
+    font-family: var(--font-mono);
+    font-feature-settings: "tnum", "ss01";
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.01em;
+  }
+
+  /* 타이포그래피 시맨틱 클래스 (DESIGN.md §3) */
+  .text-hero {
+    font-size: 56px;
+    line-height: 1.05;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+  }
+  @media (max-width: 767px) {
+    .text-hero {
+      font-size: 40px;
+      line-height: 1.1;
+    }
+  }
+  .text-h1 {
+    font-size: 36px;
+    line-height: 1.15;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+  }
+  .text-h2 {
+    font-size: 28px;
+    line-height: 1.25;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+  .text-h3 {
+    font-size: 20px;
+    line-height: 1.35;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+  .text-body {
+    font-size: 15px;
+    line-height: 1.6;
+    font-weight: 400;
+  }
+  .text-body-sm {
+    font-size: 14px;
+    line-height: 1.55;
+    font-weight: 400;
+  }
+  .text-caption {
+    font-size: 12px;
+    line-height: 1.5;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+  }
+
+  /* Hero 배경 (랜딩 한정) */
+  .bg-hero-gradient {
+    background: linear-gradient(
+      180deg,
+      oklch(0.985 0.003 247) 0%,
+      oklch(0.978 0.003 247) 100%
+    );
+  }
+
   .animate-fade-in {
     animation: fadeIn 0.5s ease-out forwards;
   }
@@ -134,7 +258,6 @@
       opacity: 0;
       transform: translateY(10px);
     }
-
     to {
       opacity: 1;
       transform: translateY(0);
@@ -145,7 +268,6 @@
     0% {
       transform: translateX(0);
     }
-
     100% {
       transform: translateX(-50%);
     }

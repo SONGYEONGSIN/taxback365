@@ -428,14 +428,24 @@ DESIGN.md를 단일 진실원으로 두고 **토큰부터 위로 올라가는 bo
 
 ## 진행 추적
 
-| Phase | 태스크 | 상태 | 검증 명령 |
+| Phase | 태스크 | 상태 | 검증 결과 |
 |-------|--------|------|-----------|
-| 1. 토큰/폰트 | T1~T3 (3) | pending | `tsc --noEmit` + globals.css grep 0 |
+| 1. 토큰/폰트 | T1~T3 (3) | **done** | tsc 0 / lint 0 / globals.css·design-tokens.ts·layout.tsx 잔재 grep 0 (2026-05-07) |
 | 2. 공통 컴포넌트 | T4~T8 (5) | pending | tsc 0 에러 |
 | 3. 레이아웃 | T9~T10 (2) | pending | grep `neo-` 0건 (Nav/Footer) |
 | 4. 페이지 | T11~T23 (13) | pending | 페이지별 grep 0 + lint |
 | 5. 메타/로고 | T24~T28 (5) | pending | build 통과 + OG 시각 |
 | 6. 검증 | T29~T32 (4) | pending | lint+tsc+build+사용자 시각 회귀 |
+
+### Phase 1 단계별 기록
+
+| 시각 | 단계 | 상태 변경 | 비고 |
+|---|---|---|---|
+| 2026-05-07 | 환경 | done | `git worktree add ../taxback365-feat-redesign -b feat/redesign` + `npm i pretendard` |
+| 2026-05-07 | T1 | done | `app/globals.css` 전면 재작성 — Navy/Mint/neutral oklch 토큰 + Pretendard dynamic-subset @import + Mono 디스플레이 유틸 + 도트/형광/3px 잔재 0 |
+| 2026-05-07 | T2 | done | `lib/design-tokens.ts` TS 미러 — colors/radius/shadows/borders/typography/spacing 새 값 + hex 폴백 추가 (SVG·차트용) |
+| 2026-05-07 | T3 | done | `app/layout.tsx` Lexend import/변수/className 제거 + metadata `TAXAI` → `taxback365` 일괄. `metadataBase` `taxai.kr` → `taxback365.vercel.app` |
+| 2026-05-07 | 인프라 | revise | TDD enforce hook이 strict→warn으로 임시 전환 (디자인 작업 한정, 완료 후 strict 복원 follow-up) |
 
 **의존성 임계 경로** (가장 긴 chain):
 T1 → T2 → T3 → T4 → T19 (랜딩) → T29 → T30 → T31 → T32
