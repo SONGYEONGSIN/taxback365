@@ -4,7 +4,7 @@ import { withApiGuard } from '@/lib/api-guard';
 import { createLimiter } from '@/lib/rate-limit';
 
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
-const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent';
+const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent';
 
 const aiAdviceSchema = z.object({
     salary: z.number().nonnegative().max(1_000_000_000),
@@ -71,7 +71,10 @@ ${deductionSummary}
                 }],
                 generationConfig: {
                     temperature: 0.7,
-                    maxOutputTokens: 1024,
+                    maxOutputTokens: 4096,
+                    // gemini-2.5-flash는 thinking 모드가 기본 ON. 1024 토큰이 thinking에 거의 다 소비되어
+                    // 실제 출력이 잘리는 것을 방지하기 위해 thinking 비활성화.
+                    thinkingConfig: { thinkingBudget: 0 },
                 }
             })
         });

@@ -5,7 +5,7 @@ import { createLimiter } from '@/lib/rate-limit';
 
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 // gemini-2.0-flash 모델 사용 (Vision 지원)
-const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent';
+const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent';
 
 interface OcrItem {
     category: string;
@@ -85,7 +85,9 @@ export const POST = withApiGuard<OcrRequest>(async (_req, ctx) => {
                     }],
                     generationConfig: {
                         temperature: 0.1,
-                        maxOutputTokens: 2048,
+                        maxOutputTokens: 4096,
+                        // gemini-2.5-flash thinking 비활성화 (출력 truncation 방지).
+                        thinkingConfig: { thinkingBudget: 0 },
                     }
                 })
             });
