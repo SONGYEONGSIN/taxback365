@@ -7,7 +7,7 @@ import { isAdmin } from "@/lib/admin";
 // auth.ts의 무거운 callback(supabase upsert 등)은 사용하지 않는다.
 const { auth } = NextAuth(authConfig);
 
-// /admin/** 페이지 + /api/admin-data/** 라우트에 대해 NextAuth 세션 + 관리자 권한 검사.
+// /admin/** 페이지 + /api/admin-data/** + /api/admin/** 라우트에 대해 NextAuth 세션 + 관리자 권한 검사.
 // 비로그인은 /login 으로 리다이렉트(API는 401 JSON), 일반 사용자는 / 으로(API는 403).
 export default auth((req) => {
     const session = req.auth;
@@ -34,5 +34,5 @@ export default auth((req) => {
 });
 
 export const config = {
-    matcher: ["/admin/:path*", "/api/admin-data/:path*"],
+    matcher: ["/admin/:path*", "/api/admin-data/:path*", "/api/admin/:path*"],
 };

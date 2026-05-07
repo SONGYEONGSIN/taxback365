@@ -163,4 +163,13 @@ export async function logAudit(opts: {
 
 | 시각 | 단계 | 상태 변경 | 비고 |
 |---|---|---|---|
-| 2026-05-07T... | — | plan 저장 | sub-plan B/A 완료 후 시작 권장 |
+| 2026-05-07T04:47:24Z | — | plan 저장 | |
+| 2026-05-07T07:00:00Z | C-T1 | partial | `supabase/migrations/20260507_audit_logs.sql` 작성 + `schema.sql` 동기화. 적용은 사용자 (Supabase Studio) |
+| 2026-05-07T07:05:00Z | C-T2 | done | `lib/audit.ts` server-only helper. logAudit() — try/catch swallow + IP/UA 헤더 추출 |
+| 2026-05-07T07:10:00Z | C-T3 | done | `auth.ts` signIn 콜백에 logAudit 통합. upsert .select('id') 후 user_id 매핑. 실패 시 login.failure 기록 |
+| 2026-05-07T07:15:00Z | C-T4 | done | `app/api/admin-data/route.ts` POST upsert 성공 후 `admin.data.update` 기록 |
+| 2026-05-07T07:20:00Z | C-T5 | done | `app/api/board/[id]/route.ts` DELETE 성공 후 `board.post.delete` 기록 |
+| 2026-05-07T07:25:00Z | C-T6 | done | `app/api/admin/audit/route.ts` GET 신규 — page/pageSize/action zod query + supabaseAdmin select |
+| 2026-05-07T07:28:00Z | — | revise | middleware.ts matcher에 `/api/admin/:path*` 추가 (defense-in-depth) |
+| 2026-05-07T07:35:00Z | C-T7 | done | `app/admin/audit/page.tsx` async server component — 직접 supabaseAdmin select, 페이지네이션 + action 필터, defense-in-depth 가드 (auth + isAdmin redirect) |
+| 2026-05-07T07:40:00Z | C-T8 | partial | `npm run build` 통과 (`/admin/audit` + `/api/admin/audit` 등록). RLS 침투 테스트는 C-T1 적용 후 사용자 e2e |

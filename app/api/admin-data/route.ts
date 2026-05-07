@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { requireAdminSession } from "@/lib/auth-guard";
 import { supabaseAdmin as supabase } from "@/lib/supabase";
+import { logAudit } from "@/lib/audit";
 
 const adminDataSchema = z.object({
     year: z.number().int().min(2020).max(2030),
@@ -85,6 +86,13 @@ export async function POST(request: NextRequest) {
             console.error("Supabase upsert error:", error);
             return NextResponse.json({ error: "Database error" }, { status: 500 });
         }
+
+        await logAudit({
+            action: "admin.data.update",
+            userEmail: userId,
+            target: `year=${year}`,
+            req: request,
+        });
 
         return NextResponse.json({ success: true });
     } catch (error) {

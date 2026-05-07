@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { supabaseAdmin as supabase } from "@/lib/supabase";
 import { auth } from "@/auth";
+import { logAudit } from "@/lib/audit";
 
 // GET: 게시글 상세 조회 + 조회수 증가
 export async function GET(
@@ -167,6 +168,13 @@ export async function DELETE(
             .eq("id", id);
 
         if (error) throw error;
+
+        await logAudit({
+            action: "board.post.delete",
+            userEmail: session.user.email,
+            target: `id=${id}`,
+            req: request,
+        });
 
         return NextResponse.json({ success: true });
     } catch (error) {

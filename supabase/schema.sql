@@ -77,3 +77,25 @@ CREATE INDEX IF NOT EXISTS idx_admin_data_user_year ON admin_data(user_id, year)
 CREATE INDEX IF NOT EXISTS idx_tax_data_user ON tax_data(user_id);
 CREATE INDEX IF NOT EXISTS idx_board_posts_created ON board_posts(created_at DESC);
 CREATE INDEX IF NOT EXISTS idx_board_posts_pinned ON board_posts(is_pinned, created_at DESC);
+
+-- =============================================
+-- 감사 로그 (Audit Logs) — A09 보강
+-- =============================================
+CREATE TABLE IF NOT EXISTS audit_logs (
+  id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  user_id UUID REFERENCES users(id) ON DELETE SET NULL,
+  user_email TEXT,
+  action TEXT NOT NULL,
+  target TEXT,
+  metadata JSONB,
+  ip_address TEXT,
+  user_agent TEXT,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS idx_audit_logs_created_at ON audit_logs(created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_audit_logs_action ON audit_logs(action);
+CREATE INDEX IF NOT EXISTS idx_audit_logs_user_id ON audit_logs(user_id);
+
+ALTER TABLE audit_logs ENABLE ROW LEVEL SECURITY;
+COMMENT ON TABLE audit_logs IS 'RLS: anon deny (no policy). service_role bypasses. All inserts via lib/audit.ts (server-only).';
