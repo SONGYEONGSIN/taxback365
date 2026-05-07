@@ -1,6 +1,7 @@
 import { ImageResponse } from "next/og";
 
-export const runtime = "edge";
+// Node.js runtime 사용 (이전 `runtime = "edge"`는 정적 생성을 비활성화하는 빌드 경고 원인이었음).
+// OG 이미지는 정적 컨텐츠라 edge runtime 이점이 없고, 정적 생성으로 두는 게 캐싱·성능 이득.
 
 export const alt = "TAXAI - 2026 AI 연말정산 솔루션";
 export const size = {

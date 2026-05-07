@@ -1,6 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
+import { z } from "zod";
 import { requireAdminSession } from "@/lib/auth-guard";
 import { supabaseAdmin as supabase } from "@/lib/supabase";
+
+const adminDataSchema = z.object({
+    year: z.number().int().min(2020).max(2030),
+    data: z.record(z.string(), z.unknown()),
+});
+
+const yearQuerySchema = z.coerce.number().int().min(2020).max(2030);
 
 // GET /api/admin-data?year=2026
 export async function GET(request: NextRequest) {
@@ -9,17 +17,21 @@ export async function GET(request: NextRequest) {
         const guard = await requireAdminSession();
         if (guard.response) return guard.response;
         const userId = guard.email;
-        const year = request.nextUrl.searchParams.get("year");
-
-        if (!year) {
-            return NextResponse.json({ error: "year parameter is required" }, { status: 400 });
+        const yearRaw = request.nextUrl.searchParams.get("year");
+        const yearParsed = yearQuerySchema.safeParse(yearRaw);
+        if (!yearParsed.success) {
+            return NextResponse.json(
+                { error: "year query is invalid (정수, 2020~2030)" },
+                { status: 400 }
+            );
         }
+        const year = yearParsed.data;
 
         const { data, error } = await supabase
             .from("admin_data")
             .select("data")
             .eq("user_id", userId)
-            .eq("year", parseInt(year))
+            .eq("year", year)
             .single();
 
         if (error && error.code !== "PGRST116") {
@@ -41,12 +53,21 @@ export async function POST(request: NextRequest) {
         const guard = await requireAdminSession();
         if (guard.response) return guard.response;
         const userId = guard.email;
-        const body = await request.json();
-        const { year, data } = body;
 
-        if (!year || !data) {
-            return NextResponse.json({ error: "year and data are required" }, { status: 400 });
+        let raw: unknown;
+        try {
+            raw = await request.json();
+        } catch {
+            return NextResponse.json({ error: "Invalid JSON" }, { status: 400 });
         }
+        const parsed = adminDataSchema.safeParse(raw);
+        if (!parsed.success) {
+            return NextResponse.json(
+                { error: "Invalid request body", issues: parsed.error.issues },
+                { status: 400 }
+            );
+        }
+        const { year, data } = parsed.data;
 
         const { error } = await supabase
             .from("admin_data")

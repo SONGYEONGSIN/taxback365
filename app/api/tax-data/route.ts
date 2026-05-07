@@ -1,6 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
+import { z } from "zod";
 import { auth } from "@/auth";
 import { supabaseAdmin as supabase } from "@/lib/supabase";
+
+// JSONB 컬럼이라 data 자체는 임의 객체. 단지 존재·크기 상한만 검증.
+const taxDataSchema = z.object({
+    data: z.record(z.string(), z.unknown()),
+});
 
 // GET /api/tax-data
 export async function GET() {
@@ -39,12 +45,21 @@ export async function POST(request: NextRequest) {
         }
 
         const userId = session.user.email;
-        const body = await request.json();
-        const { data } = body;
 
-        if (!data) {
-            return NextResponse.json({ error: "data is required" }, { status: 400 });
+        let raw: unknown;
+        try {
+            raw = await request.json();
+        } catch {
+            return NextResponse.json({ error: "Invalid JSON" }, { status: 400 });
         }
+        const parsed = taxDataSchema.safeParse(raw);
+        if (!parsed.success) {
+            return NextResponse.json(
+                { error: "Invalid request body", issues: parsed.error.issues },
+                { status: 400 }
+            );
+        }
+        const { data } = parsed.data;
 
         const { error } = await supabase
             .from("tax_data")
