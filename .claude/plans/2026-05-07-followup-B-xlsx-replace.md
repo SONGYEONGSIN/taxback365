@@ -83,4 +83,10 @@ estimated_hours: 4-6
 
 | 시각 | 단계 | 상태 변경 | 비고 |
 |---|---|---|---|
-| 2026-05-07T... | — | plan 저장 | 사용자 합의 후 |
+| 2026-05-07T04:47:24Z | — | plan 저장 | 사용자 합의 후 |
+| 2026-05-07T05:00:00Z | B-T1 | done | `lib/excel-import.ts` 작성. exceljs dynamic import + cell value Date/RichText/Formula 변환 |
+| 2026-05-07T05:05:00Z | B-T2 | done | `app/admin/page.tsx:415-424` 호출지점 wrapper 1줄로 교체 (5줄→1줄, onload async) |
+| 2026-05-07T05:07:00Z | B-T3 | done | `app/admin/page.tsx:572-581` 동일 패턴 교체 |
+| 2026-05-07T05:10:00Z | B-T4 | done | `npm uninstall xlsx && npm i exceljs`. **HIGH vuln 0건** (xlsx CVE 2건 제거). 잔여 3 moderate은 next 내부 transitive |
+| 2026-05-07T05:15:00Z | — | revise | exceljs 타입 충돌(Buffer vs Uint8Array) `@ts-expect-error`로 우회. 런타임 영향 없음 |
+| 2026-05-07T05:18:00Z | B-T5 | partial | `npm run build` 통과. 실제 .xlsx 업로드 회귀는 사용자 e2e 대기 |
