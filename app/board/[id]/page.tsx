@@ -3,193 +3,202 @@
 import { useState, useEffect, use } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { ArrowLeft, Eye, Calendar, User, Trash2, Pin, MessageSquare, HelpCircle, Megaphone, FileText, Lock, Pencil } from "lucide-react";
+import {
+  ArrowLeft,
+  Eye,
+  Calendar,
+  User,
+  Trash2,
+  Pin,
+  Lock,
+  Pencil,
+} from "lucide-react";
 import { useSession } from "next-auth/react";
-import { motion } from "framer-motion";
+import { Card } from "@/components/ui/Card";
+import { Button } from "@/components/ui/Button";
+import { Badge } from "@/components/ui/Badge";
 
 interface BoardPost {
-    id: number;
-    category: string;
-    title: string;
-    content: string;
-    author_name: string;
-    author_email: string;
-    views: number;
-    is_pinned: boolean;
-    is_public: boolean;
-    created_at: string;
+  id: number;
+  category: string;
+  title: string;
+  content: string;
+  author_name: string;
+  author_email: string;
+  views: number;
+  is_pinned: boolean;
+  is_public: boolean;
+  created_at: string;
 }
 
-const categoryStyles: Record<string, { bg: string; text: string; icon: React.ElementType }> = {
-    "공지": { bg: "bg-red-400 text-white", text: "공지", icon: Megaphone },
-    "Q&A": { bg: "bg-neo-cyan text-black", text: "Q&A", icon: HelpCircle },
-    "질문": { bg: "bg-neo-yellow text-black", text: "질문", icon: MessageSquare },
-    "일반": { bg: "bg-gray-200 text-black", text: "일반", icon: FileText },
+const categoryVariant: Record<
+  string,
+  "danger" | "success" | "warning" | "neutral"
+> = {
+  공지: "danger",
+  "Q&A": "success",
+  질문: "warning",
+  일반: "neutral",
 };
 
-export default function BoardDetailPage({ params }: { params: Promise<{ id: string }> }) {
-    const { id } = use(params);
-    const router = useRouter();
-    const { data: session } = useSession();
-    const [post, setPost] = useState<BoardPost | null>(null);
-    const [loading, setLoading] = useState(true);
-    const [deleting, setDeleting] = useState(false);
+export default function BoardDetailPage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = use(params);
+  const router = useRouter();
+  const { data: session } = useSession();
+  const [post, setPost] = useState<BoardPost | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [deleting, setDeleting] = useState(false);
 
-    useEffect(() => {
-        const fetchPost = async () => {
-            try {
-                const res = await fetch(`/api/board/${id}`);
-                const data = await res.json();
-                if (data.success) {
-                    setPost(data.data);
-                }
-            } catch (error) {
-                console.error("Post fetch error:", error);
-            } finally {
-                setLoading(false);
-            }
-        };
-        fetchPost();
-    }, [id]);
-
-    const handleDelete = async () => {
-        if (!confirm("정말 이 게시글을 삭제하시겠습니까?")) return;
-        setDeleting(true);
-        try {
-            const res = await fetch(`/api/board/${id}`, { method: "DELETE" });
-            const data = await res.json();
-            if (data.success) {
-                router.push("/board");
-            } else {
-                alert(data.error || "삭제에 실패했습니다.");
-            }
-        } catch {
-            alert("삭제 중 오류가 발생했습니다.");
-        } finally {
-            setDeleting(false);
-        }
+  useEffect(() => {
+    const fetchPost = async () => {
+      try {
+        const res = await fetch(`/api/board/${id}`);
+        const data = await res.json();
+        if (data.success) setPost(data.data);
+      } catch (error) {
+        console.error("Post fetch error:", error);
+      } finally {
+        setLoading(false);
+      }
     };
+    fetchPost();
+  }, [id]);
 
-    if (loading) {
-        return (
-            <div className="flex items-center justify-center min-h-[50vh]">
-                <div className="flex flex-col items-center gap-3">
-                    <div className="w-10 h-10 border-4 border-neo-orange border-t-transparent rounded-full animate-spin" />
-                    <span className="font-bold text-gray-500">로딩 중...</span>
-                </div>
-            </div>
-        );
+  const handleDelete = async () => {
+    if (!confirm("정말 이 게시글을 삭제하시겠습니까?")) return;
+    setDeleting(true);
+    try {
+      const res = await fetch(`/api/board/${id}`, { method: "DELETE" });
+      const data = await res.json();
+      if (data.success) {
+        router.push("/board");
+      } else {
+        alert(data.error || "삭제에 실패했습니다.");
+      }
+    } catch {
+      alert("삭제 중 오류가 발생했습니다.");
+    } finally {
+      setDeleting(false);
     }
+  };
 
-    if (!post) {
-        return (
-            <div className="flex flex-col items-center justify-center min-h-[50vh] gap-4">
-                <p className="text-2xl font-black">게시글을 찾을 수 없습니다 😢</p>
-                <Link href="/board" className="neo-btn !py-3 !px-5">
-                    <ArrowLeft size={18} />
-                    목록으로
-                </Link>
-            </div>
-        );
-    }
-
-    const catStyle = categoryStyles[post.category] || categoryStyles["일반"];
-    const CatIcon = catStyle.icon;
-    const isAuthor = session?.user?.email === post.author_email;
-    const formattedDate = new Date(post.created_at).toLocaleDateString("ko-KR", {
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-        hour: "2-digit",
-        minute: "2-digit",
-    });
-
+  if (loading) {
     return (
-        <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="space-y-6 animate-fade-in"
-        >
-            {/* Header */}
-            <div className="neo-card bg-white">
-                {/* Category + Title */}
-                <div className="flex items-start gap-3 mb-4">
-                    {post.is_pinned && (
-                        <Pin size={20} className="text-neo-orange mt-1 flex-shrink-0" />
-                    )}
-                    <span className={`inline-flex items-center gap-1 px-3 py-1 text-xs font-bold border-2 border-black ${catStyle.bg} flex-shrink-0`}>
-                        <CatIcon size={14} />
-                        {catStyle.text}
-                    </span>
-                    <h1 className="text-2xl md:text-3xl font-black tracking-tight normal-case break-words">
-                        {post.title}
-                    </h1>
-                </div>
-
-                {/* Meta Info */}
-                <div className="flex flex-wrap items-center gap-4 text-sm text-gray-500 font-bold border-b-2 border-gray-200 pb-4">
-                    <div className="flex items-center gap-1.5">
-                        <User size={14} />
-                        <span className="font-bold">{post.author_name}</span>
-                    </div>
-                    <div className="flex items-center gap-1.5">
-                        <Calendar size={14} />
-                        <span>{formattedDate}</span>
-                    </div>
-                    <div className="flex items-center gap-1.5">
-                        <Eye size={14} />
-                        <span>조회 {post.views}</span>
-                    </div>
-                    {post.is_public === false && (
-                        <div className="flex items-center gap-1.5 text-neo-orange">
-                            <Lock size={14} />
-                            <span>비공개</span>
-                        </div>
-                    )}
-                </div>
-
-                {/* Content */}
-                <div className="mt-6 min-h-[200px] whitespace-pre-wrap font-bold text-gray-800 leading-relaxed text-base">
-                    {post.content}
-                </div>
-            </div>
-
-            {/* Actions */}
-            <div className="flex items-center justify-between">
-                <motion.div whileHover={{ y: -1 }} whileTap={{ scale: 0.98 }}>
-                    <Link
-                        href="/board"
-                        className="inline-flex items-center gap-2 px-5 py-2.5 bg-white border-[3px] border-black font-bold shadow-[4px_4px_0px_0px_#000] hover:shadow-[2px_2px_0px_0px_#000] active:shadow-none transition-all"
-                    >
-                        <ArrowLeft size={18} />
-                        목록보기
-                    </Link>
-                </motion.div>
-
-                {isAuthor && (
-                    <div className="flex items-center gap-3">
-                        <motion.div whileHover={{ y: -1 }} whileTap={{ scale: 0.98 }}>
-                            <Link
-                                href={`/board/${id}/edit`}
-                                className="inline-flex items-center gap-2 px-5 py-2.5 bg-neo-yellow text-black border-[3px] border-black font-bold shadow-[4px_4px_0px_0px_#000] hover:shadow-[2px_2px_0px_0px_#000] active:shadow-none transition-all"
-                            >
-                                <Pencil size={18} />
-                                수정
-                            </Link>
-                        </motion.div>
-                        <motion.button
-                            whileHover={{ y: -1 }}
-                            whileTap={{ scale: 0.98 }}
-                            onClick={handleDelete}
-                            disabled={deleting}
-                            className="inline-flex items-center gap-2 px-5 py-2.5 bg-red-400 text-white border-[3px] border-black font-bold shadow-[4px_4px_0px_0px_#000] hover:shadow-[2px_2px_0px_0px_#000] active:shadow-none transition-all disabled:opacity-50"
-                        >
-                            <Trash2 size={18} />
-                            {deleting ? "삭제 중..." : "삭제"}
-                        </motion.button>
-                    </div>
-                )}
-            </div>
-        </motion.div>
+      <div className="flex items-center justify-center min-h-[50vh]">
+        <div className="flex flex-col items-center gap-3">
+          <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+          <span className="text-body-sm text-neutral-500">불러오는 중…</span>
+        </div>
+      </div>
     );
+  }
+
+  if (!post) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-[50vh] gap-4 max-w-[760px] mx-auto">
+        <p className="text-h2 text-foreground">게시글을 찾을 수 없습니다</p>
+        <Link href="/board">
+          <Button variant="secondary" size="md">
+            <ArrowLeft size={16} strokeWidth={1.75} />
+            목록으로
+          </Button>
+        </Link>
+      </div>
+    );
+  }
+
+  const variant = categoryVariant[post.category] ?? "neutral";
+  const isAuthor = session?.user?.email === post.author_email;
+  const formattedDate = new Date(post.created_at).toLocaleDateString("ko-KR", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+
+  return (
+    <div className="space-y-6 animate-fade-in max-w-[760px] mx-auto">
+      <Card padding="lg">
+        {/* Category + Title */}
+        <div className="flex items-start gap-2 mb-4 flex-wrap">
+          {post.is_pinned && (
+            <Pin
+              size={18}
+              className="text-mint-dark mt-1 flex-shrink-0"
+              strokeWidth={2}
+            />
+          )}
+          <Badge variant={variant}>{post.category}</Badge>
+          <h1 className="text-h1 text-foreground break-words w-full">
+            {post.title}
+          </h1>
+        </div>
+
+        {/* Meta Info */}
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-caption text-neutral-500 border-b border-neutral-200 pb-4">
+          <span className="inline-flex items-center gap-1.5">
+            <User size={12} strokeWidth={1.75} />
+            <span className="text-foreground font-medium">
+              {post.author_name}
+            </span>
+          </span>
+          <span className="inline-flex items-center gap-1.5 font-mono tabular-nums">
+            <Calendar size={12} strokeWidth={1.75} />
+            {formattedDate}
+          </span>
+          <span className="inline-flex items-center gap-1.5">
+            <Eye size={12} strokeWidth={1.75} />
+            조회 <span className="font-mono tabular-nums">{post.views}</span>
+          </span>
+          {post.is_public === false && (
+            <span className="inline-flex items-center gap-1.5 text-warning">
+              <Lock size={12} strokeWidth={1.75} />
+              비공개
+            </span>
+          )}
+        </div>
+
+        {/* Content */}
+        <div className="mt-6 min-h-[200px] whitespace-pre-wrap text-body text-foreground leading-[1.7]">
+          {post.content}
+        </div>
+      </Card>
+
+      {/* Actions */}
+      <div className="flex items-center justify-between gap-3">
+        <Link href="/board">
+          <Button variant="secondary" size="md">
+            <ArrowLeft size={16} strokeWidth={1.75} />
+            목록보기
+          </Button>
+        </Link>
+
+        {isAuthor && (
+          <div className="flex items-center gap-2">
+            <Link href={`/board/${id}/edit`}>
+              <Button variant="secondary" size="md">
+                <Pencil size={15} strokeWidth={1.75} />
+                수정
+              </Button>
+            </Link>
+            <Button
+              variant="danger"
+              size="md"
+              onClick={handleDelete}
+              disabled={deleting}
+              isLoading={deleting}
+            >
+              <Trash2 size={15} strokeWidth={1.75} />
+              {deleting ? "삭제 중…" : "삭제"}
+            </Button>
+          </div>
+        )}
+      </div>
+    </div>
+  );
 }
