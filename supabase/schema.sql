@@ -58,7 +58,7 @@ COMMENT ON TABLE tax_data IS 'RLS: anon deny. Server-only via service_role.';
 -- =============================================
 CREATE TABLE IF NOT EXISTS board_posts (
   id BIGSERIAL PRIMARY KEY,
-  category TEXT NOT NULL DEFAULT '일반' CHECK (category IN ('일반', '질문', 'FAQ', '공지')),
+  category TEXT NOT NULL DEFAULT '일반' CHECK (category IN ('일반', '질문', 'Q&A', '공지')),
   title TEXT NOT NULL,
   content TEXT NOT NULL,
   author_name TEXT NOT NULL,

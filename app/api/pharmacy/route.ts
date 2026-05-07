@@ -174,7 +174,6 @@ async function checkPharmacyByApi(name: string): Promise<{ name: string; isPharm
 
         // 검색 결과가 실제로 입력 가맹점명과 일치하는지 확인
         const normalizedInput = name.replace(/[\s_]/g, "").toLowerCase();
-        const normalizedSearch = searchName.toLowerCase();
 
         const matchedPharmacy = pharmacyList.find(p => {
             if (!p?.yadmNm) return false;

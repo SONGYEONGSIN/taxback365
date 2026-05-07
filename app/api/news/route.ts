@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { XMLParser } from "fast-xml-parser";
 
 interface NewsItem {
     id: string;
@@ -32,20 +33,41 @@ export async function GET() {
             if (!response.ok) continue;
 
             const xmlText = await response.text();
-            const itemMatches = xmlText.match(/<item>([\s\S]*?)<\/item>/g);
 
-            if (itemMatches && itemMatches.length > 0) {
-                itemMatches.slice(0, 15).forEach((item, index) => {
-                    const titleMatch = item.match(/<title><!\[CDATA\[(.*?)\]\]><\/title>/) ||
-                        item.match(/<title>(.*?)<\/title>/);
-                    const linkMatch = item.match(/<link>(.*?)<\/link>/);
-                    const sourceMatch = item.match(/<source[^>]*>(.*?)<\/source>/) ||
-                        item.match(/<source[^>]*><!\[CDATA\[(.*?)\]\]><\/source>/);
-                    const pubDateMatch = item.match(/<pubDate>(.*?)<\/pubDate>/);
+            // fast-xml-parser로 RSS 파싱 (이전: 정규식). CDATA 자동 처리, 안전한 XML 파싱.
+            const parser = new XMLParser({
+                ignoreAttributes: false,
+                attributeNamePrefix: "",
+                cdataPropName: "__cdata",
+            });
+            const parsed = parser.parse(xmlText) as {
+                rss?: { channel?: { item?: unknown } };
+            };
+            const rawItems = parsed.rss?.channel?.item;
+            const xmlItems = Array.isArray(rawItems) ? rawItems : rawItems ? [rawItems] : [];
 
-                    if (titleMatch && linkMatch) {
-                        let title = titleMatch[1];
-                        let source = sourceMatch ? sourceMatch[1] : "뉴스";
+            const extractText = (v: unknown): string => {
+                if (typeof v === "string") return v;
+                if (typeof v === "number") return String(v);
+                if (v && typeof v === "object") {
+                    const obj = v as Record<string, unknown>;
+                    if (typeof obj.__cdata === "string") return obj.__cdata;
+                    if (typeof obj["#text"] === "string") return obj["#text"];
+                }
+                return "";
+            };
+
+            if (xmlItems.length > 0) {
+                xmlItems.slice(0, 15).forEach((rawItem) => {
+                    const item = rawItem as Record<string, unknown>;
+                    const titleRaw = extractText(item.title);
+                    const linkRaw = extractText(item.link);
+                    const sourceRaw = extractText(item.source);
+                    const pubDateRaw = extractText(item.pubDate);
+
+                    if (titleRaw && linkRaw) {
+                        let title = titleRaw;
+                        let source = sourceRaw || "뉴스";
 
                         const dashIndex = title.lastIndexOf(" - ");
                         if (dashIndex > 0) {
@@ -55,8 +77,8 @@ export async function GET() {
 
                         let timeAgo = "방금 전";
                         let pubTimestamp = Date.now();
-                        if (pubDateMatch) {
-                            const pubDate = new Date(pubDateMatch[1]);
+                        if (pubDateRaw) {
+                            const pubDate = new Date(pubDateRaw);
                             pubTimestamp = pubDate.getTime();
                             const now = new Date();
                             const diffMs = now.getTime() - pubDate.getTime();
@@ -73,7 +95,6 @@ export async function GET() {
                             }
                         }
 
-                        // 중복 제거 (같은 제목 방지)
                         const isDuplicate = items.some(
                             (existing) => existing.title === title.trim()
                         );
@@ -84,7 +105,7 @@ export async function GET() {
                                 title: title.trim(),
                                 source: source.trim(),
                                 time: timeAgo,
-                                url: linkMatch[1],
+                                url: linkRaw,
                                 isNew: false,
                                 _timestamp: pubTimestamp,
                             } as NewsItem & { _timestamp: number });
@@ -92,7 +113,6 @@ export async function GET() {
                     }
                 });
 
-                // 충분한 기사가 모이면 중단
                 if (items.length >= 10) break;
             }
         }

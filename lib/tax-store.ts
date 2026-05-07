@@ -354,11 +354,6 @@ export function generateDeductionAnalysis(adminData: AdminData): DeductionAnalys
     // 한도 적용
     const finalCardDeduction = Math.min(cardDeduction, cardLimit);
 
-    // 4대보험 합계
-    const socialInsurance = adminData.salary.nationalPension +
-        adminData.salary.healthInsurance +
-        (adminData.salary.longTermCare || 0) +
-        (adminData.salary.employmentInsurance || 0);
 
     // 인적공제 (부양가족 수)
     const dependents = 1 +
@@ -640,7 +635,6 @@ export function generateDeductionAnalysis(adminData: AdminData): DeductionAnalys
 
             // 3% 문턱
             const threshold = Math.round(salary * 0.03);
-            const exceeds = totalMedical > threshold;
 
             // 각 카테고리별 세액공제액 계산 (3% 문턱은 전체에 적용)
             // 실제로는 그밖부양가족만 700만원 한도 적용
@@ -651,14 +645,6 @@ export function generateDeductionAnalysis(adminData: AdminData): DeductionAnalys
             const prematureCredit = Math.round(premature * 0.20);
             const selfCredit = Math.round(selfMedical * 0.15);
             const familyCredit = Math.round(familyLimited * 0.15);
-
-            // 총 세액공제액 (3% 문턱 초과분에만 적용)
-            const totalCredit = exceeds ?
-                Math.round(Math.max(0, infertility - Math.min(threshold, infertility)) * 0.30) +
-                Math.round(Math.max(0, premature) * 0.20) +
-                Math.round(Math.max(0, selfMedical) * 0.15) +
-                Math.round(Math.min(familyMedical, FAMILY_LIMIT) * 0.15)
-                : 0;
 
             // thresholdInfo 생성 - 각 카테고리별 계산식 표시
             const infoLines: string[] = [];

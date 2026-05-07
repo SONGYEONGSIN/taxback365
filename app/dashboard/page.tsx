@@ -8,7 +8,7 @@ import rehypeSanitize from "rehype-sanitize";
 import { TrendingUp, Sparkles, Bell, Target, ChevronUp, ChevronDown, AlertCircle, CheckCircle2, Lightbulb, PiggyBank, CreditCard, Home, Heart, GraduationCap, Gift, Building, Loader2, Users } from "lucide-react";
 import { Badge } from "@/components/ui/Badge";
 import { loadTaxData, loadAdminData, generateDeductionAnalysis, DeductionAnalysis } from "@/lib/tax-store";
-import { generateRecommendations, getDefaultRecommendations, calculateTotalPotentialSaving, AIRecommendation, convertAdminDataToTaxData, generateRecommendationsFromAnalysis } from "@/lib/ai-recommendation";
+import { generateRecommendations, getDefaultRecommendations, calculateTotalPotentialSaving, AIRecommendation, generateRecommendationsFromAnalysis } from "@/lib/ai-recommendation";
 import { calculateTax, convertAdminToTaxInputs } from "@/lib/tax-calculator";
 
 interface NewsArticle {
@@ -20,14 +20,6 @@ interface NewsArticle {
     isNew: boolean;
 }
 
-interface AIAlert {
-    id: string;
-    type: "high" | "medium" | "low";
-    message: string;
-    detail: string;
-    potentialSaving: string;
-}
-
 interface DeductionItem {
     id: string;
     category: string;
@@ -37,37 +29,6 @@ interface DeductionItem {
     icon: React.ElementType;
     status: "optimal" | "good" | "warning" | "critical";
 }
-
-const MOCK_ALERTS: AIAlert[] = [
-    {
-        id: "1",
-        type: "high",
-        message: "신용카드 30만원 추가 사용 시",
-        detail: "현재 공제 문턱까지 98% 도달했습니다. 조금만 더 사용하면 최대 공제를 받을 수 있습니다.",
-        potentialSaving: "+15만원",
-    },
-    {
-        id: "2",
-        type: "high",
-        message: "퇴직연금(IRP) 300만원 납입 추천",
-        detail: "올해 한도가 남아있습니다. 연말 전에 납입하면 추가 세액공제 가능합니다.",
-        potentialSaving: "+45만원",
-    },
-    {
-        id: "3",
-        type: "medium",
-        message: "기부금 10만원으로 전액 공제",
-        detail: "정치자금 기부금 10만원 이하는 전액 세액공제 됩니다.",
-        potentialSaving: "+10만원",
-    },
-    {
-        id: "4",
-        type: "low",
-        message: "의료비 추가 지출 검토",
-        detail: "현재 의료비 공제 문턱(총급여 3%)에 근접했습니다.",
-        potentialSaving: "+8만원",
-    },
-];
 
 const MOCK_DEDUCTIONS: DeductionItem[] = [
     {
@@ -328,7 +289,7 @@ export default function DashboardPage() {
                     (adminData.salary.bonus || 0) +
                     (adminData.salary.childTuition || 0);
                 setTotalSalary(calculatedSalary);
-                const recommendations = generateRecommendationsFromAnalysis(analysis, calculatedSalary);
+                const recommendations = generateRecommendationsFromAnalysis(analysis);
                 if (recommendations.length > 0) {
                     setAiRecommendations(recommendations);
                     setHasUserData(true);

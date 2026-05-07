@@ -6,7 +6,6 @@ import Link from "next/link";
 import { ArrowLeft, Save, FileText, Lock, Globe } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { motion } from "framer-motion";
-import { ADMIN_ONLY_CATEGORIES } from "@/lib/admin";
 
 // 관리자 이메일 목록 (클라이언트용)
 const ADMIN_EMAILS = (process.env.NEXT_PUBLIC_ADMIN_EMAILS || "ysong2526@gmail.com")

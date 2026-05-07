@@ -138,6 +138,8 @@ export function Navigation() {
                                     </div>
                                 </div>
                                 <div className="w-8 h-8 rounded-full border-2 border-black bg-gray-200 overflow-hidden">
+                                    {/* Google avatar는 동적 외부 URL이라 next/image 도메인 화이트리스트 추가가 필요. follow-up. */}
+                                    {/* eslint-disable-next-line @next/next/no-img-element */}
                                     <img
                                         src={session.user?.image || "https://api.dicebear.com/7.x/avataaars/svg?seed=Felix"}
                                         alt="User"

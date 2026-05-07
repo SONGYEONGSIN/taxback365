@@ -1381,7 +1381,6 @@ export default function CalculatorPage() {
                                                     <div className="text-sm space-y-1">
                                                         {(() => {
                                                             const threshold = Math.round(inputs.salary * 0.25);
-                                                            const totalUsed = inputs.creditCard + inputs.debitCard + inputs.cash + inputs.publicTransport + inputs.traditionalMarket + inputs.culture;
 
                                                             // 순차적으로 25% 소진: 신용카드 → 직불카드 → 현금영수증 → 대중교통 → 전통시장 → 문화체육
                                                             let remaining = threshold;
@@ -1515,10 +1514,8 @@ export default function CalculatorPage() {
                                                             let remaining = threshold;
                                                             const creditExcess = Math.max(0, inputs.creditCard - remaining); remaining = Math.max(0, remaining - inputs.creditCard);
                                                             const debitExcess = Math.max(0, inputs.debitCard - remaining); remaining = Math.max(0, remaining - inputs.debitCard);
-                                                            const cashExcess = Math.max(0, inputs.cash - remaining); remaining = Math.max(0, remaining - inputs.cash);
-                                                            const transportExcess = Math.max(0, inputs.publicTransport - remaining); remaining = Math.max(0, remaining - inputs.publicTransport);
-                                                            const marketExcess = Math.max(0, inputs.traditionalMarket - remaining); remaining = Math.max(0, remaining - inputs.traditionalMarket);
-                                                            const cultureExcess = Math.max(0, inputs.culture - remaining);
+                                                            const cashExcess = Math.max(0, inputs.cash - remaining);
+                                                            // transport/market/culture excess는 기본 공제 계산에 포함되지 않음 (별도 추가 공제 영역에서 처리)
 
                                                             const basicDeduction = Math.round(creditExcess * 0.15) + Math.round(debitExcess * 0.3) + Math.round(cashExcess * 0.3);
                                                             const basicLimit = (inputs.salary <= 70000000 ? 3000000 : inputs.salary <= 120000000 ? 2500000 : 2000000) + Math.min(inputs.cardChildren * 500000, 1000000);
@@ -1668,8 +1665,6 @@ export default function CalculatorPage() {
                                                             const prematureDeduction = Math.round(prematureExcess * 0.20); // 20%, 한도 없음
                                                             const selfDeduction = Math.round(selfExcess * 0.15); // 15%, 한도 없음
                                                             const otherDeduction = Math.round(Math.min(otherExcess, 7000000) * 0.15); // 15%, 700만원 한도
-
-                                                            const totalDeduction = selfDeduction + otherDeduction + infertilityDeduction + prematureDeduction;
 
                                                             return (
                                                                 <>
@@ -2267,49 +2262,38 @@ export default function CalculatorPage() {
                                                             const politicalExcess = Math.max(0, inputs.politicalDonation - 100000);
                                                             const politicalExcess15 = Math.min(politicalExcess, 30000000);
                                                             const politicalExcess25 = Math.max(0, politicalExcess - 30000000);
-                                                            const politicalDeduction = politicalBase + politicalExcess15 * 0.15 + politicalExcess25 * 0.25;
 
                                                             // 고향사랑: 합산 2천만원 한도
-                                                            const hometownTotal = inputs.hometownDonation + inputs.hometownDisaster;
                                                             const hometownLimited = Math.min(inputs.hometownDonation, 20000000);
                                                             const hometownDisasterLimited = Math.min(inputs.hometownDisaster, Math.max(0, 20000000 - hometownLimited));
 
                                                             const hometownBase = Math.min(hometownLimited, 100000) * (100 / 110);
                                                             const hometownExcess = Math.max(0, hometownLimited - 100000) * 0.15;
-                                                            const hometownDeduction = hometownBase + hometownExcess;
 
                                                             const disasterBase = Math.min(hometownDisasterLimited, 100000) * (100 / 110);
                                                             const disasterExcess = Math.max(0, hometownDisasterLimited - 100000) * 0.30;
-                                                            const disasterDeduction = disasterBase + disasterExcess;
 
                                                             // 특례기부금: 1천만원 이하 15%, 초과 30%
                                                             const special15 = Math.min(inputs.specialDonation, 10000000) * 0.15;
                                                             const special30 = Math.max(0, inputs.specialDonation - 10000000) * 0.30;
-                                                            const specialDeduction = special15 + special30;
 
                                                             // 우리사주조합: 소득 30% 한도
                                                             const employeeLimit = inputs.salary * 0.30;
                                                             const employeeLimited = Math.min(inputs.employeeDonation, employeeLimit);
                                                             const employee15 = Math.min(employeeLimited, 10000000) * 0.15;
                                                             const employee30 = Math.max(0, employeeLimited - 10000000) * 0.30;
-                                                            const employeeDeduction = employee15 + employee30;
 
                                                             // 일반기부금 (종교단체 외): 소득 30% 한도
                                                             const designatedLimit = inputs.salary * 0.30;
                                                             const designatedLimited = Math.min(inputs.designatedDonation, designatedLimit);
                                                             const designated15 = Math.min(designatedLimited, 10000000) * 0.15;
                                                             const designated30 = Math.max(0, designatedLimited - 10000000) * 0.30;
-                                                            const designatedDeduction = designated15 + designated30;
 
                                                             // 종교단체: 소득 10% 한도
                                                             const religiousLimit = inputs.salary * 0.10;
                                                             const religiousLimited = Math.min(inputs.religiousDonation, religiousLimit);
                                                             const religious15 = Math.min(religiousLimited, 10000000) * 0.15;
                                                             const religious30 = Math.max(0, religiousLimited - 10000000) * 0.30;
-                                                            const religiousDeduction = religious15 + religious30;
-
-                                                            const totalDeduction = politicalDeduction + hometownDeduction + disasterDeduction +
-                                                                specialDeduction + employeeDeduction + designatedDeduction + religiousDeduction;
 
                                                             return (
                                                                 <>

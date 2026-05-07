@@ -152,8 +152,6 @@ export function generateRecommendations(data: TaxData): AIRecommendation[] {
     }
 
     // 4. 기부금 분석
-    const totalDonation = data.politicalDonation + data.hometownDonation + data.designatedDonation;
-
     if (data.politicalDonation < 100000) {
         const shortage = 100000 - data.politicalDonation;
         recommendations.push({
@@ -378,8 +376,7 @@ interface DeductionAnalysisInput {
  * 이미 계산된 amount, limit, status 정보를 활용하여 개선 필요 항목을 식별합니다.
  */
 export function generateRecommendationsFromAnalysis(
-    deductionItems: DeductionAnalysisInput[],
-    salary: number = 0
+    deductionItems: DeductionAnalysisInput[]
 ): AIRecommendation[] {
     const recommendations: AIRecommendation[] = [];
     let idCounter = 1;
@@ -426,9 +423,7 @@ export function generateRecommendationsFromAnalysis(
         else if (item.category.includes("연금저축") || item.category.includes("IRP")) {
             // 연금저축/IRP: 16.5% 또는 13.2% 세액공제
             // shortage는 추가 세액공제 가능 금액 (maxBenefit - amount)
-            // 추가 납입 가능 금액은 별도 계산 필요
-            const taxCreditRate = salary <= 55000000 ? 0.165 : 0.132;
-            const taxCreditRatePercent = salary <= 55000000 ? "16.5" : "13.2";
+            // 추가 납입 가능 금액은 별도 계산 필요 (Follow-up: 미구현, dead code 제거됨)
 
             // 현재 amount는 세액공제액, shortage도 세액공제 차이
             // 추가 납입 가능 금액 = shortage / taxCreditRate (세액공제 공제율 역산)

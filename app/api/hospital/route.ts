@@ -174,7 +174,6 @@ async function checkHospitalByApi(name: string): Promise<{ name: string; isHospi
         // 검색 결과가 실제로 입력 가맹점명과 일치하는지 확인
         // (API가 부분 매칭을 반환하므로, 실제 이름 유사도 검증 필요)
         const normalizedInput = name.replace(/[\s_]/g, "").toLowerCase();
-        const normalizedSearch = searchName.toLowerCase();
 
         const matchedHospital = hospitalList.find(h => {
             if (!h?.yadmNm) return false;

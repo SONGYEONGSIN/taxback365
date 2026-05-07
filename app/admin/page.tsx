@@ -83,7 +83,7 @@ export default function AdminPage() {
     const [excelFile, setExcelFile] = useState<File | null>(null);
     const [isExcelDragging, setIsExcelDragging] = useState(false);
     const [excelModalMonth, setExcelModalMonth] = useState(1);
-    const [ocrModalMonth, setOcrModalMonth] = useState(1);
+    const [, setOcrModalMonth] = useState(1);
 
     // OCR 상태
     const [ocrPreviewItems, setOcrPreviewItems] = useState<{ category: string, merchant: string, amount: number }[]>([]);
@@ -270,7 +270,7 @@ export default function AdminPage() {
         const initialYear = savedYear ? parseInt(savedYear) : 2026; // 기본값 2026년
         setSelectedYear(initialYear);
         loadYearData(initialYear);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+         
     }, []);
 
     // 연도 변경 시 데이터 리로드 + 선택 연도 저장
@@ -421,7 +421,7 @@ export default function AdminPage() {
                 const jsonData = await parseSheetToRows(data);
 
                 // Look for salary data in the Excel file
-                let newSalaryData: Partial<MonthlySalaryData> = {};
+                const newSalaryData: Partial<MonthlySalaryData> = {};
 
                 jsonData.forEach((row) => {
                     if (!row || row.length < 2) return;
@@ -485,12 +485,6 @@ export default function AdminPage() {
     const handleExcelDragLeave = (e: React.DragEvent) => {
         e.preventDefault();
         setIsExcelDragging(false);
-    };
-
-    const handleExcelModalOpen = () => {
-        setShowExcelModal(true);
-        setExcelFile(null);
-        setExcelModalMonth(selectedMonth);
     };
 
     const handleExcelModalClose = () => {
@@ -657,7 +651,7 @@ export default function AdminPage() {
                 );
 
                 // 업종/분류 열 (전통시장, 대중교통 구분용)
-                let categoryCol = headers.findIndex(h =>
+                const categoryCol = headers.findIndex(h =>
                     h.includes("업종") || h.includes("업태") || h.includes("분류") ||
                     h.includes("업종명") || h.includes("카테고리")
                 );
@@ -775,7 +769,7 @@ export default function AdminPage() {
                 let excludedCnt = 0;
                 let skippedCnt = 0;
 
-                jsonData.slice(headerRowIndex + 1).forEach((row, idx) => {
+                jsonData.slice(headerRowIndex + 1).forEach((row) => {
                     if (!row || row.length < 3) {
                         skippedCnt++;
                         return;
@@ -828,7 +822,7 @@ export default function AdminPage() {
 
                     // 사업자등록번호 추출 및 정규화
                     let bizNo: string | undefined;
-                    let hasBizNoColumn = bizNoCol >= 0;
+                    const hasBizNoColumn = bizNoCol >= 0;
                     if (hasBizNoColumn) {
                         const rawBizNo = String(row[bizNoCol] || "").replace(/[-\s]/g, "");
                         // 10자리 숫자인 경우만 유효한 사업자등록번호
@@ -1920,6 +1914,8 @@ export default function AdminPage() {
                                     <div className="grid grid-cols-3 gap-2">
                                         {capturedImages.map((img, index) => (
                                             <div key={index} className="relative aspect-square border-2 border-black overflow-hidden group">
+                                                {/* OCR 업로드 미리보기 — base64/blob URL이라 next/image 미적용. follow-up. */}
+                                                {/* eslint-disable-next-line @next/next/no-img-element */}
                                                 <img src={img} alt={`Uploaded ${index + 1}`} className="w-full h-full object-cover" />
                                                 <button
                                                     onClick={(e) => {

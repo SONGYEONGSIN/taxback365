@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Lexend, Nanum_Pen_Script } from "next/font/google";
+import { Inter, Lexend } from "next/font/google";
 import "./globals.css";
 import { Navigation } from "@/components/layout/Navigation";
 import { Footer } from "@/components/layout/Footer";
@@ -16,13 +16,6 @@ const lexend = Lexend({
     subsets: ["latin"],
     variable: "--font-lexend",
     weight: ["400", "500", "600", "700", "800", "900"],
-    display: "swap",
-});
-
-const nanumPenScript = Nanum_Pen_Script({
-    subsets: ["latin"],
-    variable: "--font-handwriting",
-    weight: "400",
     display: "swap",
 });
 
