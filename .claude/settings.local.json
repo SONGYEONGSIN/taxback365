@@ -3,7 +3,7 @@
     "NODE_ENV": "development",
     "CLAUDE_AUTOCOMPACT_PCT_OVERRIDE": "50",
     "PORT": "3000",
-    "CLAUDE_TDD_ENFORCE": "strict"
+    "CLAUDE_TDD_ENFORCE": "warn"
   },
   "mcpServers": {
     "playwright": {

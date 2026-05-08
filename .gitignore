@@ -35,8 +35,10 @@ dist-ssr
 .claude/messages/archive/
 .claude/messages/broadcast/
 .claude/messages/.last-debate-trigger
+.claude/messages/.last-model-suggest
 .claude/events.jsonl
 .claude/store.db
+.claude/**/*.bak.*
 # 추적 대상: .claude/memory/, .claude/messages/debates/, .claude/plans/
 # settings.local.json은 *.local 패턴으로 이미 무시됨
 

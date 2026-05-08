@@ -428,14 +428,55 @@ DESIGN.md를 단일 진실원으로 두고 **토큰부터 위로 올라가는 bo
 
 ## 진행 추적
 
-| Phase | 태스크 | 상태 | 검증 명령 |
+| Phase | 태스크 | 상태 | 검증 결과 |
 |-------|--------|------|-----------|
-| 1. 토큰/폰트 | T1~T3 (3) | pending | `tsc --noEmit` + globals.css grep 0 |
-| 2. 공통 컴포넌트 | T4~T8 (5) | pending | tsc 0 에러 |
-| 3. 레이아웃 | T9~T10 (2) | pending | grep `neo-` 0건 (Nav/Footer) |
-| 4. 페이지 | T11~T23 (13) | pending | 페이지별 grep 0 + lint |
+| 1. 토큰/폰트 | T1~T3 (3) | **done** (2026-05-07) | tsc 0 / lint 0 / Pretendard@import 적용 |
+| 2. 공통 컴포넌트 | T4~T8 (5) | **done** (2026-05-07) | Button/Card/Input/Badge/number-format 5개 신규, tsc 0 / lint 0 |
+| 3. 레이아웃 | T9~T10 (2) | **done** (2026-05-07) | Navigation/Footer 임시 ㅌ 자모 인라인 SVG, tsc 0 / lint 0 |
+| 4. 페이지 | T11~T23 (13) | **partial 10/13** | terms·privacy·board(목록/상세/write/edit)·login·signup·랜딩·dashboard 완료. **calculator·admin·admin/audit 미완** |
 | 5. 메타/로고 | T24~T28 (5) | pending | build 통과 + OG 시각 |
 | 6. 검증 | T29~T32 (4) | pending | lint+tsc+build+사용자 시각 회귀 |
+
+### 세션 1 종료 시점 인계 (2026-05-08)
+
+**현재 상태**:
+- worktree: `../taxback365-feat-redesign` (`feat/redesign` 브랜치, main에서 8 commits ahead)
+- working tree clean (tsbuildinfo 외 변경 없음)
+- TDD enforce hook: strict → **warn** 로 임시 전환됨 (`.claude/settings.local.json`). 디자인 작업 종료 시 strict 복원 필요
+
+**완료 페이지 10/13** (Phase 4 Group 1~5):
+- `app/terms/page.tsx`, `app/privacy/page.tsx`
+- `app/board/page.tsx`, `app/board/[id]/page.tsx`, `app/board/write/page.tsx`, `app/board/[id]/edit/page.tsx`
+- `app/login/page.tsx`, `app/signup/page.tsx`
+- `app/page.tsx` (랜딩 — 구조 재설계)
+- `app/dashboard/page.tsx`
+
+**미완 페이지 3/13** (대규모 + 회귀 위험):
+- `app/calculator/page.tsx` (2830줄) — **R1 HIGH**: 환급 계산 로직 + 입력 폼 다수
+- `app/admin/page.tsx` (3105줄) — 엑셀 업로드 + 카드 분류 + admin 데이터 CRUD
+- `app/admin/audit/page.tsx` (182줄) — 감사 로그 테이블 (가벼움)
+
+**다음 세션 시작 시 권장 의사결정**:
+- (a) 본 plan 마감 → calculator+admin은 별도 follow-up plan 분리 (admin/audit만 추가 처리하고 11/13으로 종료, **R1 분리 정책**)
+- (b) 강행 → 본 plan에서 calculator+admin 모두 처리 (회귀 테스트 별도 검증 필수)
+- (c) 부분 처리 → admin/audit + admin 일부 surgical edit, calculator는 별도
+
+**Phase 5/6 미진행**:
+- T24 = Claude 자체 SVG 작성으로 결정됨 (사용자 합의 완료)
+- T25 logo.svg / T26 logo-icon.svg / T27 layout.tsx icons / T28 opengraph-image.tsx
+- T29~T32 검증 (lint/tsc/build/사용자 시각 회귀)
+
+**Neo-Brutalism 잔재 grep 결과** (2026-05-08, 10/13 완료 시점, 추정):
+- 예상 잔존: calculator·admin·admin/audit 의 약 200건 (대부분 이 3개 페이지 내부)
+- globals.css·design-tokens.ts·layout.tsx·components/ui/·components/layout/·완료된 10개 페이지: 0건
+
+**재개 명령**:
+```bash
+cd ../taxback365-feat-redesign      # worktree 진입
+git status                           # working tree clean 확인
+git log --oneline main..HEAD         # 8 commits 확인
+npx tsc --noEmit && npm run lint    # 검증 통과 확인
+```
 
 **의존성 임계 경로** (가장 긴 chain):
 T1 → T2 → T3 → T4 → T19 (랜딩) → T29 → T30 → T31 → T32
