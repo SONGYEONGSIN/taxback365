@@ -25,6 +25,7 @@ dist-ssr
 
 # Next.js build output
 .next
+tsconfig.tsbuildinfo
 
 .vercel
 
