@@ -63,6 +63,11 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/",
   },
+  icons: {
+    icon: "/logo-icon.svg",
+    shortcut: "/logo-icon.svg",
+    apple: "/logo-icon.svg",
+  },
   verification: {
     // Google Search Console 등록 후 아래 값 교체
     // google: "your-google-verification-code",
