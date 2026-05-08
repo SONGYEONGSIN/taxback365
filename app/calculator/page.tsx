@@ -884,15 +884,13 @@ export default function CalculatorPage() {
       {/* Input Section */}
       <div className="lg:col-span-2 space-y-4">
         <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl md:text-3xl font-black uppercase">계산기</h2>
+          <h2 className="text-h2 text-foreground">계산기</h2>
           <div className="flex gap-2">
             <button
               onClick={handleLoadData}
               className={clsx(
-                "flex items-center gap-2 px-4 py-2 text-sm font-bold border-2 border-black shadow-[4px_4px_0px_0px_#000] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_0px_#000] active:translate-x-[4px] active:translate-y-[4px] active:shadow-none transition-all",
-                isLoadingData
-                  ? "bg-neo-cyan translate-x-[4px] translate-y-[4px] shadow-none"
-                  : "bg-white",
+                "inline-flex items-center justify-center gap-2 h-9 px-3.5 rounded-md border border-neutral-200 bg-card text-foreground text-[13px] font-medium transition-colors hover:bg-neutral-100 hover:border-neutral-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-600 disabled:opacity-50",
+                isLoadingData && "bg-primary/5 border-primary text-primary",
               )}
             >
               <Download
@@ -904,10 +902,10 @@ export default function CalculatorPage() {
             <button
               onClick={handleReset}
               className={clsx(
-                "flex items-center gap-2 px-4 py-2 text-sm font-bold border-2 border-black shadow-[4px_4px_0px_0px_#000] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_0px_#000] active:translate-x-[4px] active:translate-y-[4px] active:shadow-none transition-all",
+                "inline-flex items-center justify-center gap-2 h-9 px-3.5 rounded-md text-[13px] font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-600 disabled:opacity-50",
                 isResetting
-                  ? "bg-neo-orange translate-x-[4px] translate-y-[4px] shadow-none"
-                  : "bg-black text-white",
+                  ? "bg-warning/10 border border-warning/30 text-warning"
+                  : "bg-foreground text-card hover:bg-primary-700",
               )}
             >
               <RefreshCw
@@ -1025,7 +1023,7 @@ export default function CalculatorPage() {
                             ))}
                           </div>
                         </div>
-                        <div className="bg-neo-cyan/20 p-4 border-2 border-black space-y-2">
+                        <div className="bg-neutral-50 p-4 border border-neutral-200 rounded-md space-y-2">
                           <p className="font-bold text-sm">계산식</p>
                           <div className="text-sm space-y-1">
                             <p>
@@ -1050,7 +1048,7 @@ export default function CalculatorPage() {
                             </p>
                           </div>
                         </div>
-                        <div className="bg-neo-yellow p-4 border-2 border-black">
+                        <div className="bg-warning/10 p-4 border border-warning/30 rounded-md">
                           <p className="font-bold mb-1">총급여액 (자동 계산)</p>
                           <p className="text-2xl font-black">
                             {formatNumber(inputs.salary)}원
@@ -1128,7 +1126,7 @@ export default function CalculatorPage() {
                               <label className="font-bold text-sm h-6 flex items-center">
                                 본인공제
                               </label>
-                              <div className="neo-input bg-gray-100 text-gray-500 cursor-not-allowed">
+                              <div className="w-full h-11 rounded-md border border-neutral-200 bg-neutral-100 px-3.5 flex items-center justify-end text-body text-neutral-500 font-mono tabular-nums cursor-not-allowed">
                                 1,500,000
                               </div>
                             </div>
@@ -1150,7 +1148,7 @@ export default function CalculatorPage() {
                                       handleInputChange("spouse", num)
                                     }
                                     className={clsx(
-                                      "flex-1 p-3 border-[3px] border-black font-bold text-lg transition-colors",
+                                      "flex-1 h-11 rounded-md border border-neutral-200 text-body font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-600",
                                       inputs.spouse === num
                                         ? "bg-black text-white"
                                         : "bg-white hover:bg-gray-100",
@@ -1364,7 +1362,7 @@ export default function CalculatorPage() {
                         </div>
 
                         {/* 계산식 */}
-                        <div className="bg-neo-cyan/20 p-4 border-2 border-black space-y-2">
+                        <div className="bg-neutral-50 p-4 border border-neutral-200 rounded-md space-y-2">
                           <p className="font-bold text-sm">계산식</p>
                           <div className="text-sm space-y-1">
                             <p>본인: 1명 × 150만원 = 1,500,000원</p>
@@ -1408,7 +1406,7 @@ export default function CalculatorPage() {
                         </div>
 
                         {/* 인적공제 합계 */}
-                        <div className="bg-neo-yellow p-4 border-2 border-black">
+                        <div className="bg-warning/10 p-4 border border-warning/30 rounded-md">
                           <p className="font-bold mb-1">
                             인적공제 합계 (자동 계산)
                           </p>
@@ -1516,7 +1514,7 @@ export default function CalculatorPage() {
                         </div>
 
                         {/* 계산식 */}
-                        <div className="bg-neo-cyan/20 p-4 border-2 border-black space-y-2">
+                        <div className="bg-neutral-50 p-4 border border-neutral-200 rounded-md space-y-2">
                           <p className="font-bold text-sm">계산식</p>
                           <div className="text-sm space-y-1">
                             <p>
@@ -1538,7 +1536,7 @@ export default function CalculatorPage() {
                         </div>
 
                         {/* 4대보험 합계 */}
-                        <div className="bg-neo-yellow p-4 border-2 border-black">
+                        <div className="bg-warning/10 p-4 border border-warning/30 rounded-md">
                           <p className="font-bold mb-1">
                             4대보험 소득공제 합계
                           </p>
@@ -1739,7 +1737,7 @@ export default function CalculatorPage() {
                         </div>
 
                         {/* 계산식 */}
-                        <div className="bg-neo-cyan/20 p-4 border-2 border-black space-y-2">
+                        <div className="bg-neutral-50 p-4 border border-neutral-200 rounded-md space-y-2">
                           <p className="font-bold text-sm">계산식</p>
                           <div className="text-sm space-y-1">
                             {(() => {
@@ -1967,7 +1965,7 @@ export default function CalculatorPage() {
                         </div>
 
                         {/* 카드 소득공제 합계 */}
-                        <div className="bg-neo-yellow p-4 border-2 border-black">
+                        <div className="bg-warning/10 p-4 border border-warning/30 rounded-md">
                           <p className="font-bold mb-1">신용카드 등 소득공제</p>
                           <p className="text-2xl font-black">
                             {(() => {
@@ -2304,7 +2302,7 @@ export default function CalculatorPage() {
                         </div>
 
                         {/* 계산식 */}
-                        <div className="bg-neo-cyan/20 p-4 border-2 border-black space-y-2">
+                        <div className="bg-neutral-50 p-4 border border-neutral-200 rounded-md space-y-2">
                           <p className="font-bold text-sm">계산식</p>
                           <div className="text-sm space-y-1">
                             {(() => {
@@ -2480,7 +2478,7 @@ export default function CalculatorPage() {
                         </div>
 
                         {/* 의료비 공제 합계 */}
-                        <div className="bg-neo-yellow p-4 border-2 border-black">
+                        <div className="bg-warning/10 p-4 border border-warning/30 rounded-md">
                           <p className="font-bold mb-1">🏥 의료비 세액공제</p>
                           <p className="text-2xl font-black">
                             {(() => {
@@ -2680,7 +2678,7 @@ export default function CalculatorPage() {
                         </div>
 
                         {/* 계산식 */}
-                        <div className="bg-neo-cyan/20 p-4 border-2 border-black space-y-2">
+                        <div className="bg-neutral-50 p-4 border border-neutral-200 rounded-md space-y-2">
                           <p className="font-bold text-sm">계산식</p>
                           <div className="text-sm space-y-1">
                             {inputs.selfEducation > 0 && (
@@ -2720,7 +2718,7 @@ export default function CalculatorPage() {
                         </div>
 
                         {/* 교육비 공제 합계 */}
-                        <div className="bg-neo-yellow p-4 border-2 border-black">
+                        <div className="bg-warning/10 p-4 border border-warning/30 rounded-md">
                           <p className="font-bold mb-1">교육비 세액공제</p>
                           <p className="text-2xl font-black">
                             {formatNumber(
@@ -2848,7 +2846,7 @@ export default function CalculatorPage() {
                         </div>
 
                         {/* 계산식 */}
-                        <div className="bg-neo-cyan/20 p-4 border-2 border-black space-y-2">
+                        <div className="bg-neutral-50 p-4 border border-neutral-200 rounded-md space-y-2">
                           <p className="font-bold text-sm">계산식</p>
                           <div className="text-sm space-y-1">
                             {((inputs.housingSubscription > 0 &&
@@ -2915,7 +2913,7 @@ export default function CalculatorPage() {
                         </div>
 
                         {/* 주택자금 공제 합계 */}
-                        <div className="bg-neo-yellow p-4 border-2 border-black">
+                        <div className="bg-warning/10 p-4 border border-warning/30 rounded-md">
                           <p className="font-bold mb-1">주택자금 공제</p>
                           <p className="text-2xl font-black">
                             {formatNumber(
@@ -3168,7 +3166,7 @@ export default function CalculatorPage() {
                         </div>
 
                         {/* 계산식 */}
-                        <div className="bg-neo-cyan/20 p-4 border-2 border-black space-y-2">
+                        <div className="bg-neutral-50 p-4 border border-neutral-200 rounded-md space-y-2">
                           <p className="font-bold text-sm">계산식</p>
                           <div className="text-sm space-y-1">
                             {(inputs.pensionSavings > 0 ||
@@ -3251,7 +3249,7 @@ export default function CalculatorPage() {
                         </div>
 
                         {/* 연금계좌·보험료 공제 합계 */}
-                        <div className="bg-neo-yellow p-4 border-2 border-black">
+                        <div className="bg-warning/10 p-4 border border-warning/30 rounded-md">
                           <p className="font-bold mb-1">
                             연금계좌·보험료 세액공제
                           </p>
@@ -3508,7 +3506,7 @@ export default function CalculatorPage() {
                         </div>
 
                         {/* 계산식 */}
-                        <div className="bg-neo-cyan/20 p-4 border-2 border-black space-y-2">
+                        <div className="bg-neutral-50 p-4 border border-neutral-200 rounded-md space-y-2">
                           <p className="font-bold text-sm">계산식</p>
                           <div className="text-sm space-y-1">
                             {(() => {
@@ -3944,7 +3942,7 @@ export default function CalculatorPage() {
                         </div>
 
                         {/* 기부금 공제 합계 */}
-                        <div className="bg-neo-yellow p-4 border-2 border-black">
+                        <div className="bg-warning/10 p-4 border border-warning/30 rounded-md">
                           <p className="font-bold mb-1">💗 기부금 세액공제</p>
                           <p className="text-2xl font-black">
                             {(() => {
@@ -4331,7 +4329,7 @@ export default function CalculatorPage() {
                         </div>
 
                         {/* 계산식 */}
-                        <div className="bg-neo-cyan/20 p-4 border-2 border-black space-y-2">
+                        <div className="bg-neutral-50 p-4 border border-neutral-200 rounded-md space-y-2">
                           <p className="font-bold text-sm">계산식</p>
                           <div className="text-sm space-y-1">
                             {inputs.childrenOver8 > 0 && (
@@ -4419,7 +4417,7 @@ export default function CalculatorPage() {
                         </div>
 
                         {/* 자녀공제 합계 */}
-                        <div className="bg-neo-yellow p-4 border-2 border-black">
+                        <div className="bg-warning/10 p-4 border border-warning/30 rounded-md">
                           <p className="font-bold mb-1">👶 자녀 세액공제</p>
                           <p className="text-2xl font-black">
                             {formatNumber(
