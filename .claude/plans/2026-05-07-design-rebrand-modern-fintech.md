@@ -1,7 +1,7 @@
 ---
 plan_id: 2026-05-07-design-rebrand-modern-fintech
 title: 디자인 리뉴얼 — Modern Fintech Minimal × Korean Trust
-status: pending
+status: done
 hard_gate: full
 priority: HIGH
 created: 2026-05-07
@@ -431,11 +431,11 @@ DESIGN.md를 단일 진실원으로 두고 **토큰부터 위로 올라가는 bo
 | Phase | 태스크 | 상태 | 검증 결과 |
 |-------|--------|------|-----------|
 | 1. 토큰/폰트 | T1~T3 (3) | **done** | tsc 0 / lint 0 / globals.css·design-tokens.ts·layout.tsx 잔재 grep 0 (2026-05-07) |
-| 2. 공통 컴포넌트 | T4~T8 (5) | pending | tsc 0 에러 |
-| 3. 레이아웃 | T9~T10 (2) | pending | grep `neo-` 0건 (Nav/Footer) |
-| 4. 페이지 | T11~T23 (13) | pending | 페이지별 grep 0 + lint |
-| 5. 메타/로고 | T24~T28 (5) | pending | build 통과 + OG 시각 |
-| 6. 검증 | T29~T32 (4) | pending | lint+tsc+build+사용자 시각 회귀 |
+| 2. 공통 컴포넌트 | T4~T8 (5) | **done** | Button/Card/Input/Badge/number-format 신규, tsc 0 / lint 0 (2026-05-07) |
+| 3. 레이아웃 | T9~T10 (2) | **done** | Nav/Footer 리뉴얼, 임시 ㅌ 인라인 SVG, tsc 0 / lint 0 (2026-05-07) |
+| 4. 페이지 | T11~T23 (13) | **partial 11/13** | terms·privacy·board(목록/상세/write/edit)·login·signup·랜딩·dashboard·**admin/audit** done. **calculator+admin 미완** → follow-up plan 분리 |
+| 5. 메타/로고 | T24~T28 (5) | **done** | favicon SVG + layout.tsx icons + opengraph-image 재작성 + JsonLd/layout 4개 TAXAI 정리 (2026-05-08) |
+| 6. 검증 | T29~T32 (4) | **partial 3/4** | T29 grep: TAXAI 0건 / neo-* 잔재는 calculator+admin 한정. T30 tsc 0 / lint 0. T31 컴파일 성공(60s) / prerender는 main에도 존재하는 별도 이슈(`<Html> outside _document`, Next 15.5.15). T32 사용자 회귀 검수는 **본 plan 범위 밖** (calculator+admin 처리 후 한 번에) |
 
 ### Phase 1 단계별 기록
 
