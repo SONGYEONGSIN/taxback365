@@ -79,12 +79,12 @@ export default async function AuditPage({
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-canvas-white">
       <div className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between mb-6 flex-wrap gap-3">
           <div className="min-w-0">
-            <h1 className="text-h1 text-foreground">감사 로그</h1>
-            <p className="text-body-sm text-neutral-500 mt-1">
+            <h1 className="text-h1 text-ink-black">감사 로그</h1>
+            <p className="text-body-sm text-shadow-gray mt-1">
               보안·관리 이벤트 기록 ({totalCount.toLocaleString()}건)
             </p>
           </div>
@@ -105,7 +105,7 @@ export default async function AuditPage({
             name="action"
             defaultValue={filterAction ?? ""}
             placeholder="action 필터 (예: login.success)"
-            className="flex-1 min-w-[200px] h-11 rounded-md border border-neutral-200 bg-card px-3.5 text-body text-foreground placeholder:text-neutral-300 hover:border-neutral-300 focus-visible:outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary-600/25"
+            className="flex-1 min-w-[200px] h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30"
           />
           <Button type="submit" variant="primary" size="md">
             필터
@@ -119,23 +119,23 @@ export default async function AuditPage({
           )}
         </form>
 
-        <div className="rounded-lg border border-neutral-200 bg-card overflow-x-auto">
+        <div className="rounded-lg border border-border-light bg-canvas-white overflow-x-auto">
           <table className="w-full">
             <thead>
-              <tr className="bg-neutral-50 border-b border-neutral-200">
-                <th className="py-3 px-3 text-left text-caption font-semibold text-neutral-500 uppercase tracking-[0.06em] whitespace-nowrap">
+              <tr className="bg-subtle-ash border-b border-border-light">
+                <th className="py-3 px-3 text-left text-caption font-semibold text-shadow-gray uppercase tracking-[0.06em] whitespace-nowrap">
                   시각
                 </th>
-                <th className="py-3 px-3 text-left text-caption font-semibold text-neutral-500 uppercase tracking-[0.06em] whitespace-nowrap">
+                <th className="py-3 px-3 text-left text-caption font-semibold text-shadow-gray uppercase tracking-[0.06em] whitespace-nowrap">
                   사용자
                 </th>
-                <th className="py-3 px-3 text-left text-caption font-semibold text-neutral-500 uppercase tracking-[0.06em] whitespace-nowrap">
+                <th className="py-3 px-3 text-left text-caption font-semibold text-shadow-gray uppercase tracking-[0.06em] whitespace-nowrap">
                   Action
                 </th>
-                <th className="py-3 px-3 text-left text-caption font-semibold text-neutral-500 uppercase tracking-[0.06em] whitespace-nowrap hidden md:table-cell">
+                <th className="py-3 px-3 text-left text-caption font-semibold text-shadow-gray uppercase tracking-[0.06em] whitespace-nowrap hidden md:table-cell">
                   Target
                 </th>
-                <th className="py-3 px-3 text-left text-caption font-semibold text-neutral-500 uppercase tracking-[0.06em] whitespace-nowrap hidden lg:table-cell">
+                <th className="py-3 px-3 text-left text-caption font-semibold text-shadow-gray uppercase tracking-[0.06em] whitespace-nowrap hidden lg:table-cell">
                   IP
                 </th>
               </tr>
@@ -145,7 +145,7 @@ export default async function AuditPage({
                 <tr>
                   <td
                     colSpan={5}
-                    className="py-12 text-center text-body-sm text-neutral-500"
+                    className="py-12 text-center text-body-sm text-shadow-gray"
                   >
                     기록 없음
                   </td>
@@ -154,21 +154,21 @@ export default async function AuditPage({
                 logs.map((log) => (
                   <tr
                     key={log.id}
-                    className="border-b border-neutral-200 last:border-b-0 hover:bg-neutral-50 transition-colors"
+                    className="border-b border-border-light last:border-b-0 hover:bg-subtle-ash transition-colors"
                   >
-                    <td className="py-2 px-3 whitespace-nowrap text-caption text-neutral-700 font-mono tabular-nums">
+                    <td className="py-2 px-3 whitespace-nowrap text-caption text-thunder-gray font-mono tabular-nums">
                       {formatTime(log.created_at)}
                     </td>
-                    <td className="py-2 px-3 whitespace-nowrap text-body-sm text-foreground">
+                    <td className="py-2 px-3 whitespace-nowrap text-body-sm text-ink-black">
                       {log.user_email ?? "—"}
                     </td>
-                    <td className="py-2 px-3 whitespace-nowrap text-caption font-mono text-foreground">
+                    <td className="py-2 px-3 whitespace-nowrap text-caption font-mono text-ink-black">
                       {log.action}
                     </td>
-                    <td className="py-2 px-3 text-caption text-neutral-700 hidden md:table-cell">
+                    <td className="py-2 px-3 text-caption text-thunder-gray hidden md:table-cell">
                       {log.target ?? "—"}
                     </td>
-                    <td className="py-2 px-3 whitespace-nowrap text-caption text-neutral-500 font-mono tabular-nums hidden lg:table-cell">
+                    <td className="py-2 px-3 whitespace-nowrap text-caption text-shadow-gray font-mono tabular-nums hidden lg:table-cell">
                       {log.ip_address ?? "—"}
                     </td>
                   </tr>
@@ -180,7 +180,7 @@ export default async function AuditPage({
 
         {totalPages > 1 && (
           <div className="mt-6 flex items-center justify-between flex-wrap gap-3">
-            <p className="text-body-sm text-neutral-500">
+            <p className="text-body-sm text-shadow-gray">
               <span className="font-mono tabular-nums">{page}</span> /{" "}
               <span className="font-mono tabular-nums">{totalPages}</span>{" "}
               페이지

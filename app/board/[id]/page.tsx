@@ -90,8 +90,8 @@ export default function BoardDetailPage({
     return (
       <div className="flex items-center justify-center min-h-[50vh]">
         <div className="flex flex-col items-center gap-3">
-          <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin" />
-          <span className="text-body-sm text-neutral-500">불러오는 중…</span>
+          <div className="w-8 h-8 border-2 border-ink-black border-t-transparent rounded-full animate-spin" />
+          <span className="text-body-sm text-shadow-gray">불러오는 중…</span>
         </div>
       </div>
     );
@@ -100,7 +100,7 @@ export default function BoardDetailPage({
   if (!post) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[50vh] gap-4 max-w-[760px] mx-auto">
-        <p className="text-h2 text-foreground">게시글을 찾을 수 없습니다</p>
+        <p className="text-h2 text-ink-black">게시글을 찾을 수 없습니다</p>
         <Link href="/board">
           <Button variant="secondary" size="md">
             <ArrowLeft size={16} strokeWidth={1.75} />
@@ -129,21 +129,21 @@ export default function BoardDetailPage({
           {post.is_pinned && (
             <Pin
               size={18}
-              className="text-mint-dark mt-1 flex-shrink-0"
+              className="text-fresh-green mt-1 flex-shrink-0"
               strokeWidth={2}
             />
           )}
           <Badge variant={variant}>{post.category}</Badge>
-          <h1 className="text-h1 text-foreground break-words w-full">
+          <h1 className="text-h1 text-ink-black break-words w-full">
             {post.title}
           </h1>
         </div>
 
         {/* Meta Info */}
-        <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-caption text-neutral-500 border-b border-neutral-200 pb-4">
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-caption text-shadow-gray border-b border-border-light pb-4">
           <span className="inline-flex items-center gap-1.5">
             <User size={12} strokeWidth={1.75} />
-            <span className="text-foreground font-medium">
+            <span className="text-ink-black font-medium">
               {post.author_name}
             </span>
           </span>
@@ -156,7 +156,7 @@ export default function BoardDetailPage({
             조회 <span className="font-mono tabular-nums">{post.views}</span>
           </span>
           {post.is_public === false && (
-            <span className="inline-flex items-center gap-1.5 text-warning">
+            <span className="inline-flex items-center gap-1.5 text-warm-orange">
               <Lock size={12} strokeWidth={1.75} />
               비공개
             </span>
@@ -164,7 +164,7 @@ export default function BoardDetailPage({
         </div>
 
         {/* Content */}
-        <div className="mt-6 min-h-[200px] whitespace-pre-wrap text-body text-foreground leading-[1.7]">
+        <div className="mt-6 min-h-[200px] whitespace-pre-wrap text-body text-ink-black leading-[1.7]">
           {post.content}
         </div>
       </Card>

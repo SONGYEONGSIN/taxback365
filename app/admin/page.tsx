@@ -2296,7 +2296,7 @@ export default function AdminPage() {
         <div
           className={clsx(
             "fixed bottom-20 left-1/2 -translate-x-1/2 z-50 flex items-center gap-3 px-6 py-3 border-2 border-black shadow-md animate-fade-in md:bottom-28",
-            notification.type === "success" ? "bg-mint" : "bg-primary",
+            notification.type === "success" ? "bg-fresh-green" : "bg-ink-black",
           )}
         >
           {notification.type === "success" ? (
@@ -2313,7 +2313,7 @@ export default function AdminPage() {
         typeof document !== "undefined" &&
         createPortal(
           <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/80">
-            <div className="bg-white border border-neutral-200 p-6 max-w-md w-full mx-4 shadow-lg">
+            <div className="bg-white border border-border-light p-6 max-w-md w-full mx-4 shadow-lg">
               <div className="flex justify-between items-center mb-4">
                 <h3 className="text-lg font-black">수동 항목 추가</h3>
                 <button
@@ -2325,7 +2325,7 @@ export default function AdminPage() {
                   className={clsx(
                     "p-2 border-2 border-black shadow-sm transition-all",
                     clickedBtn === "modalClose"
-                      ? "bg-primary translate-x-[2px] translate-y-[2px] shadow-none"
+                      ? "bg-ink-black translate-x-[2px] translate-y-[2px] shadow-none"
                       : "bg-white hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-sm",
                   )}
                 >
@@ -2337,7 +2337,7 @@ export default function AdminPage() {
                 <div>
                   <label className="block font-bold mb-2">월 선택</label>
                   <select
-                    className="w-full h-11 rounded-md border border-neutral-200 bg-card px-3.5 text-body text-foreground placeholder:text-neutral-300 hover:border-neutral-300 focus-visible:outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary-600/25 transition-colors"
+                    className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
                     value={newItemMonth}
                     onChange={(e) => setNewItemMonth(parseInt(e.target.value))}
                   >
@@ -2351,7 +2351,7 @@ export default function AdminPage() {
                 <div>
                   <label className="block font-bold mb-2">항목명</label>
                   <select
-                    className="w-full h-11 rounded-md border border-neutral-200 bg-card px-3.5 text-body text-foreground placeholder:text-neutral-300 hover:border-neutral-300 focus-visible:outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary-600/25 transition-colors"
+                    className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
                     value={newItemName}
                     onChange={(e) => setNewItemName(e.target.value)}
                   >
@@ -2494,7 +2494,7 @@ export default function AdminPage() {
                   <label className="block font-bold mb-2">금액 (원)</label>
                   <input
                     type="text"
-                    className="w-full h-11 rounded-md border border-neutral-200 bg-card px-3.5 text-body text-foreground placeholder:text-neutral-300 hover:border-neutral-300 focus-visible:outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary-600/25 transition-colors"
+                    className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
                     placeholder="예: 500,000"
                     value={newItemAmount}
                     onChange={(e) => {
@@ -2522,7 +2522,7 @@ export default function AdminPage() {
                   className={clsx(
                     "flex-1 py-3 font-bold border-2 border-black shadow-md transition-all",
                     clickedBtn === "modalCancel"
-                      ? "bg-primary translate-x-[4px] translate-y-[4px] shadow-none"
+                      ? "bg-ink-black translate-x-[4px] translate-y-[4px] shadow-none"
                       : "bg-white hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-md",
                   )}
                 >
@@ -2533,8 +2533,8 @@ export default function AdminPage() {
                   className={clsx(
                     "flex-1 py-3 font-bold border-2 border-black shadow-md transition-all",
                     clickedBtn === "modalAdd"
-                      ? "bg-primary translate-x-[4px] translate-y-[4px] shadow-none"
-                      : "bg-mint hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-md",
+                      ? "bg-ink-black translate-x-[4px] translate-y-[4px] shadow-none"
+                      : "bg-fresh-green hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-md",
                   )}
                 >
                   추가
@@ -2550,7 +2550,7 @@ export default function AdminPage() {
         typeof document !== "undefined" &&
         createPortal(
           <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/80">
-            <div className="bg-white border border-neutral-200 p-6 max-w-2xl w-full mx-4 shadow-lg max-h-[80vh] overflow-y-auto">
+            <div className="bg-white border border-border-light p-6 max-w-2xl w-full mx-4 shadow-lg max-h-[80vh] overflow-y-auto">
               <div className="flex justify-between items-center mb-4 pb-4 border-b-2 border-black">
                 <h3 className="text-xl font-black">이미지 업로드 (OCR)</h3>
                 <button
@@ -2560,7 +2560,7 @@ export default function AdminPage() {
                   className={clsx(
                     "p-2 border-2 border-black shadow-sm transition-all",
                     clickedBtn === "ocrModalClose"
-                      ? "bg-primary translate-x-[2px] translate-y-[2px] shadow-none"
+                      ? "bg-ink-black translate-x-[2px] translate-y-[2px] shadow-none"
                       : "bg-white hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-sm",
                   )}
                 >
@@ -2601,12 +2601,12 @@ export default function AdminPage() {
                       "flex-1 py-3 font-bold border-2 border-black transition-all",
                       ocrCardType === type
                         ? clickedBtn === btnId
-                          ? "bg-mint translate-x-[3px] translate-y-[3px] shadow-none"
-                          : "bg-mint shadow-sm"
+                          ? "bg-fresh-green translate-x-[3px] translate-y-[3px] shadow-none"
+                          : "bg-fresh-green shadow-sm"
                         : capturedImages.length > 0
                           ? "bg-gray-200 cursor-not-allowed opacity-50"
                           : clickedBtn === btnId
-                            ? "bg-warning/15 translate-x-[2px] translate-y-[2px] shadow-none"
+                            ? "bg-highlight-orange/30 translate-x-[2px] translate-y-[2px] shadow-none"
                             : "bg-white hover:bg-gray-100 shadow-sm",
                     )}
                   >
@@ -2620,7 +2620,7 @@ export default function AdminPage() {
                 className={clsx(
                   "min-h-[200px] mb-6 border-2 border-dashed flex flex-col items-center justify-center cursor-pointer transition-all",
                   isDragging
-                    ? "border-mint bg-mint/20 scale-[1.02]"
+                    ? "border-fresh-green bg-highlight-green/30 scale-[1.02]"
                     : "border-gray-400 bg-gray-50 hover:bg-gray-100",
                 )}
                 onDrop={handleDrop}
@@ -2662,9 +2662,9 @@ export default function AdminPage() {
                       <div className="flex items-center justify-center gap-2 mt-3">
                         <RefreshCw
                           size={16}
-                          className="animate-spin text-mint-dark"
+                          className="animate-spin text-fresh-green"
                         />
-                        <span className="text-sm font-bold text-mint-dark">
+                        <span className="text-sm font-bold text-fresh-green">
                           AI 분석 중...
                         </span>
                       </div>
@@ -2683,7 +2683,7 @@ export default function AdminPage() {
                         e.stopPropagation();
                         ocrImageInputRef.current?.click();
                       }}
-                      className="px-4 py-2 bg-mint font-bold border-2 border-black shadow-sm hover:shadow-md transition-all"
+                      className="px-4 py-2 bg-fresh-green font-bold border-2 border-black shadow-sm hover:shadow-md transition-all"
                     >
                       파일 선택
                     </button>
@@ -2786,7 +2786,7 @@ export default function AdminPage() {
                   </div>
 
                   {/* 카테고리별 합계 */}
-                  <div className="mt-3 p-3 bg-warning/15 border-2 border-black space-y-1">
+                  <div className="mt-3 p-3 bg-highlight-orange/30 border-2 border-black space-y-1">
                     {Object.entries(
                       ocrPreviewItems.reduce(
                         (acc, item) => {
@@ -2818,8 +2818,8 @@ export default function AdminPage() {
 
                   {/* 중복 항목 표시 */}
                   {ocrDuplicateItems.length > 0 && (
-                    <div className="mt-3 p-3 bg-primary/10 border-2 border-primary text-sm">
-                      <p className="font-bold text-primary mb-2">
+                    <div className="mt-3 p-3 bg-ink-black/10 border-2 border-ink-black text-sm">
+                      <p className="font-bold text-ink-black mb-2">
                         ⚠️ 중복 이미지 감지됨
                       </p>
                       {[
@@ -2885,7 +2885,7 @@ export default function AdminPage() {
                   className={clsx(
                     "px-4 py-2 font-bold border-2 border-black shadow-sm transition-all",
                     clickedBtn === "ocrCancel"
-                      ? "bg-primary translate-x-[3px] translate-y-[3px] shadow-none"
+                      ? "bg-ink-black translate-x-[3px] translate-y-[3px] shadow-none"
                       : "bg-white hover:shadow-md",
                   )}
                 >
@@ -2897,7 +2897,7 @@ export default function AdminPage() {
                   className={clsx(
                     "px-4 py-2 font-bold border-2 border-black shadow-sm transition-all",
                     ocrPreviewItems.length > 0
-                      ? "bg-mint hover:shadow-md"
+                      ? "bg-fresh-green hover:shadow-md"
                       : "bg-gray-200 cursor-not-allowed opacity-50",
                   )}
                 >
@@ -2916,7 +2916,7 @@ export default function AdminPage() {
         typeof document !== "undefined" &&
         createPortal(
           <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/80">
-            <div className="bg-white border border-neutral-200 p-4 max-w-2xl w-full mx-4 shadow-lg">
+            <div className="bg-white border border-border-light p-4 max-w-2xl w-full mx-4 shadow-lg">
               <div className="flex justify-between items-center mb-4">
                 <div>
                   <h3 className="text-lg font-black flex items-center gap-2">
@@ -2931,7 +2931,7 @@ export default function AdminPage() {
                   className={clsx(
                     "p-2 border-2 border-black shadow-sm transition-all",
                     clickedBtn === "excelModalClose"
-                      ? "bg-primary translate-x-[2px] translate-y-[2px] shadow-none"
+                      ? "bg-ink-black translate-x-[2px] translate-y-[2px] shadow-none"
                       : "bg-white hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-sm",
                   )}
                 >
@@ -2943,7 +2943,7 @@ export default function AdminPage() {
               <div className="mb-4">
                 <label className="block font-bold mb-2">적용할 월 선택</label>
                 <select
-                  className="w-full h-11 rounded-md border border-neutral-200 bg-card px-3.5 text-body text-foreground placeholder:text-neutral-300 hover:border-neutral-300 focus-visible:outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary-600/25 transition-colors"
+                  className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
                   value={excelModalMonth}
                   onChange={(e) => setExcelModalMonth(parseInt(e.target.value))}
                 >
@@ -2960,7 +2960,7 @@ export default function AdminPage() {
                 className={clsx(
                   "min-h-[180px] mb-4 border-2 border-dashed rounded-lg flex flex-col items-center justify-center cursor-pointer transition-all",
                   isExcelDragging
-                    ? "border-mint bg-mint/20 scale-[1.02]"
+                    ? "border-fresh-green bg-highlight-green/30 scale-[1.02]"
                     : "border-gray-400 bg-gray-50 hover:bg-gray-100",
                 )}
                 onDrop={handleExcelDrop}
@@ -3011,7 +3011,7 @@ export default function AdminPage() {
                     </button>
                     <button
                       onClick={handleExcelApply}
-                      className="flex-1 py-3 font-bold border-2 border-black bg-mint hover:bg-cyan-300"
+                      className="flex-1 py-3 font-bold border-2 border-black bg-fresh-green hover:bg-cyan-300"
                     >
                       적용하기
                     </button>
@@ -3026,8 +3026,8 @@ export default function AdminPage() {
                     className={clsx(
                       "w-full py-3 font-bold border-2 border-black shadow-md transition-all",
                       clickedBtn === "excelFileSelect"
-                        ? "bg-primary translate-x-[4px] translate-y-[4px] shadow-none"
-                        : "bg-mint hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-md",
+                        ? "bg-ink-black translate-x-[4px] translate-y-[4px] shadow-none"
+                        : "bg-fresh-green hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-md",
                     )}
                   >
                     📁 파일 선택
@@ -3055,7 +3055,7 @@ export default function AdminPage() {
                 selectedYear === year
                   ? "bg-black text-white translate-x-[4px] translate-y-[4px] shadow-none"
                   : clickedBtn === `year-${year}`
-                    ? "bg-primary translate-x-[4px] translate-y-[4px] shadow-none"
+                    ? "bg-ink-black translate-x-[4px] translate-y-[4px] shadow-none"
                     : "bg-white hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-md",
               )}
             >
@@ -3068,10 +3068,10 @@ export default function AdminPage() {
       {/* Monthly Data Grid */}
       <div className="space-y-8">
         {/* Salary Section */}
-        <div className="bg-white border border-neutral-200 p-4 md:p-6 shadow-md md:shadow-lg">
+        <div className="bg-white border border-border-light p-4 md:p-6 shadow-md md:shadow-lg">
           <div className="flex flex-col md:flex-row justify-between items-start gap-4 mb-6">
             <div className="flex items-center gap-3">
-              <div className="bg-mint p-2 border-2 border-black">
+              <div className="bg-fresh-green p-2 border-2 border-black">
                 <DollarSign size={24} />
               </div>
               <div>
@@ -3102,8 +3102,8 @@ export default function AdminPage() {
                 className={clsx(
                   "px-3 py-2 text-xs font-bold border-2 border-black shadow-sm transition-all",
                   clickedBtn === "copy1to3"
-                    ? "bg-primary translate-x-[3px] translate-y-[3px] shadow-none"
-                    : "bg-warning/15 hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-md",
+                    ? "bg-ink-black translate-x-[3px] translate-y-[3px] shadow-none"
+                    : "bg-highlight-orange/30 hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-md",
                 )}
               >
                 1~3월 동일 적용
@@ -3128,8 +3128,8 @@ export default function AdminPage() {
                 className={clsx(
                   "px-3 py-2 text-xs font-bold border-2 border-black shadow-sm transition-all",
                   clickedBtn === "copy3to12"
-                    ? "bg-primary translate-x-[3px] translate-y-[3px] shadow-none"
-                    : "bg-danger/10 hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-md",
+                    ? "bg-ink-black translate-x-[3px] translate-y-[3px] shadow-none"
+                    : "bg-highlight-orange/30 hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-md",
                 )}
               >
                 4~12월 동일 적용
@@ -3151,7 +3151,7 @@ export default function AdminPage() {
                   selectedMonth === month
                     ? "bg-black text-white shadow-none"
                     : clickedBtn === `month-${month}`
-                      ? "bg-mint translate-x-[2px] translate-y-[2px] shadow-none"
+                      ? "bg-fresh-green translate-x-[2px] translate-y-[2px] shadow-none"
                       : "bg-white shadow-sm hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-md",
                 )}
               >
@@ -3165,7 +3165,7 @@ export default function AdminPage() {
               <label className="block font-bold mb-2">월급여 (세전)</label>
               <input
                 type="text"
-                className="w-full h-11 rounded-md border border-neutral-200 bg-card px-3.5 text-body text-foreground placeholder:text-neutral-300 hover:border-neutral-300 focus-visible:outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary-600/25 transition-colors"
+                className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
                 value={monthlySalary[selectedMonth]?.totalSalary || "0"}
                 onChange={(e) =>
                   handleSalaryInputChange("totalSalary", e.target.value)
@@ -3176,7 +3176,7 @@ export default function AdminPage() {
               <label className="block font-bold mb-2">비과세 식대</label>
               <input
                 type="text"
-                className="w-full h-11 rounded-md border border-neutral-200 bg-card px-3.5 text-body text-foreground placeholder:text-neutral-300 hover:border-neutral-300 focus-visible:outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary-600/25 transition-colors"
+                className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
                 value={monthlySalary[selectedMonth]?.mealAllowance || "0"}
                 onChange={(e) =>
                   handleSalaryInputChange("mealAllowance", e.target.value)
@@ -3187,7 +3187,7 @@ export default function AdminPage() {
               <label className="block font-bold mb-2">국민연금</label>
               <input
                 type="text"
-                className="w-full h-11 rounded-md border border-neutral-200 bg-card px-3.5 text-body text-foreground placeholder:text-neutral-300 hover:border-neutral-300 focus-visible:outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary-600/25 transition-colors"
+                className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
                 value={monthlySalary[selectedMonth]?.nationalPension || "0"}
                 onChange={(e) =>
                   handleSalaryInputChange("nationalPension", e.target.value)
@@ -3198,7 +3198,7 @@ export default function AdminPage() {
               <label className="block font-bold mb-2">건강보험</label>
               <input
                 type="text"
-                className="w-full h-11 rounded-md border border-neutral-200 bg-card px-3.5 text-body text-foreground placeholder:text-neutral-300 hover:border-neutral-300 focus-visible:outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary-600/25 transition-colors"
+                className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
                 value={monthlySalary[selectedMonth]?.healthInsurance || "0"}
                 onChange={(e) =>
                   handleSalaryInputChange("healthInsurance", e.target.value)
@@ -3209,7 +3209,7 @@ export default function AdminPage() {
               <label className="block font-bold mb-2">노인장기요양보험</label>
               <input
                 type="text"
-                className="w-full h-11 rounded-md border border-neutral-200 bg-card px-3.5 text-body text-foreground placeholder:text-neutral-300 hover:border-neutral-300 focus-visible:outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary-600/25 transition-colors"
+                className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
                 value={monthlySalary[selectedMonth]?.longTermCare || "0"}
                 onChange={(e) =>
                   handleSalaryInputChange("longTermCare", e.target.value)
@@ -3220,7 +3220,7 @@ export default function AdminPage() {
               <label className="block font-bold mb-2">고용보험</label>
               <input
                 type="text"
-                className="w-full h-11 rounded-md border border-neutral-200 bg-card px-3.5 text-body text-foreground placeholder:text-neutral-300 hover:border-neutral-300 focus-visible:outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary-600/25 transition-colors"
+                className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
                 value={monthlySalary[selectedMonth]?.employmentInsurance || "0"}
                 onChange={(e) =>
                   handleSalaryInputChange("employmentInsurance", e.target.value)
@@ -3231,7 +3231,7 @@ export default function AdminPage() {
               <label className="block font-bold mb-2">상여금</label>
               <input
                 type="text"
-                className="w-full h-11 rounded-md border border-neutral-200 bg-card px-3.5 text-body text-foreground placeholder:text-neutral-300 hover:border-neutral-300 focus-visible:outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary-600/25 transition-colors"
+                className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
                 value={monthlySalary[selectedMonth]?.bonus || "0"}
                 onChange={(e) =>
                   handleSalaryInputChange("bonus", e.target.value)
@@ -3242,7 +3242,7 @@ export default function AdminPage() {
               <label className="block font-bold mb-2">자녀학자금</label>
               <input
                 type="text"
-                className="w-full h-11 rounded-md border border-neutral-200 bg-card px-3.5 text-body text-foreground placeholder:text-neutral-300 hover:border-neutral-300 focus-visible:outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary-600/25 transition-colors"
+                className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
                 value={monthlySalary[selectedMonth]?.childTuition || "0"}
                 onChange={(e) =>
                   handleSalaryInputChange("childTuition", e.target.value)
@@ -3255,7 +3255,7 @@ export default function AdminPage() {
               </label>
               <input
                 type="text"
-                className="w-full h-11 rounded-md border border-neutral-200 bg-card px-3.5 text-body text-foreground placeholder:text-neutral-300 hover:border-neutral-300 focus-visible:outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary-600/25 transition-colors"
+                className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
                 value={monthlySalary[selectedMonth]?.prepaidTax || "0"}
                 onChange={(e) =>
                   handleSalaryInputChange("prepaidTax", e.target.value)
@@ -3268,7 +3268,7 @@ export default function AdminPage() {
               </label>
               <input
                 type="text"
-                className="w-full h-11 rounded-md border border-neutral-200 bg-card px-3.5 text-body text-foreground placeholder:text-neutral-300 hover:border-neutral-300 focus-visible:outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary-600/25 transition-colors"
+                className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
                 value={monthlySalary[selectedMonth]?.localIncomeTax || "0"}
                 onChange={(e) =>
                   handleSalaryInputChange("localIncomeTax", e.target.value)
@@ -3279,9 +3279,9 @@ export default function AdminPage() {
         </div>
 
         {/* Family Info Section */}
-        <div className="bg-white border border-neutral-200 p-4 md:p-6 shadow-md md:shadow-lg">
+        <div className="bg-white border border-border-light p-4 md:p-6 shadow-md md:shadow-lg">
           <div className="flex items-center gap-3 mb-6">
-            <div className="bg-warning/15 p-2 border-2 border-black">
+            <div className="bg-highlight-orange/30 p-2 border-2 border-black">
               <Users size={24} />
             </div>
             <div>
@@ -3294,7 +3294,7 @@ export default function AdminPage() {
 
           {/* 기본공제 섹션 */}
           <div className="mb-6">
-            <h4 className="text-base font-black mb-3 px-2 py-1 bg-mint border-2 border-black inline-block">
+            <h4 className="text-base font-black mb-3 px-2 py-1 bg-fresh-green border-2 border-black inline-block">
               기본공제
             </h4>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -3311,7 +3311,7 @@ export default function AdminPage() {
                         }))
                       }
                       className={clsx(
-                        "flex-1 p-3 border border-neutral-200 font-bold text-lg transition-colors",
+                        "flex-1 p-3 border border-border-light font-bold text-lg transition-colors",
                         familyData.spouse === hasSpouse
                           ? "bg-black text-white"
                           : "bg-white hover:bg-gray-100",
@@ -3330,7 +3330,7 @@ export default function AdminPage() {
                   type="number"
                   min="0"
                   max="10"
-                  className="w-full h-11 rounded-md border border-neutral-200 bg-card px-3.5 text-body text-foreground placeholder:text-neutral-300 hover:border-neutral-300 focus-visible:outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary-600/25 transition-colors"
+                  className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
                   value={familyData.children}
                   onChange={(e) =>
                     setFamilyData((prev) => ({
@@ -3349,7 +3349,7 @@ export default function AdminPage() {
                   type="number"
                   min="0"
                   max="10"
-                  className="w-full h-11 rounded-md border border-neutral-200 bg-card px-3.5 text-body text-foreground placeholder:text-neutral-300 hover:border-neutral-300 focus-visible:outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary-600/25 transition-colors"
+                  className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
                   value={familyData.parents}
                   onChange={(e) =>
                     setFamilyData((prev) => ({
@@ -3365,7 +3365,7 @@ export default function AdminPage() {
                   type="number"
                   min="0"
                   max="10"
-                  className="w-full h-11 rounded-md border border-neutral-200 bg-card px-3.5 text-body text-foreground placeholder:text-neutral-300 hover:border-neutral-300 focus-visible:outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary-600/25 transition-colors"
+                  className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
                   value={familyData.siblings}
                   onChange={(e) =>
                     setFamilyData((prev) => ({
@@ -3383,7 +3383,7 @@ export default function AdminPage() {
                   type="number"
                   min="0"
                   max="10"
-                  className="w-full h-11 rounded-md border border-neutral-200 bg-card px-3.5 text-body text-foreground placeholder:text-neutral-300 hover:border-neutral-300 focus-visible:outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary-600/25 transition-colors"
+                  className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
                   value={familyData.foster}
                   onChange={(e) =>
                     setFamilyData((prev) => ({
@@ -3399,7 +3399,7 @@ export default function AdminPage() {
                   type="number"
                   min="0"
                   max="10"
-                  className="w-full h-11 rounded-md border border-neutral-200 bg-card px-3.5 text-body text-foreground placeholder:text-neutral-300 hover:border-neutral-300 focus-visible:outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary-600/25 transition-colors"
+                  className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
                   value={familyData.recipient}
                   onChange={(e) =>
                     setFamilyData((prev) => ({
@@ -3414,7 +3414,7 @@ export default function AdminPage() {
 
           {/* 세액공제 섹션 */}
           <div className="mb-6">
-            <h4 className="text-base font-black mb-3 px-2 py-1 bg-warning/15 border-2 border-black inline-block">
+            <h4 className="text-base font-black mb-3 px-2 py-1 bg-highlight-orange/30 border-2 border-black inline-block">
               세액공제
             </h4>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -3426,7 +3426,7 @@ export default function AdminPage() {
                   type="number"
                   min="0"
                   max="10"
-                  className="w-full h-11 rounded-md border border-neutral-200 bg-card px-3.5 text-body text-foreground placeholder:text-neutral-300 hover:border-neutral-300 focus-visible:outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary-600/25 transition-colors"
+                  className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
                   value={familyData.childrenOver8}
                   onChange={(e) =>
                     setFamilyData((prev) => ({
@@ -3439,7 +3439,7 @@ export default function AdminPage() {
               <div>
                 <label className="block font-bold mb-2">출생·입양자</label>
                 <select
-                  className="w-full h-11 rounded-md border border-neutral-200 bg-card px-3.5 text-body text-foreground placeholder:text-neutral-300 hover:border-neutral-300 focus-visible:outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary-600/25 transition-colors"
+                  className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
                   value={familyData.birthAdoption}
                   onChange={(e) =>
                     setFamilyData((prev) => ({
@@ -3467,7 +3467,7 @@ export default function AdminPage() {
 
           {/* 비과세 섹션 */}
           <div>
-            <h4 className="text-base font-black mb-3 px-2 py-1 bg-danger/10 border-2 border-black inline-block">
+            <h4 className="text-base font-black mb-3 px-2 py-1 bg-highlight-orange/30 border-2 border-black inline-block">
               비과세
             </h4>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -3479,7 +3479,7 @@ export default function AdminPage() {
                   type="number"
                   min="0"
                   max="10"
-                  className="w-full h-11 rounded-md border border-neutral-200 bg-card px-3.5 text-body text-foreground placeholder:text-neutral-300 hover:border-neutral-300 focus-visible:outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary-600/25 transition-colors"
+                  className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
                   value={familyData.childrenUnder6}
                   onChange={(e) =>
                     setFamilyData((prev) => ({
@@ -3497,10 +3497,10 @@ export default function AdminPage() {
         </div>
 
         {/* Spending Section */}
-        <div className="bg-white border border-neutral-200 p-4 md:p-6 shadow-md md:shadow-lg">
+        <div className="bg-white border border-border-light p-4 md:p-6 shadow-md md:shadow-lg">
           <div className="flex flex-col md:flex-row justify-between items-start gap-4 mb-4">
             <div className="flex items-center gap-3">
-              <div className="bg-primary p-2 border-2 border-black">
+              <div className="bg-ink-black p-2 border-2 border-black">
                 <CreditCard size={24} />
               </div>
               <div>
@@ -3517,7 +3517,7 @@ export default function AdminPage() {
                 className={clsx(
                   "flex-1 md:flex-none flex items-center justify-center gap-2 px-3 md:px-4 py-2 border-2 border-black font-bold text-xs md:text-sm shadow-md transition-all",
                   clickedBtn === "excel"
-                    ? "bg-primary translate-x-[4px] translate-y-[4px] shadow-none"
+                    ? "bg-ink-black translate-x-[4px] translate-y-[4px] shadow-none"
                     : "bg-white hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-md",
                 )}
               >
@@ -3535,8 +3535,8 @@ export default function AdminPage() {
                 className={clsx(
                   "flex-1 md:flex-none flex items-center justify-center gap-2 px-3 md:px-4 py-2 border-2 border-black font-bold text-xs md:text-sm shadow-md transition-all",
                   clickedBtn === "ocr"
-                    ? "bg-primary translate-x-[4px] translate-y-[4px] shadow-none"
-                    : "bg-warning/15 hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-md",
+                    ? "bg-ink-black translate-x-[4px] translate-y-[4px] shadow-none"
+                    : "bg-highlight-orange/30 hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-md",
                 )}
               >
                 <Upload size={14} className="md:w-4 md:h-4" /> OCR
@@ -3553,7 +3553,7 @@ export default function AdminPage() {
                 className={clsx(
                   "flex-1 md:flex-none flex items-center justify-center gap-2 px-3 md:px-4 py-2 border-2 border-black font-bold text-xs md:text-sm shadow-md transition-all",
                   clickedBtn === "sync"
-                    ? "bg-mint translate-x-[4px] translate-y-[4px] shadow-none"
+                    ? "bg-fresh-green translate-x-[4px] translate-y-[4px] shadow-none"
                     : "bg-black text-white hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-md",
                 )}
               >
@@ -3584,7 +3584,7 @@ export default function AdminPage() {
                   selectedSpendingMonth === month
                     ? "bg-black text-white shadow-none"
                     : clickedBtn === `spending-month-${month}`
-                      ? "bg-mint translate-x-[2px] translate-y-[2px] shadow-none"
+                      ? "bg-fresh-green translate-x-[2px] translate-y-[2px] shadow-none"
                       : "bg-white shadow-sm hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-md",
                 )}
               >
@@ -3655,7 +3655,7 @@ export default function AdminPage() {
             className={clsx(
               "w-full mt-6 py-3 border-2 border-dashed font-bold transition-all flex items-center justify-center gap-2",
               clickedBtn === "addItem"
-                ? "border-black bg-warning/15 text-black"
+                ? "border-black bg-highlight-orange/30 text-black"
                 : "border-gray-300 text-gray-400 hover:border-black hover:text-black hover:bg-gray-50",
             )}
           >
@@ -3670,7 +3670,7 @@ export default function AdminPage() {
           className={clsx(
             "px-6 py-3 font-bold border-2 border-black shadow-md transition-all",
             clickedBtn === "cancel"
-              ? "bg-primary translate-x-[4px] translate-y-[4px] shadow-none"
+              ? "bg-ink-black translate-x-[4px] translate-y-[4px] shadow-none"
               : "bg-white hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-md",
           )}
         >
@@ -3681,8 +3681,8 @@ export default function AdminPage() {
           className={clsx(
             "px-6 py-3 font-bold border-2 border-black shadow-md transition-all",
             clickedBtn === "save"
-              ? "bg-primary translate-x-[4px] translate-y-[4px] shadow-none"
-              : "bg-mint hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-md",
+              ? "bg-ink-black translate-x-[4px] translate-y-[4px] shadow-none"
+              : "bg-fresh-green hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-md",
           )}
         >
           저장하기
@@ -3694,7 +3694,7 @@ export default function AdminPage() {
         typeof document !== "undefined" &&
         createPortal(
           <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/80">
-            <div className="bg-white border border-neutral-200 p-6 max-w-2xl w-full mx-4 shadow-lg max-h-[80vh] overflow-y-auto">
+            <div className="bg-white border border-border-light p-6 max-w-2xl w-full mx-4 shadow-lg max-h-[80vh] overflow-y-auto">
               <div className="flex justify-between items-center mb-4 pb-4 border-b-2 border-black">
                 <h3 className="text-xl font-black">엑셀 업로드</h3>
                 <button
@@ -3707,7 +3707,7 @@ export default function AdminPage() {
                   className={clsx(
                     "p-2 border-2 border-black shadow-sm transition-all",
                     clickedBtn === "cardExcelClose"
-                      ? "bg-primary translate-x-[2px] translate-y-[2px] shadow-none"
+                      ? "bg-ink-black translate-x-[2px] translate-y-[2px] shadow-none"
                       : "bg-white hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-sm",
                   )}
                 >
@@ -3748,11 +3748,11 @@ export default function AdminPage() {
                       className={clsx(
                         "flex-1 py-3 font-bold border-2 border-black transition-all",
                         cardType === type
-                          ? "bg-mint shadow-none translate-x-[2px] translate-y-[2px]"
+                          ? "bg-fresh-green shadow-none translate-x-[2px] translate-y-[2px]"
                           : isDisabled
                             ? "bg-gray-200 text-gray-400 cursor-not-allowed opacity-50"
                             : clickedBtn === btnId
-                              ? "bg-primary translate-x-[2px] translate-y-[2px] shadow-none"
+                              ? "bg-ink-black translate-x-[2px] translate-y-[2px] shadow-none"
                               : "bg-white shadow-md hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-md",
                       )}
                     >
@@ -3773,9 +3773,9 @@ export default function AdminPage() {
                 className={clsx(
                   "border-2 border-dashed p-8 text-center mb-6 transition-all",
                   isCardExcelDragging
-                    ? "border-mint bg-mint/10"
+                    ? "border-fresh-green bg-highlight-green/20"
                     : "border-gray-300",
-                  cardExcelFile && "border-success bg-success/10",
+                  cardExcelFile && "border-fresh-green bg-highlight-green/20",
                 )}
               >
                 <input
@@ -3807,7 +3807,7 @@ export default function AdminPage() {
                     <p className="font-bold mb-2">엑셀 파일을 드래그하거나</p>
                     <button
                       onClick={() => cardExcelInputRef.current?.click()}
-                      className="px-4 py-2 bg-mint font-bold border-2 border-black shadow-sm hover:shadow-md transition-all"
+                      className="px-4 py-2 bg-fresh-green font-bold border-2 border-black shadow-sm hover:shadow-md transition-all"
                     >
                       파일 선택
                     </button>
@@ -3906,7 +3906,7 @@ export default function AdminPage() {
                       </tbody>
                     </table>
                   </div>
-                  <div className="mt-3 p-3 bg-warning/15 border-2 border-black space-y-1">
+                  <div className="mt-3 p-3 bg-highlight-orange/30 border-2 border-black space-y-1">
                     <div className="flex justify-between font-bold text-sm">
                       <span>
                         {cardType === "credit"
@@ -4030,7 +4030,7 @@ export default function AdminPage() {
                   className={clsx(
                     "px-4 py-2 font-bold border-2 border-black shadow-sm transition-all",
                     cardExcelFile && cardExcelPreview.length > 0
-                      ? "bg-mint hover:shadow-md"
+                      ? "bg-fresh-green hover:shadow-md"
                       : "bg-gray-200 cursor-not-allowed opacity-50",
                   )}
                 >
@@ -4048,7 +4048,7 @@ export default function AdminPage() {
         typeof document !== "undefined" &&
         createPortal(
           <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/80">
-            <div className="bg-white border border-neutral-200 p-6 max-w-2xl w-full mx-4 shadow-lg max-h-[80vh] overflow-y-auto">
+            <div className="bg-white border border-border-light p-6 max-w-2xl w-full mx-4 shadow-lg max-h-[80vh] overflow-y-auto">
               <div className="flex justify-between items-center mb-4 pb-4 border-b-2 border-black">
                 <h3 className="text-xl font-black">
                   {selectedItemDetails.name} 상세 내역
@@ -4063,7 +4063,7 @@ export default function AdminPage() {
                   className={clsx(
                     "p-2 border-2 border-black shadow-sm transition-all",
                     clickedBtn === "detailsClose"
-                      ? "bg-primary translate-x-[2px] translate-y-[2px] shadow-none"
+                      ? "bg-ink-black translate-x-[2px] translate-y-[2px] shadow-none"
                       : "bg-white hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-sm",
                   )}
                 >
@@ -4071,7 +4071,7 @@ export default function AdminPage() {
                 </button>
               </div>
 
-              <div className="mb-4 p-3 bg-warning/15 border-2 border-black">
+              <div className="mb-4 p-3 bg-highlight-orange/30 border-2 border-black">
                 <div className="flex justify-between font-bold">
                   <span>총 {selectedItemDetails.details?.length || 0}건</span>
                   <span className="text-lg">
@@ -4131,7 +4131,7 @@ export default function AdminPage() {
         typeof document !== "undefined" &&
         createPortal(
           <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/80">
-            <div className="bg-white border border-neutral-200 p-6 max-w-2xl w-full mx-4 shadow-lg max-h-[80vh] overflow-y-auto">
+            <div className="bg-white border border-border-light p-6 max-w-2xl w-full mx-4 shadow-lg max-h-[80vh] overflow-y-auto">
               <div className="flex justify-between items-center mb-4 pb-4 border-b-2 border-black">
                 <h3 className="text-xl font-black">🏪 전통시장 확인</h3>
                 <button
@@ -4197,7 +4197,7 @@ export default function AdminPage() {
                             `🏪 ${item.merchantName} → 전통시장으로 분류`,
                           );
                         }}
-                        className="flex-1 py-2 px-3 font-bold text-sm border-2 border-black bg-success shadow-sm hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-md transition-all"
+                        className="flex-1 py-2 px-3 font-bold text-sm border-2 border-black bg-fresh-green shadow-sm hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-md transition-all"
                       >
                         ✅ 전통시장 맞음
                       </button>

@@ -884,13 +884,14 @@ export default function CalculatorPage() {
       {/* Input Section */}
       <div className="lg:col-span-2 space-y-4">
         <div className="flex justify-between items-center mb-6">
-          <h2 className="text-h2 text-foreground">계산기</h2>
+          <h2 className="text-h2 text-ink-black">계산기</h2>
           <div className="flex gap-2">
             <button
               onClick={handleLoadData}
               className={clsx(
-                "inline-flex items-center justify-center gap-2 h-9 px-3.5 rounded-md border border-neutral-200 bg-card text-foreground text-[13px] font-medium transition-colors hover:bg-neutral-100 hover:border-neutral-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-600 disabled:opacity-50",
-                isLoadingData && "bg-primary/5 border-primary text-primary",
+                "inline-flex items-center justify-center gap-2 h-9 px-3.5 rounded-md border border-border-light bg-canvas-white text-ink-black text-[13px] font-medium transition-colors hover:bg-subtle-ash hover:border-border-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring-blue disabled:opacity-50",
+                isLoadingData &&
+                  "bg-ink-black/5 border-ink-black text-ink-black",
               )}
             >
               <Download
@@ -902,10 +903,10 @@ export default function CalculatorPage() {
             <button
               onClick={handleReset}
               className={clsx(
-                "inline-flex items-center justify-center gap-2 h-9 px-3.5 rounded-md text-[13px] font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-600 disabled:opacity-50",
+                "inline-flex items-center justify-center gap-2 h-9 px-3.5 rounded-md text-[13px] font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring-blue disabled:opacity-50",
                 isResetting
-                  ? "bg-warning/10 border border-warning/30 text-warning"
-                  : "bg-foreground text-card hover:bg-primary-700",
+                  ? "bg-highlight-orange/20 border border-warm-orange/30 text-warm-orange"
+                  : "bg-ink-black text-canvas-white hover:opacity-90",
               )}
             >
               <RefreshCw
@@ -920,7 +921,7 @@ export default function CalculatorPage() {
         {categories.map((cat) => (
           <div
             key={cat.id}
-            className="rounded-lg border border-neutral-200 bg-card overflow-hidden"
+            className="rounded-lg border border-border-light bg-canvas-white overflow-hidden"
           >
             <button
               onClick={() =>
@@ -929,8 +930,8 @@ export default function CalculatorPage() {
               className={clsx(
                 "w-full flex items-center justify-between p-4 text-body font-semibold transition-colors",
                 openSection === cat.id
-                  ? "bg-neutral-50 text-foreground border-l-2 border-primary"
-                  : "text-neutral-700 hover:bg-neutral-50",
+                  ? "bg-subtle-ash text-ink-black border-l-2 border-ink-black"
+                  : "text-thunder-gray hover:bg-subtle-ash",
               )}
             >
               <div className="flex items-center gap-3">
@@ -968,7 +969,7 @@ export default function CalculatorPage() {
                           </label>
                           <input
                             type="text"
-                            className="w-full h-11 rounded-md border border-neutral-200 bg-card px-3.5 text-body text-foreground font-mono tabular-nums text-right placeholder:text-neutral-300 hover:border-neutral-300 focus-visible:outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary-600/25 transition-colors"
+                            className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black font-mono tabular-nums text-right placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
                             value={formatNumber(inputs.annualSalary)}
                             onChange={(e) =>
                               handleInputChange("annualSalary", e.target.value)
@@ -987,7 +988,7 @@ export default function CalculatorPage() {
                           </label>
                           <input
                             type="text"
-                            className="w-full h-11 rounded-md border border-neutral-200 bg-card px-3.5 text-body text-foreground font-mono tabular-nums text-right placeholder:text-neutral-300 hover:border-neutral-300 focus-visible:outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary-600/25 transition-colors"
+                            className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black font-mono tabular-nums text-right placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
                             value={formatNumber(inputs.mealAllowance)}
                             onChange={(e) =>
                               handleInputChange("mealAllowance", e.target.value)
@@ -1023,7 +1024,7 @@ export default function CalculatorPage() {
                             ))}
                           </div>
                         </div>
-                        <div className="bg-neutral-50 p-4 border border-neutral-200 rounded-md space-y-2">
+                        <div className="bg-subtle-ash p-4 border border-border-light rounded-md space-y-2">
                           <p className="font-bold text-sm">계산식</p>
                           <div className="text-sm space-y-1">
                             <p>
@@ -1048,7 +1049,7 @@ export default function CalculatorPage() {
                             </p>
                           </div>
                         </div>
-                        <div className="bg-warning/10 p-4 border border-warning/30 rounded-md">
+                        <div className="bg-highlight-orange/20 p-4 border border-warm-orange/30 rounded-md">
                           <p className="font-bold mb-1">총급여액 (자동 계산)</p>
                           <p className="text-2xl font-black">
                             {formatNumber(inputs.salary)}원
@@ -1080,7 +1081,7 @@ export default function CalculatorPage() {
                             </label>
                             <input
                               type="text"
-                              className="w-full h-11 rounded-md border border-neutral-200 bg-card px-3.5 text-body text-foreground font-mono tabular-nums text-right placeholder:text-neutral-300 hover:border-neutral-300 focus-visible:outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary-600/25 transition-colors"
+                              className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black font-mono tabular-nums text-right placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
                               value={formatNumber(inputs.withheldTax)}
                               onChange={(e) =>
                                 handleInputChange("withheldTax", e.target.value)
@@ -1099,7 +1100,7 @@ export default function CalculatorPage() {
                             </label>
                             <input
                               type="text"
-                              className="w-full h-11 rounded-md border border-neutral-200 bg-card px-3.5 text-body text-foreground font-mono tabular-nums text-right placeholder:text-neutral-300 hover:border-neutral-300 focus-visible:outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary-600/25 transition-colors"
+                              className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black font-mono tabular-nums text-right placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
                               value={formatNumber(inputs.localIncomeTax || 0)}
                               onChange={(e) =>
                                 handleInputChange(
@@ -1126,7 +1127,7 @@ export default function CalculatorPage() {
                               <label className="font-bold text-sm h-6 flex items-center">
                                 본인공제
                               </label>
-                              <div className="w-full h-11 rounded-md border border-neutral-200 bg-neutral-100 px-3.5 flex items-center justify-end text-body text-neutral-500 font-mono tabular-nums cursor-not-allowed">
+                              <div className="w-full h-11 rounded-md border border-border-light bg-subtle-ash px-3.5 flex items-center justify-end text-body text-shadow-gray font-mono tabular-nums cursor-not-allowed">
                                 1,500,000
                               </div>
                             </div>
@@ -1148,7 +1149,7 @@ export default function CalculatorPage() {
                                       handleInputChange("spouse", num)
                                     }
                                     className={clsx(
-                                      "flex-1 h-11 rounded-md border border-neutral-200 text-body font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-600",
+                                      "flex-1 h-11 rounded-md border border-border-light text-body font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring-blue",
                                       inputs.spouse === num
                                         ? "bg-black text-white"
                                         : "bg-white hover:bg-gray-100",
@@ -1182,7 +1183,7 @@ export default function CalculatorPage() {
                                 type="number"
                                 min="0"
                                 max="10"
-                                className="w-full h-11 rounded-md border border-neutral-200 bg-card px-3.5 text-body text-foreground font-mono tabular-nums text-right placeholder:text-neutral-300 hover:border-neutral-300 focus-visible:outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary-600/25 transition-colors"
+                                className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black font-mono tabular-nums text-right placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
                                 value={inputs.parents}
                                 onChange={(e) =>
                                   setInputs((prev) => ({
@@ -1220,7 +1221,7 @@ export default function CalculatorPage() {
                                 type="number"
                                 min="0"
                                 max="10"
-                                className="w-full h-11 rounded-md border border-neutral-200 bg-card px-3.5 text-body text-foreground font-mono tabular-nums text-right placeholder:text-neutral-300 hover:border-neutral-300 focus-visible:outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary-600/25 transition-colors"
+                                className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black font-mono tabular-nums text-right placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
                                 value={inputs.children}
                                 onChange={(e) =>
                                   setInputs((prev) => ({
@@ -1258,7 +1259,7 @@ export default function CalculatorPage() {
                                 type="number"
                                 min="0"
                                 max="10"
-                                className="w-full h-11 rounded-md border border-neutral-200 bg-card px-3.5 text-body text-foreground font-mono tabular-nums text-right placeholder:text-neutral-300 hover:border-neutral-300 focus-visible:outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary-600/25 transition-colors"
+                                className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black font-mono tabular-nums text-right placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
                                 value={inputs.siblings}
                                 onChange={(e) =>
                                   setInputs((prev) => ({
@@ -1296,7 +1297,7 @@ export default function CalculatorPage() {
                                 type="number"
                                 min="0"
                                 max="10"
-                                className="w-full h-11 rounded-md border border-neutral-200 bg-card px-3.5 text-body text-foreground font-mono tabular-nums text-right placeholder:text-neutral-300 hover:border-neutral-300 focus-visible:outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary-600/25 transition-colors"
+                                className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black font-mono tabular-nums text-right placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
                                 value={inputs.foster}
                                 onChange={(e) =>
                                   setInputs((prev) => ({
@@ -1334,7 +1335,7 @@ export default function CalculatorPage() {
                                 type="number"
                                 min="0"
                                 max="10"
-                                className="w-full h-11 rounded-md border border-neutral-200 bg-card px-3.5 text-body text-foreground font-mono tabular-nums text-right placeholder:text-neutral-300 hover:border-neutral-300 focus-visible:outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary-600/25 transition-colors"
+                                className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black font-mono tabular-nums text-right placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
                                 value={inputs.recipient}
                                 onChange={(e) =>
                                   setInputs((prev) => ({
@@ -1362,7 +1363,7 @@ export default function CalculatorPage() {
                         </div>
 
                         {/* 계산식 */}
-                        <div className="bg-neutral-50 p-4 border border-neutral-200 rounded-md space-y-2">
+                        <div className="bg-subtle-ash p-4 border border-border-light rounded-md space-y-2">
                           <p className="font-bold text-sm">계산식</p>
                           <div className="text-sm space-y-1">
                             <p>본인: 1명 × 150만원 = 1,500,000원</p>
@@ -1406,7 +1407,7 @@ export default function CalculatorPage() {
                         </div>
 
                         {/* 인적공제 합계 */}
-                        <div className="bg-warning/10 p-4 border border-warning/30 rounded-md">
+                        <div className="bg-highlight-orange/20 p-4 border border-warm-orange/30 rounded-md">
                           <p className="font-bold mb-1">
                             인적공제 합계 (자동 계산)
                           </p>
@@ -1439,7 +1440,7 @@ export default function CalculatorPage() {
                           </label>
                           <input
                             type="text"
-                            className="w-full h-11 rounded-md border border-neutral-200 bg-card px-3.5 text-body text-foreground font-mono tabular-nums text-right placeholder:text-neutral-300 hover:border-neutral-300 focus-visible:outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary-600/25 transition-colors"
+                            className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black font-mono tabular-nums text-right placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
                             value={formatNumber(inputs.nationalPension)}
                             onChange={(e) =>
                               handleInputChange(
@@ -1461,7 +1462,7 @@ export default function CalculatorPage() {
                           </label>
                           <input
                             type="text"
-                            className="w-full h-11 rounded-md border border-neutral-200 bg-card px-3.5 text-body text-foreground font-mono tabular-nums text-right placeholder:text-neutral-300 hover:border-neutral-300 focus-visible:outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary-600/25 transition-colors"
+                            className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black font-mono tabular-nums text-right placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
                             value={formatNumber(inputs.healthInsurance)}
                             onChange={(e) =>
                               handleInputChange(
@@ -1483,7 +1484,7 @@ export default function CalculatorPage() {
                           </label>
                           <input
                             type="text"
-                            className="w-full h-11 rounded-md border border-neutral-200 bg-card px-3.5 text-body text-foreground font-mono tabular-nums text-right placeholder:text-neutral-300 hover:border-neutral-300 focus-visible:outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary-600/25 transition-colors"
+                            className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black font-mono tabular-nums text-right placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
                             value={formatNumber(inputs.longTermCare)}
                             onChange={(e) =>
                               handleInputChange("longTermCare", e.target.value)
@@ -1502,7 +1503,7 @@ export default function CalculatorPage() {
                           </label>
                           <input
                             type="text"
-                            className="w-full h-11 rounded-md border border-neutral-200 bg-card px-3.5 text-body text-foreground font-mono tabular-nums text-right placeholder:text-neutral-300 hover:border-neutral-300 focus-visible:outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary-600/25 transition-colors"
+                            className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black font-mono tabular-nums text-right placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
                             value={formatNumber(inputs.employmentInsurance)}
                             onChange={(e) =>
                               handleInputChange(
@@ -1514,7 +1515,7 @@ export default function CalculatorPage() {
                         </div>
 
                         {/* 계산식 */}
-                        <div className="bg-neutral-50 p-4 border border-neutral-200 rounded-md space-y-2">
+                        <div className="bg-subtle-ash p-4 border border-border-light rounded-md space-y-2">
                           <p className="font-bold text-sm">계산식</p>
                           <div className="text-sm space-y-1">
                             <p>
@@ -1536,7 +1537,7 @@ export default function CalculatorPage() {
                         </div>
 
                         {/* 4대보험 합계 */}
-                        <div className="bg-warning/10 p-4 border border-warning/30 rounded-md">
+                        <div className="bg-highlight-orange/20 p-4 border border-warm-orange/30 rounded-md">
                           <p className="font-bold mb-1">
                             4대보험 소득공제 합계
                           </p>
@@ -1577,7 +1578,7 @@ export default function CalculatorPage() {
                               </label>
                               <input
                                 type="number"
-                                className="w-full h-11 rounded-md border border-neutral-200 bg-card px-3.5 text-body text-foreground font-mono tabular-nums text-right placeholder:text-neutral-300 hover:border-neutral-300 focus-visible:outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary-600/25 transition-colors"
+                                className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black font-mono tabular-nums text-right placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
                                 min="0"
                                 value={inputs.cardChildren}
                                 onChange={(e) =>
@@ -1613,7 +1614,7 @@ export default function CalculatorPage() {
                               </label>
                               <input
                                 type="text"
-                                className="w-full h-11 rounded-md border border-neutral-200 bg-card px-3.5 text-body text-foreground font-mono tabular-nums text-right placeholder:text-neutral-300 hover:border-neutral-300 focus-visible:outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary-600/25 transition-colors"
+                                className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black font-mono tabular-nums text-right placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
                                 value={formatNumber(inputs.creditCard)}
                                 onChange={(e) =>
                                   handleInputChange(
@@ -1635,7 +1636,7 @@ export default function CalculatorPage() {
                               </label>
                               <input
                                 type="text"
-                                className="w-full h-11 rounded-md border border-neutral-200 bg-card px-3.5 text-body text-foreground font-mono tabular-nums text-right placeholder:text-neutral-300 hover:border-neutral-300 focus-visible:outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary-600/25 transition-colors"
+                                className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black font-mono tabular-nums text-right placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
                                 value={formatNumber(inputs.debitCard)}
                                 onChange={(e) =>
                                   handleInputChange("debitCard", e.target.value)
@@ -1654,7 +1655,7 @@ export default function CalculatorPage() {
                               </label>
                               <input
                                 type="text"
-                                className="w-full h-11 rounded-md border border-neutral-200 bg-card px-3.5 text-body text-foreground font-mono tabular-nums text-right placeholder:text-neutral-300 hover:border-neutral-300 focus-visible:outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary-600/25 transition-colors"
+                                className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black font-mono tabular-nums text-right placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
                                 value={formatNumber(inputs.cash)}
                                 onChange={(e) =>
                                   handleInputChange("cash", e.target.value)
@@ -1682,7 +1683,7 @@ export default function CalculatorPage() {
                               </label>
                               <input
                                 type="text"
-                                className="w-full h-11 rounded-md border border-neutral-200 bg-card px-3.5 text-body text-foreground font-mono tabular-nums text-right placeholder:text-neutral-300 hover:border-neutral-300 focus-visible:outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary-600/25 transition-colors"
+                                className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black font-mono tabular-nums text-right placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
                                 value={formatNumber(inputs.traditionalMarket)}
                                 onChange={(e) =>
                                   handleInputChange(
@@ -1704,7 +1705,7 @@ export default function CalculatorPage() {
                               </label>
                               <input
                                 type="text"
-                                className="w-full h-11 rounded-md border border-neutral-200 bg-card px-3.5 text-body text-foreground font-mono tabular-nums text-right placeholder:text-neutral-300 hover:border-neutral-300 focus-visible:outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary-600/25 transition-colors"
+                                className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black font-mono tabular-nums text-right placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
                                 value={formatNumber(inputs.publicTransport)}
                                 onChange={(e) =>
                                   handleInputChange(
@@ -1726,7 +1727,7 @@ export default function CalculatorPage() {
                               </label>
                               <input
                                 type="text"
-                                className="w-full h-11 rounded-md border border-neutral-200 bg-card px-3.5 text-body text-foreground font-mono tabular-nums text-right placeholder:text-neutral-300 hover:border-neutral-300 focus-visible:outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary-600/25 transition-colors"
+                                className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black font-mono tabular-nums text-right placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
                                 value={formatNumber(inputs.culture)}
                                 onChange={(e) =>
                                   handleInputChange("culture", e.target.value)
@@ -1737,7 +1738,7 @@ export default function CalculatorPage() {
                         </div>
 
                         {/* 계산식 */}
-                        <div className="bg-neutral-50 p-4 border border-neutral-200 rounded-md space-y-2">
+                        <div className="bg-subtle-ash p-4 border border-border-light rounded-md space-y-2">
                           <p className="font-bold text-sm">계산식</p>
                           <div className="text-sm space-y-1">
                             {(() => {
@@ -1965,7 +1966,7 @@ export default function CalculatorPage() {
                         </div>
 
                         {/* 카드 소득공제 합계 */}
-                        <div className="bg-warning/10 p-4 border border-warning/30 rounded-md">
+                        <div className="bg-highlight-orange/20 p-4 border border-warm-orange/30 rounded-md">
                           <p className="font-bold mb-1">신용카드 등 소득공제</p>
                           <p className="text-2xl font-black">
                             {(() => {
@@ -2201,7 +2202,7 @@ export default function CalculatorPage() {
                               </label>
                               <input
                                 type="text"
-                                className="w-full h-11 rounded-md border border-neutral-200 bg-card px-3.5 text-body text-foreground font-mono tabular-nums text-right placeholder:text-neutral-300 hover:border-neutral-300 focus-visible:outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary-600/25 transition-colors"
+                                className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black font-mono tabular-nums text-right placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
                                 value={formatNumber(inputs.infertility)}
                                 onChange={(e) =>
                                   handleInputChange(
@@ -2223,7 +2224,7 @@ export default function CalculatorPage() {
                               </label>
                               <input
                                 type="text"
-                                className="w-full h-11 rounded-md border border-neutral-200 bg-card px-3.5 text-body text-foreground font-mono tabular-nums text-right placeholder:text-neutral-300 hover:border-neutral-300 focus-visible:outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary-600/25 transition-colors"
+                                className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black font-mono tabular-nums text-right placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
                                 value={formatNumber(inputs.premature)}
                                 onChange={(e) =>
                                   handleInputChange("premature", e.target.value)
@@ -2242,7 +2243,7 @@ export default function CalculatorPage() {
                               </label>
                               <input
                                 type="text"
-                                className="w-full h-11 rounded-md border border-neutral-200 bg-card px-3.5 text-body text-foreground font-mono tabular-nums text-right placeholder:text-neutral-300 hover:border-neutral-300 focus-visible:outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary-600/25 transition-colors"
+                                className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black font-mono tabular-nums text-right placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
                                 value={formatNumber(inputs.selfDisabledSenior)}
                                 onChange={(e) =>
                                   handleInputChange(
@@ -2264,7 +2265,7 @@ export default function CalculatorPage() {
                               </label>
                               <input
                                 type="text"
-                                className="w-full h-11 rounded-md border border-neutral-200 bg-card px-3.5 text-body text-foreground font-mono tabular-nums text-right placeholder:text-neutral-300 hover:border-neutral-300 focus-visible:outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary-600/25 transition-colors"
+                                className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black font-mono tabular-nums text-right placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
                                 value={formatNumber(inputs.otherFamily)}
                                 onChange={(e) =>
                                   handleInputChange(
@@ -2286,7 +2287,7 @@ export default function CalculatorPage() {
                               </label>
                               <input
                                 type="text"
-                                className="w-full h-11 rounded-md border border-neutral-200 bg-card px-3.5 text-body text-foreground font-mono tabular-nums text-right placeholder:text-neutral-300 hover:border-neutral-300 focus-visible:outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary-600/25 transition-colors"
+                                className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black font-mono tabular-nums text-right placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
                                 value={formatNumber(
                                   inputs.insuranceReimbursement,
                                 )}
@@ -2302,7 +2303,7 @@ export default function CalculatorPage() {
                         </div>
 
                         {/* 계산식 */}
-                        <div className="bg-neutral-50 p-4 border border-neutral-200 rounded-md space-y-2">
+                        <div className="bg-subtle-ash p-4 border border-border-light rounded-md space-y-2">
                           <p className="font-bold text-sm">계산식</p>
                           <div className="text-sm space-y-1">
                             {(() => {
@@ -2478,7 +2479,7 @@ export default function CalculatorPage() {
                         </div>
 
                         {/* 의료비 공제 합계 */}
-                        <div className="bg-warning/10 p-4 border border-warning/30 rounded-md">
+                        <div className="bg-highlight-orange/20 p-4 border border-warm-orange/30 rounded-md">
                           <p className="font-bold mb-1">🏥 의료비 세액공제</p>
                           <p className="text-2xl font-black">
                             {(() => {
@@ -2601,7 +2602,7 @@ export default function CalculatorPage() {
                               </label>
                               <input
                                 type="text"
-                                className="w-full h-11 rounded-md border border-neutral-200 bg-card px-3.5 text-body text-foreground font-mono tabular-nums text-right placeholder:text-neutral-300 hover:border-neutral-300 focus-visible:outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary-600/25 transition-colors"
+                                className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black font-mono tabular-nums text-right placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
                                 value={formatNumber(inputs.selfEducation)}
                                 onChange={(e) =>
                                   handleInputChange(
@@ -2623,7 +2624,7 @@ export default function CalculatorPage() {
                               </label>
                               <input
                                 type="text"
-                                className="w-full h-11 rounded-md border border-neutral-200 bg-card px-3.5 text-body text-foreground font-mono tabular-nums text-right placeholder:text-neutral-300 hover:border-neutral-300 focus-visible:outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary-600/25 transition-colors"
+                                className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black font-mono tabular-nums text-right placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
                                 value={formatNumber(inputs.preschool)}
                                 onChange={(e) =>
                                   handleInputChange("preschool", e.target.value)
@@ -2642,7 +2643,7 @@ export default function CalculatorPage() {
                               </label>
                               <input
                                 type="text"
-                                className="w-full h-11 rounded-md border border-neutral-200 bg-card px-3.5 text-body text-foreground font-mono tabular-nums text-right placeholder:text-neutral-300 hover:border-neutral-300 focus-visible:outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary-600/25 transition-colors"
+                                className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black font-mono tabular-nums text-right placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
                                 value={formatNumber(inputs.elementary)}
                                 onChange={(e) =>
                                   handleInputChange(
@@ -2664,7 +2665,7 @@ export default function CalculatorPage() {
                               </label>
                               <input
                                 type="text"
-                                className="w-full h-11 rounded-md border border-neutral-200 bg-card px-3.5 text-body text-foreground font-mono tabular-nums text-right placeholder:text-neutral-300 hover:border-neutral-300 focus-visible:outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary-600/25 transition-colors"
+                                className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black font-mono tabular-nums text-right placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
                                 value={formatNumber(inputs.university)}
                                 onChange={(e) =>
                                   handleInputChange(
@@ -2678,7 +2679,7 @@ export default function CalculatorPage() {
                         </div>
 
                         {/* 계산식 */}
-                        <div className="bg-neutral-50 p-4 border border-neutral-200 rounded-md space-y-2">
+                        <div className="bg-subtle-ash p-4 border border-border-light rounded-md space-y-2">
                           <p className="font-bold text-sm">계산식</p>
                           <div className="text-sm space-y-1">
                             {inputs.selfEducation > 0 && (
@@ -2718,7 +2719,7 @@ export default function CalculatorPage() {
                         </div>
 
                         {/* 교육비 공제 합계 */}
-                        <div className="bg-warning/10 p-4 border border-warning/30 rounded-md">
+                        <div className="bg-highlight-orange/20 p-4 border border-warm-orange/30 rounded-md">
                           <p className="font-bold mb-1">교육비 세액공제</p>
                           <p className="text-2xl font-black">
                             {formatNumber(
@@ -2761,10 +2762,10 @@ export default function CalculatorPage() {
                               <input
                                 type="text"
                                 className={clsx(
-                                  "w-full h-11 rounded-md border bg-card px-3.5 text-body text-foreground font-mono tabular-nums text-right placeholder:text-neutral-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-600/25 transition-colors",
+                                  "w-full h-11 rounded-md border bg-canvas-white px-3.5 text-body text-ink-black font-mono tabular-nums text-right placeholder:text-steel-gray focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors",
                                   inputs.salary > 70000000
-                                    ? "border-danger bg-danger/5"
-                                    : "border-neutral-200 hover:border-neutral-300 focus-visible:border-primary",
+                                    ? "border-warm-orange bg-highlight-orange/15"
+                                    : "border-border-light hover:border-border-muted focus-visible:border-focus-ring-blue",
                                 )}
                                 value={formatNumber(inputs.housingSubscription)}
                                 onChange={(e) =>
@@ -2793,7 +2794,7 @@ export default function CalculatorPage() {
                               </label>
                               <input
                                 type="text"
-                                className="w-full h-11 rounded-md border border-neutral-200 bg-card px-3.5 text-body text-foreground font-mono tabular-nums text-right placeholder:text-neutral-300 hover:border-neutral-300 focus-visible:outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary-600/25 transition-colors"
+                                className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black font-mono tabular-nums text-right placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
                                 value={formatNumber(inputs.rentLoanPayment)}
                                 onChange={(e) =>
                                   handleInputChange(
@@ -2815,7 +2816,7 @@ export default function CalculatorPage() {
                               </label>
                               <input
                                 type="text"
-                                className="w-full h-11 rounded-md border border-neutral-200 bg-card px-3.5 text-body text-foreground font-mono tabular-nums text-right placeholder:text-neutral-300 hover:border-neutral-300 focus-visible:outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary-600/25 transition-colors"
+                                className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black font-mono tabular-nums text-right placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
                                 value={formatNumber(inputs.mortgageInterest)}
                                 onChange={(e) =>
                                   handleInputChange(
@@ -2837,7 +2838,7 @@ export default function CalculatorPage() {
                               </label>
                               <input
                                 type="text"
-                                className="w-full h-11 rounded-md border border-neutral-200 bg-card px-3.5 text-body text-foreground font-mono tabular-nums text-right placeholder:text-neutral-300 hover:border-neutral-300 focus-visible:outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary-600/25 transition-colors"
+                                className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black font-mono tabular-nums text-right placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
                                 value={formatNumber(inputs.monthlyRent)}
                                 onChange={(e) =>
                                   handleInputChange(
@@ -2851,7 +2852,7 @@ export default function CalculatorPage() {
                         </div>
 
                         {/* 계산식 */}
-                        <div className="bg-neutral-50 p-4 border border-neutral-200 rounded-md space-y-2">
+                        <div className="bg-subtle-ash p-4 border border-border-light rounded-md space-y-2">
                           <p className="font-bold text-sm">계산식</p>
                           <div className="text-sm space-y-1">
                             {((inputs.housingSubscription > 0 &&
@@ -2918,7 +2919,7 @@ export default function CalculatorPage() {
                         </div>
 
                         {/* 주택자금 공제 합계 */}
-                        <div className="bg-warning/10 p-4 border border-warning/30 rounded-md">
+                        <div className="bg-highlight-orange/20 p-4 border border-warm-orange/30 rounded-md">
                           <p className="font-bold mb-1">주택자금 공제</p>
                           <p className="text-2xl font-black">
                             {formatNumber(
@@ -3063,7 +3064,7 @@ export default function CalculatorPage() {
                               </label>
                               <input
                                 type="text"
-                                className="w-full h-11 rounded-md border border-neutral-200 bg-card px-3.5 text-body text-foreground font-mono tabular-nums text-right placeholder:text-neutral-300 hover:border-neutral-300 focus-visible:outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary-600/25 transition-colors"
+                                className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black font-mono tabular-nums text-right placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
                                 value={formatNumber(inputs.pensionSavings)}
                                 onChange={(e) =>
                                   handleInputChange(
@@ -3085,7 +3086,7 @@ export default function CalculatorPage() {
                               </label>
                               <input
                                 type="text"
-                                className="w-full h-11 rounded-md border border-neutral-200 bg-card px-3.5 text-body text-foreground font-mono tabular-nums text-right placeholder:text-neutral-300 hover:border-neutral-300 focus-visible:outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary-600/25 transition-colors"
+                                className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black font-mono tabular-nums text-right placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
                                 value={formatNumber(inputs.irp)}
                                 onChange={(e) =>
                                   handleInputChange("irp", e.target.value)
@@ -3104,7 +3105,7 @@ export default function CalculatorPage() {
                               </label>
                               <input
                                 type="text"
-                                className="w-full h-11 rounded-md border border-neutral-200 bg-card px-3.5 text-body text-foreground font-mono tabular-nums text-right placeholder:text-neutral-300 hover:border-neutral-300 focus-visible:outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary-600/25 transition-colors"
+                                className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black font-mono tabular-nums text-right placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
                                 value={formatNumber(inputs.isaTransfer)}
                                 onChange={(e) =>
                                   handleInputChange(
@@ -3135,7 +3136,7 @@ export default function CalculatorPage() {
                               </label>
                               <input
                                 type="text"
-                                className="w-full h-11 rounded-md border border-neutral-200 bg-card px-3.5 text-body text-foreground font-mono tabular-nums text-right placeholder:text-neutral-300 hover:border-neutral-300 focus-visible:outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary-600/25 transition-colors"
+                                className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black font-mono tabular-nums text-right placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
                                 value={formatNumber(inputs.generalInsurance)}
                                 onChange={(e) =>
                                   handleInputChange(
@@ -3157,7 +3158,7 @@ export default function CalculatorPage() {
                               </label>
                               <input
                                 type="text"
-                                className="w-full h-11 rounded-md border border-neutral-200 bg-card px-3.5 text-body text-foreground font-mono tabular-nums text-right placeholder:text-neutral-300 hover:border-neutral-300 focus-visible:outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary-600/25 transition-colors"
+                                className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black font-mono tabular-nums text-right placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
                                 value={formatNumber(inputs.disabledInsurance)}
                                 onChange={(e) =>
                                   handleInputChange(
@@ -3171,7 +3172,7 @@ export default function CalculatorPage() {
                         </div>
 
                         {/* 계산식 */}
-                        <div className="bg-neutral-50 p-4 border border-neutral-200 rounded-md space-y-2">
+                        <div className="bg-subtle-ash p-4 border border-border-light rounded-md space-y-2">
                           <p className="font-bold text-sm">계산식</p>
                           <div className="text-sm space-y-1">
                             {(inputs.pensionSavings > 0 ||
@@ -3254,7 +3255,7 @@ export default function CalculatorPage() {
                         </div>
 
                         {/* 연금계좌·보험료 공제 합계 */}
-                        <div className="bg-warning/10 p-4 border border-warning/30 rounded-md">
+                        <div className="bg-highlight-orange/20 p-4 border border-warm-orange/30 rounded-md">
                           <p className="font-bold mb-1">
                             연금계좌·보험료 세액공제
                           </p>
@@ -3365,7 +3366,7 @@ export default function CalculatorPage() {
                               </label>
                               <input
                                 type="text"
-                                className="w-full h-11 rounded-md border border-neutral-200 bg-card px-3.5 text-body text-foreground font-mono tabular-nums text-right placeholder:text-neutral-300 hover:border-neutral-300 focus-visible:outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary-600/25 transition-colors"
+                                className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black font-mono tabular-nums text-right placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
                                 value={formatNumber(inputs.politicalDonation)}
                                 onChange={(e) =>
                                   handleInputChange(
@@ -3387,7 +3388,7 @@ export default function CalculatorPage() {
                               </label>
                               <input
                                 type="text"
-                                className="w-full h-11 rounded-md border border-neutral-200 bg-card px-3.5 text-body text-foreground font-mono tabular-nums text-right placeholder:text-neutral-300 hover:border-neutral-300 focus-visible:outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary-600/25 transition-colors"
+                                className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black font-mono tabular-nums text-right placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
                                 value={formatNumber(inputs.hometownDonation)}
                                 onChange={(e) =>
                                   handleInputChange(
@@ -3409,7 +3410,7 @@ export default function CalculatorPage() {
                               </label>
                               <input
                                 type="text"
-                                className="w-full h-11 rounded-md border border-neutral-200 bg-card px-3.5 text-body text-foreground font-mono tabular-nums text-right placeholder:text-neutral-300 hover:border-neutral-300 focus-visible:outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary-600/25 transition-colors"
+                                className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black font-mono tabular-nums text-right placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
                                 value={formatNumber(inputs.hometownDisaster)}
                                 onChange={(e) =>
                                   handleInputChange(
@@ -3431,7 +3432,7 @@ export default function CalculatorPage() {
                               </label>
                               <input
                                 type="text"
-                                className="w-full h-11 rounded-md border border-neutral-200 bg-card px-3.5 text-body text-foreground font-mono tabular-nums text-right placeholder:text-neutral-300 hover:border-neutral-300 focus-visible:outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary-600/25 transition-colors"
+                                className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black font-mono tabular-nums text-right placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
                                 value={formatNumber(inputs.specialDonation)}
                                 onChange={(e) =>
                                   handleInputChange(
@@ -3453,7 +3454,7 @@ export default function CalculatorPage() {
                               </label>
                               <input
                                 type="text"
-                                className="w-full h-11 rounded-md border border-neutral-200 bg-card px-3.5 text-body text-foreground font-mono tabular-nums text-right placeholder:text-neutral-300 hover:border-neutral-300 focus-visible:outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary-600/25 transition-colors"
+                                className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black font-mono tabular-nums text-right placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
                                 value={formatNumber(inputs.employeeDonation)}
                                 onChange={(e) =>
                                   handleInputChange(
@@ -3475,7 +3476,7 @@ export default function CalculatorPage() {
                               </label>
                               <input
                                 type="text"
-                                className="w-full h-11 rounded-md border border-neutral-200 bg-card px-3.5 text-body text-foreground font-mono tabular-nums text-right placeholder:text-neutral-300 hover:border-neutral-300 focus-visible:outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary-600/25 transition-colors"
+                                className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black font-mono tabular-nums text-right placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
                                 value={formatNumber(inputs.designatedDonation)}
                                 onChange={(e) =>
                                   handleInputChange(
@@ -3497,7 +3498,7 @@ export default function CalculatorPage() {
                               </label>
                               <input
                                 type="text"
-                                className="w-full h-11 rounded-md border border-neutral-200 bg-card px-3.5 text-body text-foreground font-mono tabular-nums text-right placeholder:text-neutral-300 hover:border-neutral-300 focus-visible:outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary-600/25 transition-colors"
+                                className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black font-mono tabular-nums text-right placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
                                 value={formatNumber(inputs.religiousDonation)}
                                 onChange={(e) =>
                                   handleInputChange(
@@ -3511,7 +3512,7 @@ export default function CalculatorPage() {
                         </div>
 
                         {/* 계산식 */}
-                        <div className="bg-neutral-50 p-4 border border-neutral-200 rounded-md space-y-2">
+                        <div className="bg-subtle-ash p-4 border border-border-light rounded-md space-y-2">
                           <p className="font-bold text-sm">계산식</p>
                           <div className="text-sm space-y-1">
                             {(() => {
@@ -3947,7 +3948,7 @@ export default function CalculatorPage() {
                         </div>
 
                         {/* 기부금 공제 합계 */}
-                        <div className="bg-warning/10 p-4 border border-warning/30 rounded-md">
+                        <div className="bg-highlight-orange/20 p-4 border border-warm-orange/30 rounded-md">
                           <p className="font-bold mb-1">💗 기부금 세액공제</p>
                           <p className="text-2xl font-black">
                             {(() => {
@@ -4282,7 +4283,7 @@ export default function CalculatorPage() {
                                 type="number"
                                 min="0"
                                 max="10"
-                                className="w-full h-11 rounded-md border border-neutral-200 bg-card px-3.5 text-body text-foreground font-mono tabular-nums text-right placeholder:text-neutral-300 hover:border-neutral-300 focus-visible:outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary-600/25 transition-colors"
+                                className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black font-mono tabular-nums text-right placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
                                 value={inputs.childrenOver8}
                                 onChange={(e) =>
                                   setInputs((prev) => ({
@@ -4306,7 +4307,7 @@ export default function CalculatorPage() {
                                 </Tooltip>
                               </label>
                               <select
-                                className="w-full h-11 rounded-md border border-neutral-200 bg-card px-3.5 text-body text-foreground font-mono tabular-nums text-right placeholder:text-neutral-300 hover:border-neutral-300 focus-visible:outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary-600/25 transition-colors"
+                                className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black font-mono tabular-nums text-right placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
                                 value={inputs.birthAdoption}
                                 onChange={(e) =>
                                   setInputs((prev) => ({
@@ -4334,7 +4335,7 @@ export default function CalculatorPage() {
                         </div>
 
                         {/* 계산식 */}
-                        <div className="bg-neutral-50 p-4 border border-neutral-200 rounded-md space-y-2">
+                        <div className="bg-subtle-ash p-4 border border-border-light rounded-md space-y-2">
                           <p className="font-bold text-sm">계산식</p>
                           <div className="text-sm space-y-1">
                             {inputs.childrenOver8 > 0 && (
@@ -4422,7 +4423,7 @@ export default function CalculatorPage() {
                         </div>
 
                         {/* 자녀공제 합계 */}
-                        <div className="bg-warning/10 p-4 border border-warning/30 rounded-md">
+                        <div className="bg-highlight-orange/20 p-4 border border-warm-orange/30 rounded-md">
                           <p className="font-bold mb-1">👶 자녀 세액공제</p>
                           <p className="text-2xl font-black">
                             {formatNumber(
@@ -4511,10 +4512,10 @@ export default function CalculatorPage() {
           onClick={handleCalculate}
           disabled={isCalculating}
           className={clsx(
-            "inline-flex items-center justify-center gap-2 w-full h-12 rounded-lg text-base font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-600 disabled:opacity-50",
+            "inline-flex items-center justify-center gap-2 w-full h-12 rounded-lg text-base font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring-blue disabled:opacity-50",
             isCalculating
-              ? "bg-neutral-200 text-neutral-500 cursor-not-allowed"
-              : "bg-foreground text-card hover:bg-primary-700",
+              ? "bg-border-light text-shadow-gray cursor-not-allowed"
+              : "bg-ink-black text-canvas-white hover:opacity-90",
           )}
         >
           {isCalculating ? (
@@ -4535,8 +4536,8 @@ export default function CalculatorPage() {
       <div className="lg:col-span-1">
         <div className="sticky top-24">
           {/* 예상 환급액 - 9번 결과 */}
-          <div className="rounded-lg bg-foreground text-card p-6 mb-4 shadow-md">
-            <h3 className="text-caption font-semibold text-neutral-300 uppercase tracking-[0.06em] mb-2">
+          <div className="rounded-lg bg-ink-black text-canvas-white p-6 mb-4 shadow-md">
+            <h3 className="text-caption font-semibold text-steel-gray uppercase tracking-[0.06em] mb-2">
               ⑨ 예상 환급액
             </h3>
             {(() => {
@@ -4555,24 +4556,26 @@ export default function CalculatorPage() {
                   <div
                     className={clsx(
                       "text-mono-display font-bold tabular-nums mb-2",
-                      totalRefund <= 0 ? "text-mint" : "text-danger",
+                      totalRefund <= 0
+                        ? "text-fresh-green"
+                        : "text-warm-orange",
                     )}
                   >
                     {formatNumber(totalRefund)}원
                   </div>
-                  <div className="text-xs text-neutral-400 space-y-1">
-                    <p className="font-semibold text-neutral-300">▸ 소득세</p>
+                  <div className="text-xs text-steel-gray space-y-1">
+                    <p className="font-semibold text-steel-gray">▸ 소득세</p>
                     <p className="pl-2">
                       결정세액: {formatNumber(result.finalTax)}원
                     </p>
                     <p className="pl-2">
                       기납부세액: -{formatNumber(result.withheldTax)}원
                     </p>
-                    <p className="pl-2 text-mint">
+                    <p className="pl-2 text-fresh-green">
                       → 소득세 환급: {formatNumber(incomeTaxRefund)}원
                     </p>
 
-                    <p className="font-semibold text-neutral-300 pt-1">
+                    <p className="font-semibold text-steel-gray pt-1">
                       ▸ 지방소득세
                     </p>
                     <p className="pl-2">
@@ -4581,7 +4584,7 @@ export default function CalculatorPage() {
                     <p className="pl-2">
                       기납부세액: -{formatNumber(inputs.localIncomeTax)}원
                     </p>
-                    <p className="pl-2 text-mint">
+                    <p className="pl-2 text-fresh-green">
                       → 지방소득세 환급: {formatNumber(localTaxRefund)}원
                     </p>
 
@@ -4603,7 +4606,7 @@ export default function CalculatorPage() {
 
           {/* 계산 플로우 1~8 */}
           {result && (
-            <div className="rounded-lg border border-neutral-200 bg-card p-6 mb-4 text-sm">
+            <div className="rounded-lg border border-border-light bg-canvas-white p-6 mb-4 text-sm">
               <h4 className="font-bold mb-3 border-b-2 border-black pb-2">
                 📋 계산 플로우
               </h4>
@@ -4625,7 +4628,7 @@ export default function CalculatorPage() {
                 </div>
 
                 {/* 3. 근로소득금액 */}
-                <div className="flex justify-between items-center bg-primary/5 p-2 -mx-2 border-y border-neutral-200">
+                <div className="flex justify-between items-center bg-ink-black/5 p-2 -mx-2 border-y border-border-light">
                   <span className="font-bold">③ 근로소득금액</span>
                   <span className="font-bold">
                     {formatNumber(result.earnedIncome)}원
@@ -4641,7 +4644,7 @@ export default function CalculatorPage() {
                 </div>
 
                 {/* 5. 과세표준 */}
-                <div className="flex justify-between items-center bg-primary/5 p-2 -mx-2 border-y border-neutral-200">
+                <div className="flex justify-between items-center bg-ink-black/5 p-2 -mx-2 border-y border-border-light">
                   <span className="font-bold">⑤ 과세표준</span>
                   <span className="font-bold">
                     {formatNumber(result.taxableIncome)}원
@@ -4665,7 +4668,7 @@ export default function CalculatorPage() {
                 </div>
 
                 {/* 8. 결정세액 */}
-                <div className="flex justify-between items-center bg-primary/5 p-2 -mx-2 border-y border-neutral-200">
+                <div className="flex justify-between items-center bg-ink-black/5 p-2 -mx-2 border-y border-border-light">
                   <span className="font-bold">⑧ 결정세액</span>
                   <span className="font-bold">
                     {formatNumber(result.finalTax)}원
@@ -4691,7 +4694,7 @@ export default function CalculatorPage() {
 
           {/* 공제 내역 상세 */}
           {result && (
-            <div className="rounded-lg border border-neutral-200 bg-card p-6 mb-4 text-sm">
+            <div className="rounded-lg border border-border-light bg-canvas-white p-6 mb-4 text-sm">
               <h4 className="font-bold mb-3 border-b-2 border-black pb-2">
                 📊 공제 내역 상세
               </h4>
@@ -4772,7 +4775,7 @@ export default function CalculatorPage() {
             </div>
           )}
 
-          <button className="inline-flex items-center justify-center gap-2 w-full h-12 rounded-lg text-base font-semibold border border-primary text-primary bg-card hover:bg-primary/5 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-600 disabled:opacity-50">
+          <button className="inline-flex items-center justify-center gap-2 w-full h-12 rounded-lg text-base font-semibold border border-ink-black text-ink-black bg-canvas-white hover:bg-ink-black/5 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring-blue disabled:opacity-50">
             <Sparkles size={24} />
             AI 최적화 제안 받기
           </button>

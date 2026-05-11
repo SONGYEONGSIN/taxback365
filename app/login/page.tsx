@@ -18,7 +18,7 @@ function LogoMark() {
     >
       <path d="M5 4 L19 4" />
       <path d="M5 12 L19 12" />
-      <path d="M5 20 L19 20" className="text-mint" />
+      <path d="M5 20 L19 20" className="text-fresh-green" />
       <path d="M12 4 L12 20" />
     </svg>
   );
@@ -68,23 +68,23 @@ export default function LoginPage() {
         <div className="text-center mb-10">
           <Link
             href="/"
-            className="inline-flex items-center gap-2 text-foreground hover:opacity-80 transition-opacity mb-6"
+            className="inline-flex items-center gap-2 text-ink-black hover:opacity-80 transition-opacity mb-6"
             aria-label="taxback365 홈"
           >
             <LogoMark />
           </Link>
-          <h1 className="text-h1 text-foreground">다시 만나 반가워요</h1>
-          <p className="text-body-sm text-neutral-500 mt-2">
+          <h1 className="text-h1 text-ink-black">다시 만나 반가워요</h1>
+          <p className="text-body-sm text-shadow-gray mt-2">
             로그인하고 환급 가능 금액을 확인하세요.
           </p>
         </div>
 
         {/* Main Card */}
-        <div className="bg-card rounded-lg border border-neutral-200 p-7 space-y-5">
+        <div className="bg-canvas-white rounded-lg border border-border-light p-7 space-y-5">
           <div className="space-y-2.5">
             <button
               onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
-              className="w-full h-11 inline-flex items-center justify-center gap-2.5 rounded-md border border-neutral-200 bg-card text-body-sm font-medium text-foreground hover:bg-neutral-50 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-600 focus-visible:ring-offset-2"
+              className="w-full h-11 inline-flex items-center justify-center gap-2.5 rounded-md border border-border-light bg-canvas-white text-body-sm font-medium text-ink-black hover:bg-subtle-ash transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring-blue focus-visible:ring-offset-2"
             >
               <GoogleIcon />
               Google로 계속하기
@@ -92,7 +92,7 @@ export default function LoginPage() {
 
             <button
               onClick={() => signIn("github", { callbackUrl: "/dashboard" })}
-              className="w-full h-11 inline-flex items-center justify-center gap-2.5 rounded-md bg-neutral-900 text-card text-body-sm font-medium hover:opacity-90 transition-opacity focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-600 focus-visible:ring-offset-2"
+              className="w-full h-11 inline-flex items-center justify-center gap-2.5 rounded-md bg-ink-black text-canvas-white text-body-sm font-medium hover:opacity-90 transition-opacity focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring-blue focus-visible:ring-offset-2"
             >
               <GithubIcon />
               GitHub로 계속하기
@@ -101,10 +101,10 @@ export default function LoginPage() {
 
           <div className="relative">
             <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-neutral-200" />
+              <div className="w-full border-t border-border-light" />
             </div>
             <div className="relative flex justify-center">
-              <span className="bg-card px-3 text-caption text-neutral-500">
+              <span className="bg-canvas-white px-3 text-caption text-shadow-gray">
                 또는 이메일로
               </span>
             </div>
@@ -115,7 +115,7 @@ export default function LoginPage() {
             <div className="flex flex-col gap-1.5">
               <label
                 htmlFor="email"
-                className="text-body-sm font-medium text-foreground"
+                className="text-body-sm font-medium text-ink-black"
               >
                 이메일
               </label>
@@ -123,13 +123,13 @@ export default function LoginPage() {
                 id="email"
                 type="email"
                 placeholder="your@email.com"
-                className="w-full h-11 rounded-md border border-neutral-200 bg-card px-3.5 text-body text-foreground placeholder:text-neutral-300 hover:border-neutral-300 focus-visible:outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary-600/25 transition-colors"
+                className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
               />
             </div>
             <div className="flex flex-col gap-1.5">
               <label
                 htmlFor="password"
-                className="text-body-sm font-medium text-foreground"
+                className="text-body-sm font-medium text-ink-black"
               >
                 비밀번호
               </label>
@@ -137,7 +137,7 @@ export default function LoginPage() {
                 id="password"
                 type="password"
                 placeholder="••••••••"
-                className="w-full h-11 rounded-md border border-neutral-200 bg-card px-3.5 text-body text-foreground placeholder:text-neutral-300 hover:border-neutral-300 focus-visible:outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary-600/25 transition-colors"
+                className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
               />
             </div>
           </div>
@@ -146,11 +146,13 @@ export default function LoginPage() {
             <label className="inline-flex items-center gap-2 cursor-pointer">
               <input
                 type="checkbox"
-                className="w-4 h-4 rounded border-neutral-300 text-primary focus:ring-primary-600"
+                className="w-4 h-4 rounded border-border-muted text-ink-black focus:ring-focus-ring-blue"
               />
-              <span className="text-body-sm text-neutral-700">로그인 유지</span>
+              <span className="text-body-sm text-thunder-gray">
+                로그인 유지
+              </span>
             </label>
-            <button className="text-body-sm text-neutral-500 hover:text-foreground transition-colors">
+            <button className="text-body-sm text-shadow-gray hover:text-ink-black transition-colors">
               비밀번호 찾기
             </button>
           </div>
@@ -160,11 +162,11 @@ export default function LoginPage() {
           </Button>
         </div>
 
-        <p className="text-center text-body-sm text-neutral-500 mt-6">
+        <p className="text-center text-body-sm text-shadow-gray mt-6">
           아직 계정이 없으신가요?{" "}
           <Link
             href="/signup"
-            className="font-medium text-primary-600 hover:text-primary transition-colors"
+            className="font-medium text-accent-blue hover:text-ink-black transition-colors"
           >
             무료로 회원가입
           </Link>
