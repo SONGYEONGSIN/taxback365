@@ -39,6 +39,10 @@ tsconfig.tsbuildinfo
 .claude/messages/.last-model-suggest
 .claude/events.jsonl
 .claude/store.db
+.claude/.last-memory-sync
+.claude/agent-memory/
+.claude/memory-sync.log
+.claude/memory/auto-build-runs.jsonl
 .claude/**/*.bak.*
 # 추적 대상: .claude/memory/, .claude/messages/debates/, .claude/plans/
 # settings.local.json은 *.local 패턴으로 이미 무시됨
