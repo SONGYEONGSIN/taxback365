@@ -17,7 +17,7 @@ import { Button } from "@/components/ui/Button";
 const SESSION_TIMEOUT = 30 * 60; // 30분 (초)
 
 /** 임시 인라인 로고 — Phase 5 (T25) 에서 /public/logo.svg 로 분리 예정.
- *  ㅌ 자모: 가로획 3 (마지막만 Mint) + 세로획 1. */
+ *  ㅌ 자모: 가로획 3 + 세로획 1. Dub은 monochrome (ink-black). */
 function LogoMark({ size = 22 }: { size?: number }) {
   return (
     <svg
@@ -32,8 +32,7 @@ function LogoMark({ size = 22 }: { size?: number }) {
     >
       <path d="M5 4 L19 4" />
       <path d="M5 12 L19 12" />
-      {/* 마지막 가로획 — Mint 액센트 */}
-      <path d="M5 20 L19 20" className="text-mint" stroke="currentColor" />
+      <path d="M5 20 L19 20" />
       <path d="M12 4 L12 20" />
     </svg>
   );
@@ -105,15 +104,15 @@ export function Navigation() {
 
   return (
     <>
-      <nav className="sticky top-0 z-40 h-16 bg-card/85 backdrop-blur-md border-b border-neutral-200">
-        <div className="container mx-auto h-full px-4 md:px-6 max-w-6xl flex items-center justify-between">
+      <nav className="sticky top-0 z-40 h-16 bg-canvas-white border-b border-border-light">
+        <div className="container mx-auto h-full px-4 md:px-6 max-w-[1200px] flex items-center justify-between">
           <Link
             href="/"
-            className="flex items-center gap-2 text-foreground hover:opacity-80 transition-opacity shrink-0"
+            className="flex items-center gap-2 text-ink-black hover:opacity-80 transition-opacity shrink-0"
             aria-label="taxback365 홈"
           >
             <LogoMark />
-            <span className="font-display font-semibold text-[17px] tracking-[-0.02em]">
+            <span className="font-display font-semibold text-heading-sm tracking-tight">
               taxback365
             </span>
           </Link>
@@ -128,10 +127,10 @@ export function Navigation() {
                     key={item.href}
                     href={item.href}
                     className={clsx(
-                      "relative px-3 py-2 rounded-md text-body-sm font-medium transition-colors duration-150",
+                      "relative px-3 py-2 rounded-md text-body font-medium transition-colors duration-150",
                       active
-                        ? "text-foreground after:absolute after:left-3 after:right-3 after:-bottom-[1.05rem] after:h-[2px] after:bg-primary"
-                        : "text-neutral-700 hover:text-foreground hover:bg-neutral-100",
+                        ? "text-ink-black after:absolute after:left-3 after:right-3 after:-bottom-[1.05rem] after:h-[2px] after:bg-ink-black"
+                        : "text-thunder-gray hover:text-ink-black hover:bg-subtle-ash",
                     )}
                   >
                     {item.label}
@@ -145,15 +144,15 @@ export function Navigation() {
             {session ? (
               <>
                 <div className="hidden md:flex items-center gap-2">
-                  <span className="text-body-sm font-medium text-foreground">
+                  <span className="text-body-sm font-medium text-ink-black">
                     {session.user?.name || "사용자"}님
                   </span>
                   <span
                     className={clsx(
-                      "inline-flex items-center gap-1 px-2 py-0.5 rounded-pill text-caption font-medium",
+                      "inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-caption font-medium",
                       isTimeWarning
-                        ? "bg-danger/10 text-danger"
-                        : "bg-neutral-100 text-neutral-500",
+                        ? "bg-warm-orange/10 text-warm-orange"
+                        : "bg-subtle-ash text-shadow-gray",
                     )}
                   >
                     <Clock size={11} strokeWidth={2} />
@@ -162,7 +161,7 @@ export function Navigation() {
                     </span>
                   </span>
                 </div>
-                <div className="w-8 h-8 rounded-pill border border-neutral-200 bg-neutral-100 overflow-hidden">
+                <div className="w-8 h-8 rounded-full border border-border-light bg-subtle-ash overflow-hidden">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={
@@ -185,13 +184,13 @@ export function Navigation() {
               <div className="flex items-center gap-2">
                 <Link
                   href="/login"
-                  className="inline-flex items-center justify-center h-9 px-3.5 rounded-md text-body-sm font-medium text-foreground hover:bg-neutral-100 transition-colors"
+                  className="inline-flex items-center justify-center h-9 px-4 rounded-full text-body font-medium text-thunder-gray hover:text-ink-black hover:bg-subtle-ash transition-colors"
                 >
                   로그인
                 </Link>
                 <Link
                   href="/signup"
-                  className="inline-flex items-center justify-center h-9 px-4 rounded-md text-body-sm font-semibold bg-primary text-primary-foreground hover:bg-primary-700 transition-colors"
+                  className="inline-flex items-center justify-center h-9 px-4 rounded-full text-body font-medium bg-ink-black text-canvas-white hover:opacity-90 transition-opacity shadow-subtle"
                 >
                   회원가입
                 </Link>
@@ -203,7 +202,7 @@ export function Navigation() {
 
       {/* Mobile Bottom Navigation */}
       {showMobileNav && (
-        <nav className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-card border-t border-neutral-200 shadow-floating">
+        <nav className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-canvas-white border-t border-border-light shadow-sm">
           <div className="flex justify-around items-center h-16 px-2">
             {[
               {
@@ -237,8 +236,8 @@ export function Navigation() {
                 className={clsx(
                   "flex flex-col items-center justify-center flex-1 h-full gap-0.5 rounded-md transition-colors",
                   active
-                    ? "text-primary"
-                    : "text-neutral-500 hover:text-foreground",
+                    ? "text-ink-black"
+                    : "text-shadow-gray hover:text-ink-black",
                 )}
               >
                 <Icon size={20} strokeWidth={active ? 2.25 : 1.75} />

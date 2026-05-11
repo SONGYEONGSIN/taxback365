@@ -1,7 +1,13 @@
 import * as React from "react";
 import clsx from "clsx";
 
-type Variant = "success" | "warning" | "danger" | "neutral" | "outline";
+type Variant =
+  | "success"
+  | "warning"
+  | "danger"
+  | "info"
+  | "neutral"
+  | "outline";
 
 /** 기존 코드 호환을 위한 legacy variant. 새 코드는 variant prop을 사용한다. */
 type LegacyType = "high" | "medium" | "low" | "new";
@@ -13,18 +19,20 @@ interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
 }
 
 const variantClass: Record<Variant, string> = {
-  success: "bg-mint/15 text-mint-dark",
-  warning: "bg-warning/15 text-warning",
-  danger: "bg-danger/15 text-danger",
-  neutral: "bg-neutral-100 text-neutral-700",
-  outline: "border border-neutral-200 bg-transparent text-neutral-700",
+  // Dub functional accents — subtle bg + saturated text
+  success: "bg-highlight-green/20 text-fresh-green",
+  warning: "bg-highlight-orange/30 text-warm-orange",
+  danger: "bg-highlight-orange/40 text-warm-orange",
+  info: "bg-highlight-violet/20 text-deep-violet",
+  neutral: "bg-subtle-ash text-shadow-gray",
+  outline: "border border-border-light bg-transparent text-ink-black",
 };
 
 const legacyMap: Record<LegacyType, { variant: Variant; label: string }> = {
   high: { variant: "danger", label: "HIGH IMPACT" },
   medium: { variant: "warning", label: "MEDIUM" },
-  low: { variant: "success", label: "INFO" },
-  new: { variant: "outline", label: "NEW 2026" },
+  low: { variant: "neutral", label: "INFO" },
+  new: { variant: "info", label: "NEW 2026" },
 };
 
 export function Badge({
@@ -46,7 +54,7 @@ export function Badge({
   return (
     <span
       className={clsx(
-        "inline-flex items-center px-2 py-0.5 rounded-pill text-caption font-medium",
+        "inline-flex items-center px-3 py-1 rounded-full text-caption font-medium",
         variantClass[resolvedVariant],
         className,
       )}

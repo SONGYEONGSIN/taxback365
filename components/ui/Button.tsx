@@ -11,37 +11,28 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const base =
-  "inline-flex items-center justify-center gap-2 rounded-md font-medium transition-colors duration-150 disabled:cursor-not-allowed focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2";
+  "inline-flex items-center justify-center gap-2 rounded-full font-medium transition-colors duration-150 disabled:cursor-not-allowed disabled:opacity-50 disabled:pointer-events-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 focus-visible:ring-offset-2";
 
 const sizeClass: Record<Size, string> = {
-  sm: "h-9 px-3.5 text-[13px]",
-  md: "h-11 px-5 text-[14px]",
+  sm: "h-8 px-3 text-caption",
+  md: "h-10 px-4 text-body",
 };
 
 const variantClass: Record<Variant, string> = {
   primary: clsx(
-    "bg-primary text-primary-foreground font-semibold",
-    "hover:bg-primary-700",
-    "focus-visible:ring-primary-600",
-    "disabled:bg-neutral-300",
+    "bg-ink-black text-canvas-white font-medium",
+    "hover:opacity-90",
+    "shadow-subtle",
   ),
   secondary: clsx(
-    "bg-card text-foreground border border-neutral-200",
-    "hover:bg-neutral-100 hover:border-neutral-300",
-    "focus-visible:ring-primary-600",
-    "disabled:opacity-50",
+    "bg-canvas-white text-ink-black border border-border-light",
+    "hover:bg-subtle-ash",
   ),
-  ghost: clsx(
-    "bg-transparent text-foreground",
-    "hover:bg-neutral-100",
-    "focus-visible:ring-primary-600",
-    "disabled:opacity-50",
-  ),
+  ghost: clsx("bg-transparent text-ink-black", "hover:bg-subtle-ash"),
+  // Dub은 red 미사용 — danger는 warm-orange 톤으로 통일
   danger: clsx(
-    "bg-danger text-card font-semibold",
-    "hover:brightness-90",
-    "focus-visible:ring-danger",
-    "disabled:opacity-50",
+    "bg-warm-orange text-canvas-white font-medium",
+    "hover:opacity-90",
   ),
 };
 

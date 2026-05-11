@@ -11,7 +11,7 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
 }
 
 const baseField =
-  "w-full h-11 px-3.5 rounded-md bg-card text-foreground text-body placeholder:text-neutral-300 transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-600/25";
+  "w-full h-10 px-3 rounded-md bg-canvas-white text-system-info text-body placeholder:text-steel-gray transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30";
 
 export const Input = React.forwardRef<HTMLInputElement, InputProps>(
   function Input(
@@ -35,15 +35,15 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
     const describedBy = errorId ?? helpId;
 
     const fieldBorder = errorText
-      ? "border border-danger focus-visible:border-danger focus-visible:ring-danger/25"
-      : "border border-neutral-200 hover:border-neutral-300 focus-visible:border-primary";
+      ? "border border-warm-orange focus-visible:border-warm-orange focus-visible:ring-warm-orange/30"
+      : "border border-border-muted hover:border-shadow-gray focus-visible:border-focus-ring-blue";
 
     return (
       <div className="flex flex-col gap-1.5">
         {label ? (
           <label
             htmlFor={fieldId}
-            className="text-body-sm font-medium text-foreground"
+            className="text-body-sm font-medium text-ink-black"
           >
             {label}
           </label>
@@ -60,24 +60,24 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
               baseField,
               fieldBorder,
               amount && "font-mono text-right tabular-nums pr-9",
-              disabled && "bg-neutral-100 text-neutral-300 cursor-not-allowed",
+              disabled && "bg-subtle-ash text-steel-gray cursor-not-allowed",
               className,
             )}
             {...props}
           />
           {amount || suffix ? (
-            <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-body-sm text-neutral-500">
+            <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-body-sm text-shadow-gray">
               {suffix ?? "원"}
             </span>
           ) : null}
         </div>
 
         {errorText ? (
-          <p id={errorId} className="text-caption text-danger">
+          <p id={errorId} className="text-caption text-warm-orange">
             {errorText}
           </p>
         ) : helpText ? (
-          <p id={helpId} className="text-caption text-neutral-500">
+          <p id={helpId} className="text-caption text-shadow-gray">
             {helpText}
           </p>
         ) : null}

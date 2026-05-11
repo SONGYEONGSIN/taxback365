@@ -1,129 +1,203 @@
 @import "tailwindcss";
-@import "pretendard/dist/web/variable/pretendardvariable-dynamic-subset.css";
 
 @custom-variant dark (&:is(.dark *));
 
+/* ─────────────────────────────────────────────────────────────────
+ * Dub Design System — Crisp Utility on White Canvas
+ * 1차 리뉴얼(Navy + Mint + Pretendard) 위에 덮어쓴 2차 시각 정체성.
+ * 한국 카피 유지 + Inter 본문 + system Korean fallback.
+ * ───────────────────────────────────────────────────────────────── */
+
 :root {
   /* Base */
-  --font-size: 15px;
+  --font-size: 14px;
 
-  /* Surfaces */
-  --background: oklch(0.978 0.003 247);
-  --foreground: oklch(0.18 0.04 262);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.18 0.04 262);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.18 0.04 262);
+  /* Colors — Dub palette */
+  --color-canvas-white: #ffffff;
+  --color-jet-black: #000000;
+  --color-ink-black: #0a0a0a;
+  --color-thunder-gray: #171717;
+  --color-shadow-gray: #262626;
+  --color-steel-gray: #404040;
+  --color-subtle-ash: #f5f5f5;
+  --color-border-light: #e5e5e5;
+  --color-border-muted: #d4d4d4;
+  --color-accent-blue: #3b82f6;
+  --color-fresh-green: #16a34a;
+  --color-warm-orange: #ea580c;
+  --color-deep-violet: #7c3aed;
+  --color-system-info: #111827;
+  --color-focus-ring-blue: #1e40af;
+  --color-highlight-green: #4ade80;
+  --color-highlight-violet: #c084fc;
+  --color-highlight-orange: #fb923c;
+  --color-linear-gray-dark: #525252;
+  --color-linear-gray-light: #737373;
 
-  /* Primary (Navy scale) */
-  --primary: oklch(0.235 0.058 262);
-  --primary-foreground: oklch(1 0 0);
-  --primary-700: oklch(0.345 0.073 262);
-  --primary-600: oklch(0.435 0.08 262);
+  /* Gradients */
+  --gradient-linear-gray-dark: linear-gradient(
+    rgb(82, 82, 82),
+    rgb(23, 23, 23)
+  );
+  --gradient-linear-gray-light: linear-gradient(
+    rgb(115, 115, 115),
+    rgb(38, 38, 38)
+  );
 
-  /* Secondary surface */
-  --secondary: oklch(1 0 0);
-  --secondary-foreground: oklch(0.18 0.04 262);
+  /* Surface aliases (페이지 의미 매핑) */
+  --background: var(--color-canvas-white);
+  --foreground: var(--color-ink-black);
+  --card: var(--color-canvas-white);
+  --card-foreground: var(--color-ink-black);
+  --popover: var(--color-canvas-white);
+  --popover-foreground: var(--color-ink-black);
 
-  /* Mint accent (환급 / 성공) */
-  --accent-mint: oklch(0.745 0.155 158);
-  --accent-mint-dark: oklch(0.605 0.145 158);
+  /* Primary / semantic aliases */
+  --primary: var(--color-ink-black);
+  --primary-foreground: var(--color-canvas-white);
+  --secondary: var(--color-canvas-white);
+  --secondary-foreground: var(--color-ink-black);
+  --muted: var(--color-subtle-ash);
+  --muted-foreground: var(--color-shadow-gray);
+  --border: var(--color-border-light);
+  --input: var(--color-canvas-white);
+  --ring: var(--color-focus-ring-blue);
+  --destructive: var(--color-warm-orange);
+  --destructive-foreground: var(--color-canvas-white);
 
-  /* Semantic */
-  --warning: oklch(0.64 0.135 70);
-  --danger: oklch(0.555 0.165 28);
-  --success: oklch(0.605 0.145 158);
-  --destructive: oklch(0.555 0.165 28);
-  --destructive-foreground: oklch(1 0 0);
+  /* Typography — Scale (Dub 7-tier) */
+  --text-caption: 10px;
+  --leading-caption: 1.4;
+  --text-body: 14px;
+  --leading-body: 1.43;
+  --text-subheading: 18px;
+  --leading-subheading: 1.56;
+  --text-heading-sm: 24px;
+  --leading-heading-sm: 1.33;
+  --text-heading: 30px;
+  --leading-heading: 1.33;
+  --text-heading-lg: 36px;
+  --leading-heading-lg: 1.11;
+  --text-display: 48px;
+  --leading-display: 1.15;
 
-  /* Neutral scale (Slate, slightly cool) */
-  --neutral-50: oklch(0.978 0.003 247);
-  --neutral-100: oklch(0.943 0.006 247);
-  --neutral-200: oklch(0.89 0.01 247);
-  --neutral-300: oklch(0.785 0.013 247);
-  --neutral-500: oklch(0.555 0.018 247);
-  --neutral-700: oklch(0.355 0.02 247);
-  --neutral-900: oklch(0.18 0.04 262);
+  /* Spacing — 4px base unit, 16-step scale */
+  --spacing-4: 4px;
+  --spacing-8: 8px;
+  --spacing-12: 12px;
+  --spacing-16: 16px;
+  --spacing-20: 20px;
+  --spacing-24: 24px;
+  --spacing-28: 28px;
+  --spacing-32: 32px;
+  --spacing-36: 36px;
+  --spacing-40: 40px;
+  --spacing-48: 48px;
+  --spacing-56: 56px;
+  --spacing-64: 64px;
+  --spacing-80: 80px;
+  --spacing-96: 96px;
+  --spacing-112: 112px;
 
-  /* Component-level */
-  --muted: var(--neutral-100);
-  --muted-foreground: var(--neutral-500);
-  --border: var(--neutral-200);
-  --input: var(--card);
-  --ring: var(--primary-600);
+  /* Layout */
+  --page-max-width: 1200px;
+  --section-gap: 64px;
+  --card-padding: 16px;
+  --element-gap: 16px;
 
-  /* Radius */
-  --radius-sm: 6px;
+  /* Border Radius */
   --radius-md: 8px;
-  --radius-lg: 12px;
-  --radius-pill: 9999px;
+  --radius-xl: 12px;
+  --radius-2xl: 16px;
+  --radius-2xl-2: 20px;
+  --radius-full: 9999px;
   --radius: var(--radius-md);
 
-  /* Shadow tiers (Navy-tinted, soft) */
-  --shadow-resting: 0 1px 2px 0 rgb(15 37 71 / 0.04);
-  --shadow-raised:
-    0 1px 3px 0 rgb(15 37 71 / 0.06), 0 1px 2px -1px rgb(15 37 71 / 0.04);
-  --shadow-floating:
-    0 10px 15px -3px rgb(15 37 71 / 0.08), 0 4px 6px -4px rgb(15 37 71 / 0.05);
+  /* Shadows — Diffused soft, no hard offsets */
+  --shadow-subtle: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
+  --shadow-sm:
+    rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.1) 0px 2px 4px -2px;
+  --shadow-sm-2: rgba(0, 0, 0, 0.2) 0px 2px 6px 0px inset;
+  --shadow-subtle-2: rgba(0, 0, 0, 0.1) 0px 0px 0px 4px;
+  --shadow-md:
+    rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.1) 0px 4px 6px -4px;
+  --shadow-lg: rgba(0, 0, 0, 0.09) 0px 20px 20px 0px;
+  --shadow-subtle-3:
+    rgb(255, 255, 255) 0px 0px 0px 3px, rgb(0, 0, 0) 0px 0px 0px 4px;
 }
 
 @theme inline {
+  /* Color tokens — Tailwind v4 노출 (Dub 19 + 시맨틱 별칭) */
+  --color-canvas-white: var(--color-canvas-white);
+  --color-jet-black: var(--color-jet-black);
+  --color-ink-black: var(--color-ink-black);
+  --color-thunder-gray: var(--color-thunder-gray);
+  --color-shadow-gray: var(--color-shadow-gray);
+  --color-steel-gray: var(--color-steel-gray);
+  --color-subtle-ash: var(--color-subtle-ash);
+  --color-border-light: var(--color-border-light);
+  --color-border-muted: var(--color-border-muted);
+  --color-accent-blue: var(--color-accent-blue);
+  --color-fresh-green: var(--color-fresh-green);
+  --color-warm-orange: var(--color-warm-orange);
+  --color-deep-violet: var(--color-deep-violet);
+  --color-system-info: var(--color-system-info);
+  --color-focus-ring-blue: var(--color-focus-ring-blue);
+  --color-highlight-green: var(--color-highlight-green);
+  --color-highlight-violet: var(--color-highlight-violet);
+  --color-highlight-orange: var(--color-highlight-orange);
+  --color-linear-gray-dark: var(--color-linear-gray-dark);
+  --color-linear-gray-light: var(--color-linear-gray-light);
+
+  /* Semantic aliases */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
   --color-card-foreground: var(--card-foreground);
   --color-popover: var(--popover);
   --color-popover-foreground: var(--popover-foreground);
-
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
-  --color-primary-700: var(--primary-700);
-  --color-primary-600: var(--primary-600);
-
   --color-secondary: var(--secondary);
   --color-secondary-foreground: var(--secondary-foreground);
-
-  --color-accent: var(--accent-mint);
-  --color-accent-foreground: var(--accent-mint-dark);
-  --color-mint: var(--accent-mint);
-  --color-mint-dark: var(--accent-mint-dark);
-
-  --color-warning: var(--warning);
-  --color-danger: var(--danger);
-  --color-success: var(--success);
-  --color-destructive: var(--destructive);
-  --color-destructive-foreground: var(--destructive-foreground);
-
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
 
-  --color-neutral-50: var(--neutral-50);
-  --color-neutral-100: var(--neutral-100);
-  --color-neutral-200: var(--neutral-200);
-  --color-neutral-300: var(--neutral-300);
-  --color-neutral-500: var(--neutral-500);
-  --color-neutral-700: var(--neutral-700);
-  --color-neutral-900: var(--neutral-900);
-
-  --radius-sm: var(--radius-sm);
+  /* Radius */
   --radius-md: var(--radius-md);
-  --radius-lg: var(--radius-lg);
-  --radius-pill: var(--radius-pill);
+  --radius-xl: var(--radius-xl);
+  --radius-2xl: var(--radius-2xl);
+  --radius-2xl-2: var(--radius-2xl-2);
+  --radius-full: var(--radius-full);
 
-  --shadow-resting: var(--shadow-resting);
-  --shadow-raised: var(--shadow-raised);
-  --shadow-floating: var(--shadow-floating);
+  /* Shadows */
+  --shadow-subtle: var(--shadow-subtle);
+  --shadow-sm: var(--shadow-sm);
+  --shadow-sm-2: var(--shadow-sm-2);
+  --shadow-subtle-2: var(--shadow-subtle-2);
+  --shadow-md: var(--shadow-md);
+  --shadow-lg: var(--shadow-lg);
+  --shadow-subtle-3: var(--shadow-subtle-3);
 
-  /* Fonts: Pretendard handles 한글, Inter handles 영문/숫자, Inter Mono for displays */
+  /* Fonts —
+   *  display: Montserrat (영문 한정, 한글은 Apple SD Gothic Neo/Malgun Gothic fallback)
+   *  body:    Inter (영문/숫자) + system Korean fallback
+   *  mono:    system mono stack
+   */
   --font-display:
-    var(--font-inter), "Pretendard Variable", Pretendard, system-ui, sans-serif;
+    var(--font-montserrat-loaded), "Montserrat", "Apple SD Gothic Neo",
+    "Malgun Gothic", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
   --font-body:
-    "Pretendard Variable", Pretendard, var(--font-inter), system-ui, sans-serif;
+    var(--font-inter-loaded), "Inter", "Apple SD Gothic Neo", "Malgun Gothic",
+    system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
   --font-mono:
-    var(--font-inter), "JetBrains Mono", "SF Mono", ui-monospace, monospace;
+    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+    "Courier New", monospace;
 }
 
 @layer base {
@@ -139,32 +213,25 @@
   }
 
   body {
-    @apply bg-background text-foreground font-body antialiased;
+    @apply bg-canvas-white text-ink-black font-body antialiased;
     overflow-x: hidden;
     font-size: var(--font-size);
-    line-height: 1.6;
-    font-feature-settings: "ss06", "case";
-    /* Tabular numerals 강제: 모든 숫자 정렬 일관성 */
+    line-height: var(--leading-body);
     font-variant-numeric: tabular-nums;
   }
 
+  /* Dub은 헤딩에 별도 weight 강제 없음 — 컴포넌트가 결정 */
   h1,
   h2,
   h3,
   h4,
   h5,
   h6 {
-    @apply font-display text-foreground;
-    font-weight: 600;
-    letter-spacing: -0.02em;
+    @apply text-ink-black;
+    letter-spacing: -0.01em;
   }
 
-  h1 {
-    letter-spacing: -0.025em;
-    font-weight: 700;
-  }
-
-  /* Form 요소 기본 reset (Tailwind preflight 보강) */
+  /* Form 요소 기본 reset */
   input,
   textarea,
   select,
@@ -173,20 +240,21 @@
     font-variant-numeric: tabular-nums;
   }
 
-  /* Focus ring 기본 (키보드 포커스만) */
   :focus-visible {
-    outline: 2px solid var(--primary-600);
+    outline: 2px solid var(--color-focus-ring-blue);
     outline-offset: 2px;
   }
 
   ::selection {
-    background-color: oklch(0.745 0.155 158 / 0.25);
-    color: var(--foreground);
+    background-color: var(--color-accent-blue);
+    color: var(--color-canvas-white);
   }
 }
 
 @layer utilities {
-  /* Mono 디스플레이 숫자 (DESIGN.md §3 탈템플릿 결정 #1) */
+  /* ───────────────────────────────────────────────────────────────
+   * Mono 디스플레이 숫자
+   * ─────────────────────────────────────────────────────────────── */
   .text-mono-display {
     font-family: var(--font-mono);
     font-feature-settings: "tnum", "ss01";
@@ -194,63 +262,72 @@
     letter-spacing: -0.01em;
   }
 
-  /* 타이포그래피 시맨틱 클래스 (DESIGN.md §3) */
+  /* ───────────────────────────────────────────────────────────────
+   * 타이포그래피 시맨틱 클래스 (Dub 7-tier 매핑)
+   *  - text-hero  = display    48px / 1.15
+   *  - text-h1    = heading-lg 36px / 1.11
+   *  - text-h2    = heading    30px / 1.33
+   *  - text-h3    = heading-sm 24px / 1.33
+   *  - text-body  = 14px / 1.43 (default)
+   *  - text-body-sm = 13px / 1.5
+   *  - text-caption = 10px / 1.4
+   * ─────────────────────────────────────────────────────────────── */
   .text-hero {
-    font-size: 56px;
-    line-height: 1.05;
-    font-weight: 700;
-    letter-spacing: -0.03em;
+    font-family: var(--font-display);
+    font-size: var(--text-display);
+    line-height: var(--leading-display);
+    font-weight: 500;
+    letter-spacing: -0.025em;
   }
   @media (max-width: 767px) {
     .text-hero {
-      font-size: 40px;
-      line-height: 1.1;
+      font-size: 36px;
+      line-height: 1.15;
     }
   }
   .text-h1 {
-    font-size: 36px;
-    line-height: 1.15;
-    font-weight: 700;
-    letter-spacing: -0.025em;
-  }
-  .text-h2 {
-    font-size: 28px;
-    line-height: 1.25;
-    font-weight: 600;
+    font-family: var(--font-display);
+    font-size: var(--text-heading-lg);
+    line-height: var(--leading-heading-lg);
+    font-weight: 500;
     letter-spacing: -0.02em;
   }
+  .text-h2 {
+    font-size: var(--text-heading);
+    line-height: var(--leading-heading);
+    font-weight: 600;
+    letter-spacing: -0.015em;
+  }
   .text-h3 {
-    font-size: 20px;
-    line-height: 1.35;
+    font-size: var(--text-heading-sm);
+    line-height: var(--leading-heading-sm);
     font-weight: 600;
     letter-spacing: -0.01em;
   }
   .text-body {
-    font-size: 15px;
-    line-height: 1.6;
+    font-size: var(--text-body);
+    line-height: var(--leading-body);
     font-weight: 400;
   }
   .text-body-sm {
-    font-size: 14px;
-    line-height: 1.55;
+    font-size: 13px;
+    line-height: 1.5;
     font-weight: 400;
   }
-  .text-caption {
-    font-size: 12px;
-    line-height: 1.5;
+  .text-subheading {
+    font-size: var(--text-subheading);
+    line-height: var(--leading-subheading);
     font-weight: 500;
-    letter-spacing: 0.01em;
+  }
+  .text-caption {
+    font-size: var(--text-caption);
+    line-height: var(--leading-caption);
+    font-weight: 400;
   }
 
-  /* Hero 배경 (랜딩 한정) */
-  .bg-hero-gradient {
-    background: linear-gradient(
-      180deg,
-      oklch(0.985 0.003 247) 0%,
-      oklch(0.978 0.003 247) 100%
-    );
-  }
-
+  /* ───────────────────────────────────────────────────────────────
+   * 애니메이션 (1차에서 도입, 본 plan 유지)
+   * ─────────────────────────────────────────────────────────────── */
   .animate-fade-in {
     animation: fadeIn 0.5s ease-out forwards;
   }

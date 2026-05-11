@@ -14,7 +14,7 @@ function LogoMark({ size = 20 }: { size?: number }) {
     >
       <path d="M5 4 L19 4" />
       <path d="M5 12 L19 12" />
-      <path d="M5 20 L19 20" className="text-mint" stroke="currentColor" />
+      <path d="M5 20 L19 20" />
       <path d="M12 4 L12 20" />
     </svg>
   );
@@ -22,20 +22,20 @@ function LogoMark({ size = 20 }: { size?: number }) {
 
 export function Footer() {
   return (
-    <footer className="border-t border-neutral-200 bg-card mt-auto">
-      <div className="container mx-auto px-4 md:px-6 max-w-6xl py-16">
+    <footer className="border-t border-border-light bg-canvas-white mt-auto">
+      <div className="container mx-auto px-4 md:px-6 max-w-[1200px] py-16">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-10">
           <div className="col-span-2 md:col-span-1">
             <Link
               href="/"
-              className="inline-flex items-center gap-2 text-foreground hover:opacity-80 transition-opacity"
+              className="inline-flex items-center gap-2 text-ink-black hover:opacity-80 transition-opacity"
             >
               <LogoMark />
-              <span className="font-display font-semibold text-[17px] tracking-[-0.02em]">
+              <span className="font-display font-semibold text-heading-sm tracking-tight">
                 taxback365
               </span>
             </Link>
-            <p className="mt-3 text-body-sm text-neutral-500 leading-relaxed">
+            <p className="mt-3 text-body-sm text-shadow-gray leading-relaxed">
               한국 직장인을 위한
               <br />
               연말정산 환급 SaaS.
@@ -43,14 +43,14 @@ export function Footer() {
           </div>
 
           <div>
-            <h4 className="text-caption font-semibold text-neutral-500 uppercase tracking-[0.06em] mb-4">
+            <h4 className="text-caption font-medium text-shadow-gray uppercase tracking-[0.06em] mb-4">
               서비스
             </h4>
             <ul className="space-y-2.5">
               <li>
                 <Link
                   href="/"
-                  className="text-body-sm text-neutral-700 hover:text-foreground transition-colors"
+                  className="text-body-sm text-thunder-gray hover:text-ink-black transition-colors"
                 >
                   기능 소개
                 </Link>
@@ -58,7 +58,7 @@ export function Footer() {
               <li>
                 <Link
                   href="/"
-                  className="text-body-sm text-neutral-700 hover:text-foreground transition-colors"
+                  className="text-body-sm text-thunder-gray hover:text-ink-black transition-colors"
                 >
                   요금 안내
                 </Link>
@@ -66,7 +66,7 @@ export function Footer() {
               <li>
                 <Link
                   href="/"
-                  className="text-body-sm text-neutral-700 hover:text-foreground transition-colors"
+                  className="text-body-sm text-thunder-gray hover:text-ink-black transition-colors"
                 >
                   자주 묻는 질문
                 </Link>
@@ -75,14 +75,14 @@ export function Footer() {
           </div>
 
           <div>
-            <h4 className="text-caption font-semibold text-neutral-500 uppercase tracking-[0.06em] mb-4">
+            <h4 className="text-caption font-medium text-shadow-gray uppercase tracking-[0.06em] mb-4">
               법적 고지
             </h4>
             <ul className="space-y-2.5">
               <li>
                 <Link
                   href="/terms"
-                  className="text-body-sm text-neutral-700 hover:text-foreground transition-colors"
+                  className="text-body-sm text-thunder-gray hover:text-ink-black transition-colors"
                 >
                   이용약관
                 </Link>
@@ -90,7 +90,7 @@ export function Footer() {
               <li>
                 <Link
                   href="/privacy"
-                  className="text-body-sm text-neutral-700 hover:text-foreground transition-colors"
+                  className="text-body-sm text-thunder-gray hover:text-ink-black transition-colors"
                 >
                   개인정보처리방침
                 </Link>
@@ -99,19 +99,19 @@ export function Footer() {
           </div>
 
           <div>
-            <h4 className="text-caption font-semibold text-neutral-500 uppercase tracking-[0.06em] mb-4">
+            <h4 className="text-caption font-medium text-shadow-gray uppercase tracking-[0.06em] mb-4">
               문의
             </h4>
             <ul className="space-y-2.5">
-              <li className="text-body-sm text-neutral-700 font-mono">
+              <li className="text-body-sm text-thunder-gray font-mono">
                 ysong2526@gmail.com
               </li>
             </ul>
           </div>
         </div>
 
-        <div className="border-t border-neutral-200 mt-12 pt-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-          <p className="text-caption text-neutral-500">
+        <div className="border-t border-border-light mt-12 pt-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+          <p className="text-caption text-shadow-gray">
             © 2026 taxback365. All rights reserved.
           </p>
           <div className="flex flex-wrap gap-2">
@@ -119,7 +119,7 @@ export function Footer() {
               href="https://www.nts.go.kr/nts/cm/cntnts/cntntsView.do?mi=6435&cntntsId=7871"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center h-9 px-3.5 rounded-md border border-neutral-200 text-body-sm text-neutral-700 hover:bg-neutral-100 hover:text-foreground transition-colors"
+              className="inline-flex items-center h-9 px-3.5 rounded-full border border-border-light text-body-sm text-thunder-gray hover:bg-subtle-ash hover:text-ink-black transition-colors"
             >
               국세청
             </a>
@@ -127,7 +127,7 @@ export function Footer() {
               href="https://www.koreatax.org/tax/index.php3"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center h-9 px-3.5 rounded-md border border-neutral-200 text-body-sm text-neutral-700 hover:bg-neutral-100 hover:text-foreground transition-colors"
+              className="inline-flex items-center h-9 px-3.5 rounded-full border border-border-light text-body-sm text-thunder-gray hover:bg-subtle-ash hover:text-ink-black transition-colors"
             >
               한국납세자연맹
             </a>

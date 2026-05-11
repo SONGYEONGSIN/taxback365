@@ -1,7 +1,8 @@
 import * as React from "react";
 import clsx from "clsx";
 
-type Variant = "resting" | "raised";
+// Dub 3-variant. 1차의 resting/raised는 호환 매핑으로 그대로 동작.
+type Variant = "outlined" | "raised" | "subtle" | "resting";
 type Padding = "sm" | "md" | "lg" | "none";
 
 interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -18,13 +19,18 @@ const paddingClass: Record<Padding, string> = {
 };
 
 const variantClass: Record<Variant, string> = {
-  resting: "bg-card border border-neutral-200",
-  raised: "bg-card border border-neutral-200 shadow-resting",
+  // Outlined: Dub 표준 (1차 resting 매핑)
+  outlined: "bg-canvas-white border border-border-light rounded-xl",
+  resting: "bg-canvas-white border border-border-light rounded-xl",
+  // Raised: 4px halo (Dub raised)
+  raised: "bg-canvas-white rounded-2xl shadow-subtle-2",
+  // Subtle: ash 배경 (CTA band 등)
+  subtle: "bg-subtle-ash rounded-2xl",
 };
 
 export const Card = React.forwardRef<HTMLDivElement, CardProps>(function Card(
   {
-    variant = "resting",
+    variant = "outlined",
     padding = "md",
     interactive = false,
     className,
@@ -36,11 +42,10 @@ export const Card = React.forwardRef<HTMLDivElement, CardProps>(function Card(
     <div
       ref={ref}
       className={clsx(
-        "rounded-lg",
         variantClass[variant],
         paddingClass[padding],
         interactive &&
-          "transition-shadow duration-200 hover:shadow-raised cursor-pointer",
+          "transition-all duration-200 hover:shadow-subtle cursor-pointer",
         className,
       )}
       {...props}
@@ -70,9 +75,9 @@ export function CardHeader({
       {...props}
     >
       <div className="min-w-0">
-        <h3 className="text-h3 text-foreground">{title}</h3>
+        <h3 className="text-h3 text-ink-black">{title}</h3>
         {description ? (
-          <p className="text-body-sm text-neutral-500 mt-1">{description}</p>
+          <p className="text-body-sm text-shadow-gray mt-1">{description}</p>
         ) : null}
       </div>
       {action ? <div className="flex-shrink-0">{action}</div> : null}
