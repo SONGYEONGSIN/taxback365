@@ -2760,7 +2760,12 @@ export default function CalculatorPage() {
                               </label>
                               <input
                                 type="text"
-                                className={`neo-input ${inputs.salary > 70000000 ? "border-red-500 bg-red-50" : ""}`}
+                                className={clsx(
+                                  "w-full h-11 rounded-md border bg-card px-3.5 text-body text-foreground font-mono tabular-nums text-right placeholder:text-neutral-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-600/25 transition-colors",
+                                  inputs.salary > 70000000
+                                    ? "border-danger bg-danger/5"
+                                    : "border-neutral-200 hover:border-neutral-300 focus-visible:border-primary",
+                                )}
                                 value={formatNumber(inputs.housingSubscription)}
                                 onChange={(e) =>
                                   handleInputChange(
@@ -4506,10 +4511,10 @@ export default function CalculatorPage() {
           onClick={handleCalculate}
           disabled={isCalculating}
           className={clsx(
-            "neo-btn w-full text-xl py-4",
+            "inline-flex items-center justify-center gap-2 w-full h-12 rounded-lg text-base font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-600 disabled:opacity-50",
             isCalculating
-              ? "bg-gray-300 cursor-not-allowed"
-              : "bg-black text-white hover:bg-gray-800",
+              ? "bg-neutral-200 text-neutral-500 cursor-not-allowed"
+              : "bg-foreground text-card hover:bg-primary-700",
           )}
         >
           {isCalculating ? (
@@ -4530,8 +4535,8 @@ export default function CalculatorPage() {
       <div className="lg:col-span-1">
         <div className="sticky top-24">
           {/* 예상 환급액 - 9번 결과 */}
-          <div className="neo-card bg-neo-black text-white mb-4">
-            <h3 className="text-lg font-bold text-gray-400 mb-1">
+          <div className="rounded-lg bg-foreground text-card p-6 mb-4 shadow-md">
+            <h3 className="text-caption font-semibold text-neutral-300 uppercase tracking-[0.06em] mb-2">
               ⑨ 예상 환급액
             </h3>
             {(() => {
@@ -4549,32 +4554,34 @@ export default function CalculatorPage() {
                 <>
                   <div
                     className={clsx(
-                      "text-4xl font-black mb-2",
-                      totalRefund <= 0 ? "text-neo-cyan" : "text-red-400",
+                      "text-mono-display font-bold tabular-nums mb-2",
+                      totalRefund <= 0 ? "text-mint" : "text-danger",
                     )}
                   >
                     {formatNumber(totalRefund)}원
                   </div>
-                  <div className="text-xs text-gray-500 space-y-1">
-                    <p className="font-bold text-gray-400">▸ 소득세</p>
+                  <div className="text-xs text-neutral-400 space-y-1">
+                    <p className="font-semibold text-neutral-300">▸ 소득세</p>
                     <p className="pl-2">
                       결정세액: {formatNumber(result.finalTax)}원
                     </p>
                     <p className="pl-2">
                       기납부세액: -{formatNumber(result.withheldTax)}원
                     </p>
-                    <p className="pl-2 text-neo-cyan">
+                    <p className="pl-2 text-mint">
                       → 소득세 환급: {formatNumber(incomeTaxRefund)}원
                     </p>
 
-                    <p className="font-bold text-gray-400 pt-1">▸ 지방소득세</p>
+                    <p className="font-semibold text-neutral-300 pt-1">
+                      ▸ 지방소득세
+                    </p>
                     <p className="pl-2">
                       결정세액 (10%): {formatNumber(localTaxDue)}원
                     </p>
                     <p className="pl-2">
                       기납부세액: -{formatNumber(inputs.localIncomeTax)}원
                     </p>
-                    <p className="pl-2 text-neo-cyan">
+                    <p className="pl-2 text-mint">
                       → 지방소득세 환급: {formatNumber(localTaxRefund)}원
                     </p>
 
@@ -4596,7 +4603,7 @@ export default function CalculatorPage() {
 
           {/* 계산 플로우 1~8 */}
           {result && (
-            <div className="neo-card bg-white mb-4 text-sm">
+            <div className="rounded-lg border border-neutral-200 bg-card p-6 mb-4 text-sm">
               <h4 className="font-bold mb-3 border-b-2 border-black pb-2">
                 📋 계산 플로우
               </h4>
@@ -4618,7 +4625,7 @@ export default function CalculatorPage() {
                 </div>
 
                 {/* 3. 근로소득금액 */}
-                <div className="flex justify-between items-center bg-neo-yellow/30 p-2 -mx-2 border-y border-black">
+                <div className="flex justify-between items-center bg-primary/5 p-2 -mx-2 border-y border-neutral-200">
                   <span className="font-bold">③ 근로소득금액</span>
                   <span className="font-bold">
                     {formatNumber(result.earnedIncome)}원
@@ -4634,7 +4641,7 @@ export default function CalculatorPage() {
                 </div>
 
                 {/* 5. 과세표준 */}
-                <div className="flex justify-between items-center bg-neo-yellow/30 p-2 -mx-2 border-y border-black">
+                <div className="flex justify-between items-center bg-primary/5 p-2 -mx-2 border-y border-neutral-200">
                   <span className="font-bold">⑤ 과세표준</span>
                   <span className="font-bold">
                     {formatNumber(result.taxableIncome)}원
@@ -4658,7 +4665,7 @@ export default function CalculatorPage() {
                 </div>
 
                 {/* 8. 결정세액 */}
-                <div className="flex justify-between items-center bg-neo-yellow/30 p-2 -mx-2 border-y border-black">
+                <div className="flex justify-between items-center bg-primary/5 p-2 -mx-2 border-y border-neutral-200">
                   <span className="font-bold">⑧ 결정세액</span>
                   <span className="font-bold">
                     {formatNumber(result.finalTax)}원
@@ -4684,7 +4691,7 @@ export default function CalculatorPage() {
 
           {/* 공제 내역 상세 */}
           {result && (
-            <div className="neo-card bg-white mb-4 text-sm">
+            <div className="rounded-lg border border-neutral-200 bg-card p-6 mb-4 text-sm">
               <h4 className="font-bold mb-3 border-b-2 border-black pb-2">
                 📊 공제 내역 상세
               </h4>
@@ -4765,7 +4772,7 @@ export default function CalculatorPage() {
             </div>
           )}
 
-          <button className="neo-btn w-full bg-neo-orange hover:bg-neo-yellow text-xl font-black">
+          <button className="inline-flex items-center justify-center gap-2 w-full h-12 rounded-lg text-base font-semibold border border-primary text-primary bg-card hover:bg-primary/5 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-600 disabled:opacity-50">
             <Sparkles size={24} />
             AI 최적화 제안 받기
           </button>
