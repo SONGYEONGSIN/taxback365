@@ -135,10 +135,12 @@
 
   html {
     -webkit-text-size-adjust: 100%;
+    overflow-x: hidden;
   }
 
   body {
     @apply bg-background text-foreground font-body antialiased;
+    overflow-x: hidden;
     font-size: var(--font-size);
     line-height: 1.6;
     font-feature-settings: "ss06", "case";

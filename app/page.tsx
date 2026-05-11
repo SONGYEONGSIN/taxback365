@@ -85,9 +85,9 @@ export default function LandingPage() {
   const { data: session } = useSession();
 
   return (
-    <div className="flex flex-col items-center animate-fade-in -mt-8">
+    <div className="animate-fade-in -mt-8">
       {/* Hero Section — 좌측 카피 + 우측 시뮬레이션 카드 */}
-      <section className="bg-hero-gradient w-screen relative left-1/2 -translate-x-1/2 -mt-px">
+      <section className="bg-hero-gradient w-[100vw] ml-[calc(50%-50vw)] -mt-px">
         <div className="max-w-[1200px] mx-auto px-6 py-20 md:py-28 grid lg:grid-cols-[1.1fr_1fr] gap-12 lg:gap-16 items-center">
           <div>
             <Badge variant="success" className="mb-5">
@@ -278,7 +278,7 @@ export default function LandingPage() {
       </section>
 
       {/* Stats — 풀 와이드 단일 행 (gradient·rainbow color 폐기) */}
-      <section className="w-screen relative left-1/2 -translate-x-1/2 bg-primary text-primary-foreground">
+      <section className="w-[100vw] ml-[calc(50%-50vw)] bg-primary text-primary-foreground">
         <div className="max-w-[1200px] mx-auto px-6 py-16">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-6">
             {stats.map(({ value, suffix, label }) => (
