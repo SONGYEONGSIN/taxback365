@@ -18,7 +18,7 @@ function LogoMark() {
     >
       <path d="M5 4 L19 4" />
       <path d="M5 12 L19 12" />
-      <path d="M5 20 L19 20" className="text-fresh-green" />
+      <path d="M5 20 L19 20" />
       <path d="M12 4 L12 20" />
     </svg>
   );
@@ -62,25 +62,25 @@ function GithubIcon() {
 
 export default function LoginPage() {
   return (
-    <div className="flex flex-col items-center justify-center min-h-[80vh] animate-fade-in px-4">
+    <div className="flex flex-col items-center justify-center min-h-[calc(100vh-8rem)] px-4 py-12">
       <div className="w-full max-w-[400px]">
         {/* Header */}
         <div className="text-center mb-10">
           <Link
             href="/"
-            className="inline-flex items-center gap-2 text-ink-black hover:opacity-80 transition-opacity mb-6"
+            className="inline-flex items-center gap-2 text-ink-black hover:opacity-80 transition-opacity mb-8"
             aria-label="taxback365 홈"
           >
             <LogoMark />
           </Link>
-          <h1 className="text-h1 text-ink-black">다시 만나 반가워요</h1>
-          <p className="text-body-sm text-shadow-gray mt-2">
+          <h1 className="text-h2 text-ink-black">다시 만나 반가워요</h1>
+          <p className="text-body text-shadow-gray mt-2">
             로그인하고 환급 가능 금액을 확인하세요.
           </p>
         </div>
 
         {/* Main Card */}
-        <div className="bg-canvas-white rounded-lg border border-border-light p-7 space-y-5">
+        <div className="bg-canvas-white rounded-xl border border-border-light p-8 space-y-6">
           <div className="space-y-2.5">
             <button
               onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
@@ -162,11 +162,11 @@ export default function LoginPage() {
           </Button>
         </div>
 
-        <p className="text-center text-body-sm text-shadow-gray mt-6">
+        <p className="text-center text-body text-shadow-gray mt-8">
           아직 계정이 없으신가요?{" "}
           <Link
             href="/signup"
-            className="font-medium text-accent-blue hover:text-ink-black transition-colors"
+            className="font-medium text-ink-black underline underline-offset-4 hover:no-underline transition-all"
           >
             무료로 회원가입
           </Link>

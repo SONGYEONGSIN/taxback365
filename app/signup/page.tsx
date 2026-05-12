@@ -21,7 +21,7 @@ function LogoMark() {
     >
       <path d="M5 4 L19 4" />
       <path d="M5 12 L19 12" />
-      <path d="M5 20 L19 20" className="text-fresh-green" />
+      <path d="M5 20 L19 20" />
       <path d="M12 4 L12 20" />
     </svg>
   );
@@ -97,25 +97,25 @@ export default function SignupPage() {
     "w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors";
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-[80vh] animate-fade-in px-4 py-10">
+    <div className="flex flex-col items-center justify-center min-h-[calc(100vh-8rem)] px-4 py-12">
       <div className="w-full max-w-[400px]">
         {/* Header */}
         <div className="text-center mb-10">
           <Link
             href="/"
-            className="inline-flex items-center gap-2 text-ink-black hover:opacity-80 transition-opacity mb-6"
+            className="inline-flex items-center gap-2 text-ink-black hover:opacity-80 transition-opacity mb-8"
             aria-label="taxback365 홈"
           >
             <LogoMark />
           </Link>
-          <h1 className="text-h1 text-ink-black">계정 만들기</h1>
-          <p className="text-body-sm text-shadow-gray mt-2">
+          <h1 className="text-h2 text-ink-black">계정 만들기</h1>
+          <p className="text-body text-shadow-gray mt-2">
             무료로 시작하고 환급 가능 금액을 확인하세요.
           </p>
         </div>
 
         {/* Main Card */}
-        <div className="bg-canvas-white rounded-lg border border-border-light p-7 space-y-5">
+        <div className="bg-canvas-white rounded-xl border border-border-light p-8 space-y-6">
           <div className="space-y-2.5">
             <button
               onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
@@ -236,14 +236,14 @@ export default function SignupPage() {
               <span className="text-body-sm text-thunder-gray leading-[1.5]">
                 <Link
                   href="/terms"
-                  className="text-accent-blue hover:text-ink-black transition-colors"
+                  className="text-ink-black underline underline-offset-2 hover:no-underline transition-all"
                 >
                   이용약관
                 </Link>{" "}
                 및{" "}
                 <Link
                   href="/privacy"
-                  className="text-accent-blue hover:text-ink-black transition-colors"
+                  className="text-ink-black underline underline-offset-2 hover:no-underline transition-all"
                 >
                   개인정보처리방침
                 </Link>
@@ -263,11 +263,11 @@ export default function SignupPage() {
           </form>
         </div>
 
-        <p className="text-center text-body-sm text-shadow-gray mt-6">
+        <p className="text-center text-body text-shadow-gray mt-8">
           이미 계정이 있으신가요?{" "}
           <Link
             href="/login"
-            className="font-medium text-accent-blue hover:text-ink-black transition-colors"
+            className="font-medium text-ink-black underline underline-offset-4 hover:no-underline transition-all"
           >
             로그인
           </Link>
