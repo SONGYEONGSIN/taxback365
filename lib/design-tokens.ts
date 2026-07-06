@@ -1,67 +1,52 @@
 /**
- * Design tokens — taxback365 (Dub Design System — Crisp Utility on White Canvas)
+ * Design tokens — taxback365 (Premium Dark Fintech)
  *
  * 1차 출처는 app/globals.css의 :root CSS 변수 + @theme inline 블록 (Tailwind v4).
  * 본 파일은 동일 값을 TS `as const`로 미러링한다.
  *
- * 변경 시 globals.css와 함께 동기화 필수. design-ref/DESIGN.md가 단일 진실원.
- * 컴포넌트는 가능하면 Tailwind 클래스(`bg-canvas-white`, `text-ink-black`, `text-mono-display` 등)를 우선 사용하고,
+ * 변경 시 globals.css와 함께 동기화 필수.
+ * 컴포넌트는 가능하면 Tailwind 클래스(`bg-surface`, `text-hi`, `text-mint`, `text-mono-display` 등)를 우선 사용하고,
  * 직접 색 참조가 필요한 경우(인라인 스타일·차트 라이브러리·SVG 등)에만 본 토큰을 import한다.
  */
 
 export const colors = {
-  /* Surfaces / semantic aliases */
-  background: "#ffffff",
-  foreground: "#0a0a0a",
-  card: "#ffffff",
-  cardForeground: "#0a0a0a",
-  popover: "#ffffff",
-  popoverForeground: "#0a0a0a",
+  /* Surfaces (off-black base + elevated) */
+  base: "#0b0c0f",
+  ink: "#0b0c0f", // mint 등 밝은 액센트 위 어두운 텍스트
+  surface: "#14161b",
+  surface2: "#1b1f27",
+  surface3: "#232833",
 
-  primary: "#0a0a0a",
-  primaryForeground: "#ffffff",
-  secondary: "#ffffff",
-  secondaryForeground: "#0a0a0a",
+  /* Borders / hairlines */
+  edge: "#23262e",
+  edgeStrong: "#333844",
 
-  muted: "#f5f5f5",
-  mutedForeground: "#262626",
-  border: "#e5e5e5",
-  input: "#ffffff",
-  ring: "#1e40af",
+  /* Text */
+  hi: "#f4f6f9",
+  mid: "#a7aebc",
+  dim: "#6b7280",
 
-  destructive: "#ea580c",
-  destructiveForeground: "#ffffff",
+  /* Accents — brand mint + 시맨틱 */
+  mint: "#35e4a4", // 브랜드 액센트 / 양수 / 강조
+  mintSoft: "#1e5c48",
+  rose: "#fb7185", // 음수 / 파괴적 액션
+  amber: "#fbbf24", // 경고 / 주의
+  sky: "#60a5fa", // 정보 / 보조
 
-  /* Dub palette — 직접 사용 가능 */
-  canvasWhite: "#ffffff",
-  jetBlack: "#000000",
-  inkBlack: "#0a0a0a",
-  thunderGray: "#171717",
-  shadowGray: "#262626",
-  steelGray: "#404040",
-  subtleAsh: "#f5f5f5",
-  borderLight: "#e5e5e5",
-  borderMuted: "#d4d4d4",
-  systemInfo: "#111827",
-
-  accent: {
-    blue: "#3b82f6",
-    freshGreen: "#16a34a",
-    warmOrange: "#ea580c",
-    deepViolet: "#7c3aed",
-    focusRingBlue: "#1e40af",
-  },
-
-  highlight: {
-    green: "#4ade80",
-    violet: "#c084fc",
-    orange: "#fb923c",
-  },
-
-  linearGray: {
-    dark: "#525252",
-    light: "#737373",
-  },
+  /* 시맨틱 별칭 (globals.css 매핑과 정합) */
+  background: "#0b0c0f",
+  foreground: "#f4f6f9",
+  card: "#14161b",
+  cardForeground: "#f4f6f9",
+  muted: "#1b1f27",
+  mutedForeground: "#a7aebc",
+  border: "#23262e",
+  input: "#14161b",
+  ring: "#35e4a4",
+  primary: "#35e4a4",
+  primaryForeground: "#0b0c0f",
+  destructive: "#fb7185",
+  destructiveForeground: "#0b0c0f",
 } as const;
 
 export const radius = {
@@ -73,14 +58,15 @@ export const radius = {
   DEFAULT: "8px",
 } as const;
 
+/**
+ * 다크 elevation — drop shadow보다 border/glow 우선.
+ * 카드 elevation은 `border border-edge` + 필요 시 아래 shadow 병행.
+ */
 export const shadows = {
-  subtle: "rgba(0, 0, 0, 0.05) 0px 1px 2px 0px",
-  sm: "rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.1) 0px 2px 4px -2px",
-  sm2: "rgba(0, 0, 0, 0.2) 0px 2px 6px 0px inset",
-  subtle2: "rgba(0, 0, 0, 0.1) 0px 0px 0px 4px",
-  md: "rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.1) 0px 4px 6px -4px",
-  lg: "rgba(0, 0, 0, 0.09) 0px 20px 20px 0px",
-  subtle3: "rgb(255, 255, 255) 0px 0px 0px 3px, rgb(0, 0, 0) 0px 0px 0px 4px",
+  sm: "rgba(0, 0, 0, 0.4) 0px 1px 2px 0px",
+  md: "rgba(0, 0, 0, 0.5) 0px 10px 15px -3px, rgba(0, 0, 0, 0.4) 0px 4px 6px -4px",
+  lg: "rgba(0, 0, 0, 0.6) 0px 24px 60px -20px",
+  mintGlow: "rgba(53, 228, 164, 0.16) 0px 0px 60px 0px",
 } as const;
 
 export const borders = {
@@ -99,10 +85,10 @@ export const typography = {
 } as const;
 
 /**
- * 4px base spacing scale (Dub spec § Spacing).
+ * 4px base spacing scale.
  * 페이지 유형별 적용:
- *  - 랜딩: section gap 64px (section-gap), card padding 16px
- *  - 대시보드/계산기: 동일 16px element-gap
+ *  - 랜딩: section gap 64px, card padding 16px
+ *  - 대시보드/계산기: 16px element-gap
  *  - 어드민 표: row py-2 (8px), px-3 (12px) 고밀도
  */
 export const spacing = {
