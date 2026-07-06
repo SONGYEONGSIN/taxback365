@@ -11,7 +11,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const base =
-  "inline-flex items-center justify-center gap-2 rounded-full font-medium transition-colors duration-150 disabled:cursor-not-allowed disabled:opacity-50 disabled:pointer-events-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 focus-visible:ring-offset-2";
+  "inline-flex items-center justify-center gap-2 rounded-full font-medium transition-all duration-150 disabled:cursor-not-allowed disabled:opacity-50 disabled:pointer-events-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mint/40";
 
 const sizeClass: Record<Size, string> = {
   sm: "h-8 px-3 text-caption",
@@ -20,19 +20,18 @@ const sizeClass: Record<Size, string> = {
 
 const variantClass: Record<Variant, string> = {
   primary: clsx(
-    "bg-ink-black text-canvas-white font-medium",
-    "hover:opacity-90",
-    "shadow-subtle",
+    "bg-mint text-ink font-semibold",
+    "hover:brightness-110 active:scale-[0.98]",
   ),
   secondary: clsx(
-    "bg-canvas-white text-ink-black border border-border-light",
-    "hover:bg-subtle-ash",
+    "bg-surface text-hi border border-edge-strong",
+    "hover:bg-surface-2 active:scale-[0.98]",
   ),
-  ghost: clsx("bg-transparent text-ink-black", "hover:bg-subtle-ash"),
-  // Dub은 red 미사용 — danger는 warm-orange 톤으로 통일
+  ghost: clsx("bg-transparent text-mid", "hover:text-hi hover:bg-surface"),
+  // Dark 핀테크 — 음수/파괴적 액션은 rose
   danger: clsx(
-    "bg-warm-orange text-canvas-white font-medium",
-    "hover:opacity-90",
+    "bg-rose text-ink font-semibold",
+    "hover:brightness-110 active:scale-[0.98]",
   ),
 };
 

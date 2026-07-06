@@ -94,7 +94,7 @@ export default function SignupPage() {
   };
 
   const fieldClass =
-    "w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors";
+    "w-full h-11 rounded-md border border-edge bg-surface px-3.5 text-body text-hi placeholder:text-dim hover:border-edge-strong focus-visible:outline-none focus-visible:border-mint focus-visible:ring-2 focus-visible:ring-mint/30 transition-colors";
 
   return (
     <div className="flex flex-col items-center justify-center min-h-[calc(100vh-8rem)] px-4 py-12">
@@ -103,30 +103,30 @@ export default function SignupPage() {
         <div className="text-center mb-10">
           <Link
             href="/"
-            className="inline-flex items-center gap-2 text-ink-black hover:opacity-80 transition-opacity mb-8"
+            className="inline-flex items-center gap-2 text-hi hover:opacity-80 transition-opacity mb-8"
             aria-label="taxback365 홈"
           >
             <LogoMark />
           </Link>
-          <h1 className="text-h2 text-ink-black">계정 만들기</h1>
-          <p className="text-body text-shadow-gray mt-2">
+          <h1 className="text-h2 text-hi">계정 만들기</h1>
+          <p className="text-body text-mid mt-2">
             무료로 시작하고 환급 가능 금액을 확인하세요.
           </p>
         </div>
 
         {/* Main Card */}
-        <div className="bg-canvas-white rounded-xl border border-border-light p-8 space-y-6">
+        <div className="bg-surface rounded-xl border border-edge p-8 space-y-6">
           <div className="space-y-2.5">
             <button
               onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
-              className="w-full h-11 inline-flex items-center justify-center gap-2.5 rounded-md border border-border-light bg-canvas-white text-body-sm font-medium text-ink-black hover:bg-subtle-ash transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring-blue focus-visible:ring-offset-2"
+              className="w-full h-11 inline-flex items-center justify-center gap-2.5 rounded-md border border-edge-strong bg-surface text-body-sm font-medium text-hi hover:bg-surface-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mint/30"
             >
               <GoogleIcon />
               Google로 시작하기
             </button>
             <button
               onClick={() => signIn("github", { callbackUrl: "/dashboard" })}
-              className="w-full h-11 inline-flex items-center justify-center gap-2.5 rounded-md bg-ink-black text-canvas-white text-body-sm font-medium hover:opacity-90 transition-opacity focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring-blue focus-visible:ring-offset-2"
+              className="w-full h-11 inline-flex items-center justify-center gap-2.5 rounded-md bg-mint text-ink text-body-sm font-medium hover:brightness-110 transition-opacity focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mint/30"
             >
               <GithubIcon />
               GitHub로 시작하기
@@ -135,10 +135,10 @@ export default function SignupPage() {
 
           <div className="relative">
             <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-border-light" />
+              <div className="w-full border-t border-edge" />
             </div>
             <div className="relative flex justify-center">
-              <span className="bg-canvas-white px-3 text-caption text-shadow-gray">
+              <span className="bg-surface px-3 text-caption text-mid">
                 또는 이메일로
               </span>
             </div>
@@ -149,7 +149,7 @@ export default function SignupPage() {
             <div className="flex flex-col gap-1.5">
               <label
                 htmlFor="name"
-                className="text-body-sm font-medium text-ink-black"
+                className="text-body-sm font-medium text-hi"
               >
                 이름
               </label>
@@ -166,7 +166,7 @@ export default function SignupPage() {
             <div className="flex flex-col gap-1.5">
               <label
                 htmlFor="signup-email"
-                className="text-body-sm font-medium text-ink-black"
+                className="text-body-sm font-medium text-hi"
               >
                 이메일
               </label>
@@ -183,7 +183,7 @@ export default function SignupPage() {
             <div className="flex flex-col gap-1.5">
               <label
                 htmlFor="signup-password"
-                className="text-body-sm font-medium text-ink-black"
+                className="text-body-sm font-medium text-hi"
               >
                 비밀번호
               </label>
@@ -200,7 +200,7 @@ export default function SignupPage() {
             <div className="flex flex-col gap-1.5">
               <label
                 htmlFor="signup-confirm"
-                className="text-body-sm font-medium text-ink-black"
+                className="text-body-sm font-medium text-hi"
               >
                 비밀번호 확인
               </label>
@@ -211,12 +211,12 @@ export default function SignupPage() {
                 value={formData.confirmPassword}
                 onChange={handleChange}
                 placeholder="다시 한 번 입력"
-                className={`${fieldClass} ${error ? "border-warm-orange focus-visible:border-warm-orange focus-visible:ring-danger/25" : ""}`}
+                className={`${fieldClass} ${error ? "border-rose focus-visible:border-rose focus-visible:ring-rose/25" : ""}`}
               />
             </div>
 
             {error && (
-              <div className="rounded-md border border-warm-orange/30 bg-warm-orange/8 p-3 flex items-start gap-2 text-body-sm text-warm-orange">
+              <div className="rounded-md border border-rose/30 bg-rose/8 p-3 flex items-start gap-2 text-body-sm text-rose">
                 <AlertTriangle
                   size={16}
                   strokeWidth={1.75}
@@ -231,19 +231,19 @@ export default function SignupPage() {
                 type="checkbox"
                 checked={agreeTerms}
                 onChange={(e) => setAgreeTerms(e.target.checked)}
-                className="mt-0.5 w-4 h-4 rounded border-border-muted text-ink-black focus:ring-focus-ring-blue"
+                className="mt-0.5 w-4 h-4 rounded border-edge-strong text-mint focus:ring-mint"
               />
-              <span className="text-body-sm text-thunder-gray leading-[1.5]">
+              <span className="text-body-sm text-mid leading-[1.5]">
                 <Link
                   href="/terms"
-                  className="text-ink-black underline underline-offset-2 hover:no-underline transition-all"
+                  className="text-hi underline underline-offset-2 hover:no-underline transition-all"
                 >
                   이용약관
                 </Link>{" "}
                 및{" "}
                 <Link
                   href="/privacy"
-                  className="text-ink-black underline underline-offset-2 hover:no-underline transition-all"
+                  className="text-hi underline underline-offset-2 hover:no-underline transition-all"
                 >
                   개인정보처리방침
                 </Link>
@@ -263,11 +263,11 @@ export default function SignupPage() {
           </form>
         </div>
 
-        <p className="text-center text-body text-shadow-gray mt-8">
+        <p className="text-center text-body text-mid mt-8">
           이미 계정이 있으신가요?{" "}
           <Link
             href="/login"
-            className="font-medium text-ink-black underline underline-offset-4 hover:no-underline transition-all"
+            className="font-medium text-hi underline underline-offset-4 hover:no-underline transition-all"
           >
             로그인
           </Link>

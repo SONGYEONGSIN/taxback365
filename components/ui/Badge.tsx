@@ -2,12 +2,7 @@ import * as React from "react";
 import clsx from "clsx";
 
 type Variant =
-  | "success"
-  | "warning"
-  | "danger"
-  | "info"
-  | "neutral"
-  | "outline";
+  "success" | "warning" | "danger" | "info" | "neutral" | "outline";
 
 /** 기존 코드 호환을 위한 legacy variant. 새 코드는 variant prop을 사용한다. */
 type LegacyType = "high" | "medium" | "low" | "new";
@@ -19,13 +14,13 @@ interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
 }
 
 const variantClass: Record<Variant, string> = {
-  // Dub functional accents — subtle bg + saturated text
-  success: "bg-highlight-green/20 text-fresh-green",
-  warning: "bg-highlight-orange/30 text-warm-orange",
-  danger: "bg-highlight-orange/40 text-warm-orange",
-  info: "bg-highlight-violet/20 text-deep-violet",
-  neutral: "bg-subtle-ash text-shadow-gray",
-  outline: "border border-border-light bg-transparent text-ink-black",
+  // Dark 핀테크 — subtle tinted bg + accent text
+  success: "bg-mint/12 text-mint",
+  warning: "bg-amber/12 text-amber",
+  danger: "bg-rose/15 text-rose",
+  info: "bg-sky/12 text-sky",
+  neutral: "bg-surface-2 text-mid",
+  outline: "border border-edge bg-transparent text-hi",
 };
 
 const legacyMap: Record<LegacyType, { variant: Variant; label: string }> = {

@@ -2295,8 +2295,8 @@ export default function AdminPage() {
       {notification && (
         <div
           className={clsx(
-            "fixed bottom-20 left-1/2 -translate-x-1/2 z-50 flex items-center gap-3 px-6 py-3 border-2 border-black shadow-md animate-fade-in md:bottom-28",
-            notification.type === "success" ? "bg-fresh-green" : "bg-ink-black",
+            "fixed bottom-20 left-1/2 -translate-x-1/2 z-50 flex items-center gap-3 px-6 py-3 border border-edge-strong shadow-md animate-fade-in md:bottom-28",
+            notification.type === "success" ? "bg-mint text-ink" : "bg-surface-3",
           )}
         >
           {notification.type === "success" ? (
@@ -2312,8 +2312,8 @@ export default function AdminPage() {
       {showAddItemModal &&
         typeof document !== "undefined" &&
         createPortal(
-          <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/80">
-            <div className="bg-white border border-border-light p-6 max-w-md w-full mx-4 shadow-lg">
+          <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-base/80">
+            <div className="bg-surface border border-edge p-6 max-w-md w-full mx-4 shadow-lg">
               <div className="flex justify-between items-center mb-4">
                 <h3 className="text-lg font-black">수동 항목 추가</h3>
                 <button
@@ -2323,10 +2323,10 @@ export default function AdminPage() {
                     )
                   }
                   className={clsx(
-                    "p-2 border-2 border-black shadow-sm transition-all",
+                    "p-2 border border-edge-strong shadow-sm transition-all",
                     clickedBtn === "modalClose"
-                      ? "bg-ink-black translate-x-[2px] translate-y-[2px] shadow-none"
-                      : "bg-white hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-sm",
+                      ? "bg-surface-3 translate-x-[2px] translate-y-[2px] shadow-none"
+                      : "bg-surface hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-sm",
                   )}
                 >
                   <X size={20} />
@@ -2337,7 +2337,7 @@ export default function AdminPage() {
                 <div>
                   <label className="block font-bold mb-2">월 선택</label>
                   <select
-                    className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
+                    className="w-full h-11 rounded-md border border-edge bg-surface-2 px-3.5 text-body text-hi placeholder:text-dim hover:border-edge-strong focus-visible:outline-none focus-visible:border-mint focus-visible:ring-2 focus-visible:ring-mint/30 transition-colors"
                     value={newItemMonth}
                     onChange={(e) => setNewItemMonth(parseInt(e.target.value))}
                   >
@@ -2351,7 +2351,7 @@ export default function AdminPage() {
                 <div>
                   <label className="block font-bold mb-2">항목명</label>
                   <select
-                    className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
+                    className="w-full h-11 rounded-md border border-edge bg-surface-2 px-3.5 text-body text-hi placeholder:text-dim hover:border-edge-strong focus-visible:outline-none focus-visible:border-mint focus-visible:ring-2 focus-visible:ring-mint/30 transition-colors"
                     value={newItemName}
                     onChange={(e) => setNewItemName(e.target.value)}
                   >
@@ -2494,7 +2494,7 @@ export default function AdminPage() {
                   <label className="block font-bold mb-2">금액 (원)</label>
                   <input
                     type="text"
-                    className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
+                    className="w-full h-11 rounded-md border border-edge bg-surface-2 px-3.5 text-body text-hi placeholder:text-dim hover:border-edge-strong focus-visible:outline-none focus-visible:border-mint focus-visible:ring-2 focus-visible:ring-mint/30 transition-colors"
                     placeholder="예: 500,000"
                     value={newItemAmount}
                     onChange={(e) => {
@@ -2520,10 +2520,10 @@ export default function AdminPage() {
                     )
                   }
                   className={clsx(
-                    "flex-1 py-3 font-bold border-2 border-black shadow-md transition-all",
+                    "flex-1 py-3 font-bold border border-edge-strong shadow-md transition-all",
                     clickedBtn === "modalCancel"
-                      ? "bg-ink-black translate-x-[4px] translate-y-[4px] shadow-none"
-                      : "bg-white hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-md",
+                      ? "bg-surface-3 translate-x-[4px] translate-y-[4px] shadow-none"
+                      : "bg-surface hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-md",
                   )}
                 >
                   취소
@@ -2531,10 +2531,10 @@ export default function AdminPage() {
                 <button
                   onClick={() => handleButtonClick("modalAdd", handleAddItem)}
                   className={clsx(
-                    "flex-1 py-3 font-bold border-2 border-black shadow-md transition-all",
+                    "flex-1 py-3 font-bold border border-edge-strong shadow-md transition-all",
                     clickedBtn === "modalAdd"
-                      ? "bg-ink-black translate-x-[4px] translate-y-[4px] shadow-none"
-                      : "bg-fresh-green hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-md",
+                      ? "bg-surface-3 translate-x-[4px] translate-y-[4px] shadow-none"
+                      : "bg-mint text-ink hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-md",
                   )}
                 >
                   추가
@@ -2549,19 +2549,19 @@ export default function AdminPage() {
       {showCameraModal &&
         typeof document !== "undefined" &&
         createPortal(
-          <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/80">
-            <div className="bg-white border border-border-light p-6 max-w-2xl w-full mx-4 shadow-lg max-h-[80vh] overflow-y-auto">
-              <div className="flex justify-between items-center mb-4 pb-4 border-b-2 border-black">
+          <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-base/80">
+            <div className="bg-surface border border-edge p-6 max-w-2xl w-full mx-4 shadow-lg max-h-[80vh] overflow-y-auto">
+              <div className="flex justify-between items-center mb-4 pb-4 border-b border-edge-strong">
                 <h3 className="text-xl font-black">이미지 업로드 (OCR)</h3>
                 <button
                   onClick={() =>
                     handleButtonClick("ocrModalClose", handleOcrModalClose)
                   }
                   className={clsx(
-                    "p-2 border-2 border-black shadow-sm transition-all",
+                    "p-2 border border-edge-strong shadow-sm transition-all",
                     clickedBtn === "ocrModalClose"
-                      ? "bg-ink-black translate-x-[2px] translate-y-[2px] shadow-none"
-                      : "bg-white hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-sm",
+                      ? "bg-surface-3 translate-x-[2px] translate-y-[2px] shadow-none"
+                      : "bg-surface hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-sm",
                   )}
                 >
                   <X size={20} />
@@ -2598,16 +2598,16 @@ export default function AdminPage() {
                     }
                     disabled={capturedImages.length > 0 && ocrCardType !== type}
                     className={clsx(
-                      "flex-1 py-3 font-bold border-2 border-black transition-all",
+                      "flex-1 py-3 font-bold border border-edge-strong transition-all",
                       ocrCardType === type
                         ? clickedBtn === btnId
-                          ? "bg-fresh-green translate-x-[3px] translate-y-[3px] shadow-none"
-                          : "bg-fresh-green shadow-sm"
+                          ? "bg-mint text-ink translate-x-[3px] translate-y-[3px] shadow-none"
+                          : "bg-mint text-ink shadow-sm"
                         : capturedImages.length > 0
-                          ? "bg-gray-200 cursor-not-allowed opacity-50"
+                          ? "bg-surface-3 cursor-not-allowed opacity-50"
                           : clickedBtn === btnId
-                            ? "bg-highlight-orange/30 translate-x-[2px] translate-y-[2px] shadow-none"
-                            : "bg-white hover:bg-gray-100 shadow-sm",
+                            ? "bg-amber/12 translate-x-[2px] translate-y-[2px] shadow-none"
+                            : "bg-surface hover:bg-surface-2 shadow-sm",
                     )}
                   >
                     {label}
@@ -2618,10 +2618,10 @@ export default function AdminPage() {
               {/* 드래그앤드롭 영역 */}
               <div
                 className={clsx(
-                  "min-h-[200px] mb-6 border-2 border-dashed flex flex-col items-center justify-center cursor-pointer transition-all",
+                  "min-h-[200px] mb-6 border border-dashed flex flex-col items-center justify-center cursor-pointer transition-all",
                   isDragging
-                    ? "border-fresh-green bg-highlight-green/30 scale-[1.02]"
-                    : "border-gray-400 bg-gray-50 hover:bg-gray-100",
+                    ? "border-mint bg-mint/12 scale-[1.02]"
+                    : "border-edge-strong bg-surface-2 hover:bg-surface-2",
                 )}
                 onDrop={handleDrop}
                 onDragOver={handleDragOver}
@@ -2637,7 +2637,7 @@ export default function AdminPage() {
                       {capturedImages.map((img, index) => (
                         <div
                           key={index}
-                          className="relative aspect-square border-2 border-black overflow-hidden group"
+                          className="relative aspect-square border border-edge-strong overflow-hidden group"
                         >
                           {/* OCR 업로드 미리보기 — base64/blob URL이라 next/image 미적용. follow-up. */}
                           {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -2651,7 +2651,7 @@ export default function AdminPage() {
                               e.stopPropagation();
                               removeImage(index);
                             }}
-                            className="absolute top-1 right-1 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                            className="absolute top-1 right-1 bg-rose text-ink rounded-full w-5 h-5 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
                           >
                             <X size={12} />
                           </button>
@@ -2662,32 +2662,32 @@ export default function AdminPage() {
                       <div className="flex items-center justify-center gap-2 mt-3">
                         <RefreshCw
                           size={16}
-                          className="animate-spin text-fresh-green"
+                          className="animate-spin text-mint"
                         />
-                        <span className="text-sm font-bold text-fresh-green">
+                        <span className="text-sm font-bold text-mint">
                           AI 분석 중...
                         </span>
                       </div>
                     ) : (
-                      <p className="text-center text-xs text-gray-500 mt-3">
+                      <p className="text-center text-xs text-mid mt-3">
                         클릭 또는 드래그하여 더 추가
                       </p>
                     )}
                   </div>
                 ) : (
                   <>
-                    <Upload size={32} className="mx-auto mb-2 text-gray-400" />
+                    <Upload size={32} className="mx-auto mb-2 text-dim" />
                     <p className="font-bold mb-2">이미지를 드래그하거나</p>
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
                         ocrImageInputRef.current?.click();
                       }}
-                      className="px-4 py-2 bg-fresh-green font-bold border-2 border-black shadow-sm hover:shadow-md transition-all"
+                      className="px-4 py-2 bg-mint text-ink font-bold border border-edge-strong shadow-sm hover:shadow-md transition-all"
                     >
                       파일 선택
                     </button>
-                    <p className="text-sm text-gray-500 mt-2">
+                    <p className="text-sm text-mid mt-2">
                       영수증, 원천징수영수증 등
                     </p>
                   </>
@@ -2708,24 +2708,24 @@ export default function AdminPage() {
                 <div className="mb-6">
                   <div className="flex justify-between items-center mb-3">
                     <span className="font-bold">입력된 항목 미리보기</span>
-                    <span className="text-sm text-gray-500">
+                    <span className="text-sm text-mid">
                       총 {ocrPreviewItems.length}건
                     </span>
                   </div>
-                  <div className="max-h-48 overflow-y-auto border-2 border-black">
+                  <div className="max-h-48 overflow-y-auto border border-edge-strong">
                     <table className="w-full text-sm">
-                      <thead className="bg-gray-100 sticky top-0">
+                      <thead className="bg-surface-2 sticky top-0">
                         <tr>
-                          <th className="p-2 text-left border-b-2 border-black">
+                          <th className="p-2 text-left border-b border-edge-strong">
                             분류
                           </th>
-                          <th className="p-2 text-left border-b-2 border-black">
+                          <th className="p-2 text-left border-b border-edge-strong">
                             가맹점
                           </th>
-                          <th className="p-2 text-right border-b-2 border-black">
+                          <th className="p-2 text-right border-b border-edge-strong">
                             금액
                           </th>
-                          <th className="p-2 text-center border-b-2 border-black">
+                          <th className="p-2 text-center border-b border-edge-strong">
                             삭제
                           </th>
                         </tr>
@@ -2735,11 +2735,11 @@ export default function AdminPage() {
                           <tr
                             key={idx}
                             className={clsx(
-                              item.category === "대중교통" && "bg-blue-50",
-                              item.category === "보험료" && "bg-purple-50",
-                              item.category === "의료비" && "bg-green-50",
-                              item.category === "전통시장" && "bg-orange-50",
-                              item.category === "문화체육" && "bg-pink-50",
+                              item.category === "대중교통" && "bg-sky/8",
+                              item.category === "보험료" && "bg-sky/8",
+                              item.category === "의료비" && "bg-mint/8",
+                              item.category === "전통시장" && "bg-amber/8",
+                              item.category === "문화체육" && "bg-rose/8",
                             )}
                           >
                             <td className="p-2 border-b">
@@ -2747,21 +2747,21 @@ export default function AdminPage() {
                                 className={clsx(
                                   "text-xs px-2 py-1 rounded",
                                   item.category === "신용카드" &&
-                                    "bg-green-100 text-green-600",
+                                    "bg-mint/12 text-mint",
                                   item.category === "체크카드" &&
-                                    "bg-cyan-100 text-cyan-600",
+                                    "bg-mint/12 text-mint",
                                   item.category === "현금영수증" &&
-                                    "bg-yellow-100 text-yellow-600",
+                                    "bg-amber/12 text-amber",
                                   item.category === "대중교통" &&
-                                    "bg-blue-100 text-blue-600",
+                                    "bg-sky/12 text-sky",
                                   item.category === "보험료" &&
-                                    "bg-purple-100 text-purple-600",
+                                    "bg-sky/12 text-sky",
                                   item.category === "의료비" &&
-                                    "bg-teal-100 text-teal-600",
+                                    "bg-mint/12 text-mint",
                                   item.category === "전통시장" &&
-                                    "bg-orange-100 text-orange-600",
+                                    "bg-amber/12 text-amber",
                                   item.category === "문화체육" &&
-                                    "bg-pink-100 text-pink-600",
+                                    "bg-rose/12 text-rose",
                                 )}
                               >
                                 {item.category}
@@ -2774,7 +2774,7 @@ export default function AdminPage() {
                             <td className="p-2 border-b text-center">
                               <button
                                 onClick={() => handleRemoveOcrItem(idx)}
-                                className="text-red-500 hover:bg-red-100 p-1 rounded"
+                                className="text-rose hover:bg-rose/12 p-1 rounded"
                               >
                                 <X size={14} />
                               </button>
@@ -2786,7 +2786,7 @@ export default function AdminPage() {
                   </div>
 
                   {/* 카테고리별 합계 */}
-                  <div className="mt-3 p-3 bg-highlight-orange/30 border-2 border-black space-y-1">
+                  <div className="mt-3 p-3 bg-amber/12 border border-edge-strong space-y-1">
                     {Object.entries(
                       ocrPreviewItems.reduce(
                         (acc, item) => {
@@ -2805,7 +2805,7 @@ export default function AdminPage() {
                         <span>{amount.toLocaleString()}원</span>
                       </div>
                     ))}
-                    <div className="border-t border-black pt-1 mt-2 flex justify-between font-bold">
+                    <div className="border-t border-edge-strong pt-1 mt-2 flex justify-between font-bold">
                       <span>총합계:</span>
                       <span>
                         {ocrPreviewItems
@@ -2818,8 +2818,8 @@ export default function AdminPage() {
 
                   {/* 중복 항목 표시 */}
                   {ocrDuplicateItems.length > 0 && (
-                    <div className="mt-3 p-3 bg-ink-black/10 border-2 border-ink-black text-sm">
-                      <p className="font-bold text-ink-black mb-2">
+                    <div className="mt-3 p-3 bg-surface-3 border border-edge-strong text-sm">
+                      <p className="font-bold text-hi mb-2">
                         ⚠️ 중복 이미지 감지됨
                       </p>
                       {[
@@ -2836,7 +2836,7 @@ export default function AdminPage() {
                             d.amount === item.amount,
                         ).length;
                         return (
-                          <p key={idx} className="text-gray-700">
+                          <p key={idx} className="text-mid">
                             <span className="font-bold">{item.merchant}</span> (
                             {item.amount.toLocaleString()}원) - {count}건 중복,
                             1건만 적용
@@ -2849,29 +2849,29 @@ export default function AdminPage() {
               )}
 
               {/* 자동 분류 안내 */}
-              <div className="mb-6 p-3 bg-gray-100 border-2 border-black text-sm">
+              <div className="mb-6 p-3 bg-surface-2 border border-edge-strong text-sm">
                 <p className="font-bold mb-2">📋 자동 분류 안내:</p>
-                <p className="text-blue-600">
+                <p className="text-sky">
                   🚌 대중교통: 버스, 지하철, 모바일이즘 → 대중교통 항목으로 분류
                 </p>
-                <p className="text-purple-600">
+                <p className="text-sky">
                   🛡 보험료: 메리츠화재, DB손해보험 등 → 보험료 항목으로 분류
                 </p>
-                <p className="text-green-600">
+                <p className="text-mint">
                   🏥 의료비: 병원, 의원, 약국 등 → 의료비 항목으로 분류
                 </p>
-                <p className="text-orange-600">
+                <p className="text-amber">
                   🏪 전통시장: 전통시장, 재래시장 등 → 전통시장 항목으로 분류
                 </p>
-                <p className="text-pink-600">
+                <p className="text-rose">
                   🎭 문화체육: 서점, 도서, 영화관, 헬스 등 → 문화체육 항목으로
                   분류
                 </p>
-                <p className="text-red-500">
+                <p className="text-rose">
                   ❌ 제외: 세금, 공과금, 통신비, 도로통행료, 사업자번호 없는
                   항목 → 공제 불가
                 </p>
-                <p className="text-gray-500 mt-1">
+                <p className="text-mid mt-1">
                   취소된 거래는 자동으로 제외됩니다.
                 </p>
               </div>
@@ -2883,10 +2883,10 @@ export default function AdminPage() {
                     handleButtonClick("ocrCancel", handleOcrModalClose)
                   }
                   className={clsx(
-                    "px-4 py-2 font-bold border-2 border-black shadow-sm transition-all",
+                    "px-4 py-2 font-bold border border-edge-strong shadow-sm transition-all",
                     clickedBtn === "ocrCancel"
-                      ? "bg-ink-black translate-x-[3px] translate-y-[3px] shadow-none"
-                      : "bg-white hover:shadow-md",
+                      ? "bg-surface-3 translate-x-[3px] translate-y-[3px] shadow-none"
+                      : "bg-surface hover:shadow-md",
                   )}
                 >
                   취소
@@ -2895,10 +2895,10 @@ export default function AdminPage() {
                   onClick={handleUseImage}
                   disabled={ocrPreviewItems.length === 0}
                   className={clsx(
-                    "px-4 py-2 font-bold border-2 border-black shadow-sm transition-all",
+                    "px-4 py-2 font-bold border border-edge-strong shadow-sm transition-all",
                     ocrPreviewItems.length > 0
-                      ? "bg-fresh-green hover:shadow-md"
-                      : "bg-gray-200 cursor-not-allowed opacity-50",
+                      ? "bg-mint text-ink hover:shadow-md"
+                      : "bg-surface-3 cursor-not-allowed opacity-50",
                   )}
                 >
                   적용하기{" "}
@@ -2915,24 +2915,24 @@ export default function AdminPage() {
       {showExcelModal &&
         typeof document !== "undefined" &&
         createPortal(
-          <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/80">
-            <div className="bg-white border border-border-light p-4 max-w-2xl w-full mx-4 shadow-lg">
+          <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-base/80">
+            <div className="bg-surface border border-edge p-4 max-w-2xl w-full mx-4 shadow-lg">
               <div className="flex justify-between items-center mb-4">
                 <div>
                   <h3 className="text-lg font-black flex items-center gap-2">
                     <FileText size={20} /> 엑셀 업로드
                   </h3>
-                  <p className="text-sm text-gray-500">급여 데이터 적용</p>
+                  <p className="text-sm text-mid">급여 데이터 적용</p>
                 </div>
                 <button
                   onClick={() =>
                     handleButtonClick("excelModalClose", handleExcelModalClose)
                   }
                   className={clsx(
-                    "p-2 border-2 border-black shadow-sm transition-all",
+                    "p-2 border border-edge-strong shadow-sm transition-all",
                     clickedBtn === "excelModalClose"
-                      ? "bg-ink-black translate-x-[2px] translate-y-[2px] shadow-none"
-                      : "bg-white hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-sm",
+                      ? "bg-surface-3 translate-x-[2px] translate-y-[2px] shadow-none"
+                      : "bg-surface hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-sm",
                   )}
                 >
                   <X size={20} />
@@ -2943,7 +2943,7 @@ export default function AdminPage() {
               <div className="mb-4">
                 <label className="block font-bold mb-2">적용할 월 선택</label>
                 <select
-                  className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
+                  className="w-full h-11 rounded-md border border-edge bg-surface-2 px-3.5 text-body text-hi placeholder:text-dim hover:border-edge-strong focus-visible:outline-none focus-visible:border-mint focus-visible:ring-2 focus-visible:ring-mint/30 transition-colors"
                   value={excelModalMonth}
                   onChange={(e) => setExcelModalMonth(parseInt(e.target.value))}
                 >
@@ -2958,10 +2958,10 @@ export default function AdminPage() {
               {/* 드래그앤드롭 영역 */}
               <div
                 className={clsx(
-                  "min-h-[180px] mb-4 border-2 border-dashed rounded-lg flex flex-col items-center justify-center cursor-pointer transition-all",
+                  "min-h-[180px] mb-4 border border-dashed rounded-lg flex flex-col items-center justify-center cursor-pointer transition-all",
                   isExcelDragging
-                    ? "border-fresh-green bg-highlight-green/30 scale-[1.02]"
-                    : "border-gray-400 bg-gray-50 hover:bg-gray-100",
+                    ? "border-mint bg-mint/12 scale-[1.02]"
+                    : "border-edge-strong bg-surface-2 hover:bg-surface-2",
                 )}
                 onDrop={handleExcelDrop}
                 onDragOver={handleExcelDragOver}
@@ -2972,12 +2972,12 @@ export default function AdminPage() {
                   <div className="text-center p-4">
                     <p className="text-3xl mb-2">📊</p>
                     <p className="text-lg font-bold mb-1">{excelFile.name}</p>
-                    <p className="text-sm text-gray-500">
+                    <p className="text-sm text-mid">
                       {(excelFile.size / 1024).toFixed(1)} KB
                     </p>
                   </div>
                 ) : (
-                  <div className="text-center text-gray-500 p-4">
+                  <div className="text-center text-mid p-4">
                     <p className="text-3xl mb-2">📁</p>
                     <p className="text-lg font-bold mb-1">
                       엑셀 파일을 드래그하거나 클릭하세요
@@ -3005,13 +3005,13 @@ export default function AdminPage() {
                           fileInputRef.current.value = "";
                         }
                       }}
-                      className="flex-1 py-3 font-bold border-2 border-black bg-white hover:bg-gray-100"
+                      className="flex-1 py-3 font-bold border border-edge-strong bg-surface hover:bg-surface-2"
                     >
                       다시 선택
                     </button>
                     <button
                       onClick={handleExcelApply}
-                      className="flex-1 py-3 font-bold border-2 border-black bg-fresh-green hover:bg-cyan-300"
+                      className="flex-1 py-3 font-bold border border-edge-strong bg-mint text-ink hover:brightness-110"
                     >
                       적용하기
                     </button>
@@ -3024,10 +3024,10 @@ export default function AdminPage() {
                       )
                     }
                     className={clsx(
-                      "w-full py-3 font-bold border-2 border-black shadow-md transition-all",
+                      "w-full py-3 font-bold border border-edge-strong shadow-md transition-all",
                       clickedBtn === "excelFileSelect"
-                        ? "bg-ink-black translate-x-[4px] translate-y-[4px] shadow-none"
-                        : "bg-fresh-green hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-md",
+                        ? "bg-surface-3 translate-x-[4px] translate-y-[4px] shadow-none"
+                        : "bg-mint text-ink hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-md",
                     )}
                   >
                     📁 파일 선택
@@ -3051,12 +3051,12 @@ export default function AdminPage() {
                 handleButtonClick(`year-${year}`, () => handleYearChange(year))
               }
               className={clsx(
-                "px-3 md:px-4 py-2 font-bold border-2 border-black text-sm shadow-md transition-all",
+                "px-3 md:px-4 py-2 font-bold border border-edge-strong text-sm shadow-md transition-all",
                 selectedYear === year
-                  ? "bg-black text-white translate-x-[4px] translate-y-[4px] shadow-none"
+                  ? "bg-mint text-ink translate-x-[4px] translate-y-[4px] shadow-none"
                   : clickedBtn === `year-${year}`
-                    ? "bg-ink-black translate-x-[4px] translate-y-[4px] shadow-none"
-                    : "bg-white hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-md",
+                    ? "bg-surface-3 translate-x-[4px] translate-y-[4px] shadow-none"
+                    : "bg-surface hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-md",
               )}
             >
               {year}
@@ -3068,15 +3068,15 @@ export default function AdminPage() {
       {/* Monthly Data Grid */}
       <div className="space-y-8">
         {/* Salary Section */}
-        <div className="bg-white border border-border-light p-4 md:p-6 shadow-md md:shadow-lg">
+        <div className="bg-surface border border-edge p-4 md:p-6 shadow-md md:shadow-lg">
           <div className="flex flex-col md:flex-row justify-between items-start gap-4 mb-6">
             <div className="flex items-center gap-3">
-              <div className="bg-fresh-green p-2 border-2 border-black">
+              <div className="bg-mint text-ink p-2 border border-edge-strong">
                 <DollarSign size={24} />
               </div>
               <div>
                 <h3 className="text-lg md:text-xl font-black">급여 데이터</h3>
-                <p className="text-xs md:text-sm font-bold text-gray-500">
+                <p className="text-xs md:text-sm font-bold text-mid">
                   매월 급여명세서 기준 입력
                 </p>
               </div>
@@ -3100,10 +3100,10 @@ export default function AdminPage() {
                   })
                 }
                 className={clsx(
-                  "px-3 py-2 text-xs font-bold border-2 border-black shadow-sm transition-all",
+                  "px-3 py-2 text-xs font-bold border border-edge-strong shadow-sm transition-all",
                   clickedBtn === "copy1to3"
-                    ? "bg-ink-black translate-x-[3px] translate-y-[3px] shadow-none"
-                    : "bg-highlight-orange/30 hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-md",
+                    ? "bg-surface-3 translate-x-[3px] translate-y-[3px] shadow-none"
+                    : "bg-amber/12 hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-md",
                 )}
               >
                 1~3월 동일 적용
@@ -3126,10 +3126,10 @@ export default function AdminPage() {
                   })
                 }
                 className={clsx(
-                  "px-3 py-2 text-xs font-bold border-2 border-black shadow-sm transition-all",
+                  "px-3 py-2 text-xs font-bold border border-edge-strong shadow-sm transition-all",
                   clickedBtn === "copy3to12"
-                    ? "bg-ink-black translate-x-[3px] translate-y-[3px] shadow-none"
-                    : "bg-highlight-orange/30 hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-md",
+                    ? "bg-surface-3 translate-x-[3px] translate-y-[3px] shadow-none"
+                    : "bg-amber/12 hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-md",
                 )}
               >
                 4~12월 동일 적용
@@ -3137,7 +3137,7 @@ export default function AdminPage() {
             </div>
           </div>
           {/* Month Tabs */}
-          <div className="grid grid-cols-6 md:grid-cols-12 gap-1 mb-4 border-b-2 border-black pb-3">
+          <div className="grid grid-cols-6 md:grid-cols-12 gap-1 mb-4 border-b border-edge-strong pb-3">
             {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((month) => (
               <button
                 key={month}
@@ -3147,12 +3147,12 @@ export default function AdminPage() {
                   )
                 }
                 className={clsx(
-                  "py-2 font-bold text-sm border-2 border-black transition-all",
+                  "py-2 font-bold text-sm border border-edge-strong transition-all",
                   selectedMonth === month
-                    ? "bg-black text-white shadow-none"
+                    ? "bg-mint text-ink shadow-none"
                     : clickedBtn === `month-${month}`
-                      ? "bg-fresh-green translate-x-[2px] translate-y-[2px] shadow-none"
-                      : "bg-white shadow-sm hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-md",
+                      ? "bg-mint text-ink translate-x-[2px] translate-y-[2px] shadow-none"
+                      : "bg-surface shadow-sm hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-md",
                 )}
               >
                 {month}월
@@ -3165,7 +3165,7 @@ export default function AdminPage() {
               <label className="block font-bold mb-2">월급여 (세전)</label>
               <input
                 type="text"
-                className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
+                className="w-full h-11 rounded-md border border-edge bg-surface-2 px-3.5 text-body text-hi placeholder:text-dim hover:border-edge-strong focus-visible:outline-none focus-visible:border-mint focus-visible:ring-2 focus-visible:ring-mint/30 transition-colors"
                 value={monthlySalary[selectedMonth]?.totalSalary || "0"}
                 onChange={(e) =>
                   handleSalaryInputChange("totalSalary", e.target.value)
@@ -3176,7 +3176,7 @@ export default function AdminPage() {
               <label className="block font-bold mb-2">비과세 식대</label>
               <input
                 type="text"
-                className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
+                className="w-full h-11 rounded-md border border-edge bg-surface-2 px-3.5 text-body text-hi placeholder:text-dim hover:border-edge-strong focus-visible:outline-none focus-visible:border-mint focus-visible:ring-2 focus-visible:ring-mint/30 transition-colors"
                 value={monthlySalary[selectedMonth]?.mealAllowance || "0"}
                 onChange={(e) =>
                   handleSalaryInputChange("mealAllowance", e.target.value)
@@ -3187,7 +3187,7 @@ export default function AdminPage() {
               <label className="block font-bold mb-2">국민연금</label>
               <input
                 type="text"
-                className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
+                className="w-full h-11 rounded-md border border-edge bg-surface-2 px-3.5 text-body text-hi placeholder:text-dim hover:border-edge-strong focus-visible:outline-none focus-visible:border-mint focus-visible:ring-2 focus-visible:ring-mint/30 transition-colors"
                 value={monthlySalary[selectedMonth]?.nationalPension || "0"}
                 onChange={(e) =>
                   handleSalaryInputChange("nationalPension", e.target.value)
@@ -3198,7 +3198,7 @@ export default function AdminPage() {
               <label className="block font-bold mb-2">건강보험</label>
               <input
                 type="text"
-                className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
+                className="w-full h-11 rounded-md border border-edge bg-surface-2 px-3.5 text-body text-hi placeholder:text-dim hover:border-edge-strong focus-visible:outline-none focus-visible:border-mint focus-visible:ring-2 focus-visible:ring-mint/30 transition-colors"
                 value={monthlySalary[selectedMonth]?.healthInsurance || "0"}
                 onChange={(e) =>
                   handleSalaryInputChange("healthInsurance", e.target.value)
@@ -3209,7 +3209,7 @@ export default function AdminPage() {
               <label className="block font-bold mb-2">노인장기요양보험</label>
               <input
                 type="text"
-                className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
+                className="w-full h-11 rounded-md border border-edge bg-surface-2 px-3.5 text-body text-hi placeholder:text-dim hover:border-edge-strong focus-visible:outline-none focus-visible:border-mint focus-visible:ring-2 focus-visible:ring-mint/30 transition-colors"
                 value={monthlySalary[selectedMonth]?.longTermCare || "0"}
                 onChange={(e) =>
                   handleSalaryInputChange("longTermCare", e.target.value)
@@ -3220,7 +3220,7 @@ export default function AdminPage() {
               <label className="block font-bold mb-2">고용보험</label>
               <input
                 type="text"
-                className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
+                className="w-full h-11 rounded-md border border-edge bg-surface-2 px-3.5 text-body text-hi placeholder:text-dim hover:border-edge-strong focus-visible:outline-none focus-visible:border-mint focus-visible:ring-2 focus-visible:ring-mint/30 transition-colors"
                 value={monthlySalary[selectedMonth]?.employmentInsurance || "0"}
                 onChange={(e) =>
                   handleSalaryInputChange("employmentInsurance", e.target.value)
@@ -3231,7 +3231,7 @@ export default function AdminPage() {
               <label className="block font-bold mb-2">상여금</label>
               <input
                 type="text"
-                className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
+                className="w-full h-11 rounded-md border border-edge bg-surface-2 px-3.5 text-body text-hi placeholder:text-dim hover:border-edge-strong focus-visible:outline-none focus-visible:border-mint focus-visible:ring-2 focus-visible:ring-mint/30 transition-colors"
                 value={monthlySalary[selectedMonth]?.bonus || "0"}
                 onChange={(e) =>
                   handleSalaryInputChange("bonus", e.target.value)
@@ -3242,7 +3242,7 @@ export default function AdminPage() {
               <label className="block font-bold mb-2">자녀학자금</label>
               <input
                 type="text"
-                className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
+                className="w-full h-11 rounded-md border border-edge bg-surface-2 px-3.5 text-body text-hi placeholder:text-dim hover:border-edge-strong focus-visible:outline-none focus-visible:border-mint focus-visible:ring-2 focus-visible:ring-mint/30 transition-colors"
                 value={monthlySalary[selectedMonth]?.childTuition || "0"}
                 onChange={(e) =>
                   handleSalaryInputChange("childTuition", e.target.value)
@@ -3255,7 +3255,7 @@ export default function AdminPage() {
               </label>
               <input
                 type="text"
-                className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
+                className="w-full h-11 rounded-md border border-edge bg-surface-2 px-3.5 text-body text-hi placeholder:text-dim hover:border-edge-strong focus-visible:outline-none focus-visible:border-mint focus-visible:ring-2 focus-visible:ring-mint/30 transition-colors"
                 value={monthlySalary[selectedMonth]?.prepaidTax || "0"}
                 onChange={(e) =>
                   handleSalaryInputChange("prepaidTax", e.target.value)
@@ -3268,7 +3268,7 @@ export default function AdminPage() {
               </label>
               <input
                 type="text"
-                className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
+                className="w-full h-11 rounded-md border border-edge bg-surface-2 px-3.5 text-body text-hi placeholder:text-dim hover:border-edge-strong focus-visible:outline-none focus-visible:border-mint focus-visible:ring-2 focus-visible:ring-mint/30 transition-colors"
                 value={monthlySalary[selectedMonth]?.localIncomeTax || "0"}
                 onChange={(e) =>
                   handleSalaryInputChange("localIncomeTax", e.target.value)
@@ -3279,14 +3279,14 @@ export default function AdminPage() {
         </div>
 
         {/* Family Info Section */}
-        <div className="bg-white border border-border-light p-4 md:p-6 shadow-md md:shadow-lg">
+        <div className="bg-surface border border-edge p-4 md:p-6 shadow-md md:shadow-lg">
           <div className="flex items-center gap-3 mb-6">
-            <div className="bg-highlight-orange/30 p-2 border-2 border-black">
+            <div className="bg-amber/12 p-2 border border-edge-strong">
               <Users size={24} />
             </div>
             <div>
               <h3 className="text-lg md:text-xl font-black">가족 정보</h3>
-              <p className="text-xs md:text-sm font-bold text-gray-500">
+              <p className="text-xs md:text-sm font-bold text-mid">
                 인적공제 및 카드공제 한도 확대 적용
               </p>
             </div>
@@ -3294,7 +3294,7 @@ export default function AdminPage() {
 
           {/* 기본공제 섹션 */}
           <div className="mb-6">
-            <h4 className="text-base font-black mb-3 px-2 py-1 bg-fresh-green border-2 border-black inline-block">
+            <h4 className="text-base font-black mb-3 px-2 py-1 bg-mint text-ink border border-edge-strong inline-block">
               기본공제
             </h4>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -3311,10 +3311,10 @@ export default function AdminPage() {
                         }))
                       }
                       className={clsx(
-                        "flex-1 p-3 border border-border-light font-bold text-lg transition-colors",
+                        "flex-1 p-3 border border-edge font-bold text-lg transition-colors",
                         familyData.spouse === hasSpouse
-                          ? "bg-black text-white"
-                          : "bg-white hover:bg-gray-100",
+                          ? "bg-mint text-ink"
+                          : "bg-surface hover:bg-surface-2",
                       )}
                     >
                       {hasSpouse ? "있음" : "없음"}
@@ -3330,7 +3330,7 @@ export default function AdminPage() {
                   type="number"
                   min="0"
                   max="10"
-                  className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
+                  className="w-full h-11 rounded-md border border-edge bg-surface-2 px-3.5 text-body text-hi placeholder:text-dim hover:border-edge-strong focus-visible:outline-none focus-visible:border-mint focus-visible:ring-2 focus-visible:ring-mint/30 transition-colors"
                   value={familyData.children}
                   onChange={(e) =>
                     setFamilyData((prev) => ({
@@ -3349,7 +3349,7 @@ export default function AdminPage() {
                   type="number"
                   min="0"
                   max="10"
-                  className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
+                  className="w-full h-11 rounded-md border border-edge bg-surface-2 px-3.5 text-body text-hi placeholder:text-dim hover:border-edge-strong focus-visible:outline-none focus-visible:border-mint focus-visible:ring-2 focus-visible:ring-mint/30 transition-colors"
                   value={familyData.parents}
                   onChange={(e) =>
                     setFamilyData((prev) => ({
@@ -3365,7 +3365,7 @@ export default function AdminPage() {
                   type="number"
                   min="0"
                   max="10"
-                  className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
+                  className="w-full h-11 rounded-md border border-edge bg-surface-2 px-3.5 text-body text-hi placeholder:text-dim hover:border-edge-strong focus-visible:outline-none focus-visible:border-mint focus-visible:ring-2 focus-visible:ring-mint/30 transition-colors"
                   value={familyData.siblings}
                   onChange={(e) =>
                     setFamilyData((prev) => ({
@@ -3383,7 +3383,7 @@ export default function AdminPage() {
                   type="number"
                   min="0"
                   max="10"
-                  className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
+                  className="w-full h-11 rounded-md border border-edge bg-surface-2 px-3.5 text-body text-hi placeholder:text-dim hover:border-edge-strong focus-visible:outline-none focus-visible:border-mint focus-visible:ring-2 focus-visible:ring-mint/30 transition-colors"
                   value={familyData.foster}
                   onChange={(e) =>
                     setFamilyData((prev) => ({
@@ -3399,7 +3399,7 @@ export default function AdminPage() {
                   type="number"
                   min="0"
                   max="10"
-                  className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
+                  className="w-full h-11 rounded-md border border-edge bg-surface-2 px-3.5 text-body text-hi placeholder:text-dim hover:border-edge-strong focus-visible:outline-none focus-visible:border-mint focus-visible:ring-2 focus-visible:ring-mint/30 transition-colors"
                   value={familyData.recipient}
                   onChange={(e) =>
                     setFamilyData((prev) => ({
@@ -3414,7 +3414,7 @@ export default function AdminPage() {
 
           {/* 세액공제 섹션 */}
           <div className="mb-6">
-            <h4 className="text-base font-black mb-3 px-2 py-1 bg-highlight-orange/30 border-2 border-black inline-block">
+            <h4 className="text-base font-black mb-3 px-2 py-1 bg-amber/12 border border-edge-strong inline-block">
               세액공제
             </h4>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -3426,7 +3426,7 @@ export default function AdminPage() {
                   type="number"
                   min="0"
                   max="10"
-                  className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
+                  className="w-full h-11 rounded-md border border-edge bg-surface-2 px-3.5 text-body text-hi placeholder:text-dim hover:border-edge-strong focus-visible:outline-none focus-visible:border-mint focus-visible:ring-2 focus-visible:ring-mint/30 transition-colors"
                   value={familyData.childrenOver8}
                   onChange={(e) =>
                     setFamilyData((prev) => ({
@@ -3439,7 +3439,7 @@ export default function AdminPage() {
               <div>
                 <label className="block font-bold mb-2">출생·입양자</label>
                 <select
-                  className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
+                  className="w-full h-11 rounded-md border border-edge bg-surface-2 px-3.5 text-body text-hi placeholder:text-dim hover:border-edge-strong focus-visible:outline-none focus-visible:border-mint focus-visible:ring-2 focus-visible:ring-mint/30 transition-colors"
                   value={familyData.birthAdoption}
                   onChange={(e) =>
                     setFamilyData((prev) => ({
@@ -3467,7 +3467,7 @@ export default function AdminPage() {
 
           {/* 비과세 섹션 */}
           <div>
-            <h4 className="text-base font-black mb-3 px-2 py-1 bg-highlight-orange/30 border-2 border-black inline-block">
+            <h4 className="text-base font-black mb-3 px-2 py-1 bg-amber/12 border border-edge-strong inline-block">
               비과세
             </h4>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -3479,7 +3479,7 @@ export default function AdminPage() {
                   type="number"
                   min="0"
                   max="10"
-                  className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
+                  className="w-full h-11 rounded-md border border-edge bg-surface-2 px-3.5 text-body text-hi placeholder:text-dim hover:border-edge-strong focus-visible:outline-none focus-visible:border-mint focus-visible:ring-2 focus-visible:ring-mint/30 transition-colors"
                   value={familyData.childrenUnder6}
                   onChange={(e) =>
                     setFamilyData((prev) => ({
@@ -3497,10 +3497,10 @@ export default function AdminPage() {
         </div>
 
         {/* Spending Section */}
-        <div className="bg-white border border-border-light p-4 md:p-6 shadow-md md:shadow-lg">
+        <div className="bg-surface border border-edge p-4 md:p-6 shadow-md md:shadow-lg">
           <div className="flex flex-col md:flex-row justify-between items-start gap-4 mb-4">
             <div className="flex items-center gap-3">
-              <div className="bg-ink-black p-2 border-2 border-black">
+              <div className="bg-surface-3 p-2 border border-edge-strong">
                 <CreditCard size={24} />
               </div>
               <div>
@@ -3515,10 +3515,10 @@ export default function AdminPage() {
                   handleButtonClick("cardExcel", handleCardExcelModalOpen)
                 }
                 className={clsx(
-                  "flex-1 md:flex-none flex items-center justify-center gap-2 px-3 md:px-4 py-2 border-2 border-black font-bold text-xs md:text-sm shadow-md transition-all",
+                  "flex-1 md:flex-none flex items-center justify-center gap-2 px-3 md:px-4 py-2 border border-edge-strong font-bold text-xs md:text-sm shadow-md transition-all",
                   clickedBtn === "excel"
-                    ? "bg-ink-black translate-x-[4px] translate-y-[4px] shadow-none"
-                    : "bg-white hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-md",
+                    ? "bg-surface-3 translate-x-[4px] translate-y-[4px] shadow-none"
+                    : "bg-surface hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-md",
                 )}
               >
                 <FileText
@@ -3533,10 +3533,10 @@ export default function AdminPage() {
               <button
                 onClick={() => handleButtonClick("ocr", handleOcrModalOpen)}
                 className={clsx(
-                  "flex-1 md:flex-none flex items-center justify-center gap-2 px-3 md:px-4 py-2 border-2 border-black font-bold text-xs md:text-sm shadow-md transition-all",
+                  "flex-1 md:flex-none flex items-center justify-center gap-2 px-3 md:px-4 py-2 border border-edge-strong font-bold text-xs md:text-sm shadow-md transition-all",
                   clickedBtn === "ocr"
-                    ? "bg-ink-black translate-x-[4px] translate-y-[4px] shadow-none"
-                    : "bg-highlight-orange/30 hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-md",
+                    ? "bg-surface-3 translate-x-[4px] translate-y-[4px] shadow-none"
+                    : "bg-amber/12 hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-md",
                 )}
               >
                 <Upload size={14} className="md:w-4 md:h-4" /> OCR
@@ -3551,10 +3551,10 @@ export default function AdminPage() {
                   )
                 }
                 className={clsx(
-                  "flex-1 md:flex-none flex items-center justify-center gap-2 px-3 md:px-4 py-2 border-2 border-black font-bold text-xs md:text-sm shadow-md transition-all",
+                  "flex-1 md:flex-none flex items-center justify-center gap-2 px-3 md:px-4 py-2 border border-edge-strong font-bold text-xs md:text-sm shadow-md transition-all",
                   clickedBtn === "sync"
-                    ? "bg-fresh-green translate-x-[4px] translate-y-[4px] shadow-none"
-                    : "bg-black text-white hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-md",
+                    ? "bg-mint text-ink translate-x-[4px] translate-y-[4px] shadow-none"
+                    : "bg-mint text-ink hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-md",
                 )}
               >
                 <RefreshCw
@@ -3570,7 +3570,7 @@ export default function AdminPage() {
           </div>
 
           {/* Month Tabs for Spending */}
-          <div className="grid grid-cols-6 md:grid-cols-12 gap-1 mb-4 border-b-2 border-black pb-3">
+          <div className="grid grid-cols-6 md:grid-cols-12 gap-1 mb-4 border-b border-edge-strong pb-3">
             {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((month) => (
               <button
                 key={month}
@@ -3580,12 +3580,12 @@ export default function AdminPage() {
                   )
                 }
                 className={clsx(
-                  "py-2 font-bold text-sm border-2 border-black transition-all",
+                  "py-2 font-bold text-sm border border-edge-strong transition-all",
                   selectedSpendingMonth === month
-                    ? "bg-black text-white shadow-none"
+                    ? "bg-mint text-ink shadow-none"
                     : clickedBtn === `spending-month-${month}`
-                      ? "bg-fresh-green translate-x-[2px] translate-y-[2px] shadow-none"
-                      : "bg-white shadow-sm hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-md",
+                      ? "bg-mint text-ink translate-x-[2px] translate-y-[2px] shadow-none"
+                      : "bg-surface shadow-sm hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-md",
                 )}
               >
                 {month}월
@@ -3602,7 +3602,7 @@ export default function AdminPage() {
                 .map((item) => (
                   <div
                     key={item.id}
-                    className="flex items-center justify-between border-b-2 border-gray-100 pb-2 group"
+                    className="flex items-center justify-between border-b border-edge pb-2 group"
                   >
                     <div className="flex items-center gap-2">
                       <span className="font-bold">{item.name}</span>
@@ -3612,7 +3612,7 @@ export default function AdminPage() {
                             setSelectedItemDetails(item);
                             setShowDetailsModal(true);
                           }}
-                          className="text-xs bg-blue-100 text-blue-600 px-2 py-0.5 rounded hover:bg-blue-200 flex items-center gap-1"
+                          className="text-xs bg-sky/12 text-sky px-2 py-0.5 rounded hover:bg-sky/20 flex items-center gap-1"
                         >
                           <Eye size={12} />
                           {item.details.length}건
@@ -3628,7 +3628,7 @@ export default function AdminPage() {
                       </span>
                       <button
                         onClick={() => handleDeleteItem(item.id)}
-                        className="opacity-0 group-hover:opacity-100 p-1 hover:bg-red-100 text-red-500 transition-opacity"
+                        className="opacity-0 group-hover:opacity-100 p-1 hover:bg-rose/12 text-rose transition-opacity"
                       >
                         <X size={16} />
                       </button>
@@ -3636,7 +3636,7 @@ export default function AdminPage() {
                   </div>
                 ))
             ) : (
-              <div className="text-center py-8 text-gray-400">
+              <div className="text-center py-8 text-dim">
                 <p className="font-bold">
                   {selectedSpendingMonth}월 지출 데이터가 없습니다
                 </p>
@@ -3653,10 +3653,10 @@ export default function AdminPage() {
               handleButtonClick("addItem", () => setShowAddItemModal(true));
             }}
             className={clsx(
-              "w-full mt-6 py-3 border-2 border-dashed font-bold transition-all flex items-center justify-center gap-2",
+              "w-full mt-6 py-3 border border-dashed font-bold transition-all flex items-center justify-center gap-2",
               clickedBtn === "addItem"
-                ? "border-black bg-highlight-orange/30 text-black"
-                : "border-gray-300 text-gray-400 hover:border-black hover:text-black hover:bg-gray-50",
+                ? "border-edge-strong bg-amber/12 text-hi"
+                : "border-edge text-dim hover:border-edge-strong hover:text-hi hover:bg-surface-2",
             )}
           >
             <Plus size={16} /> 수동 항목 추가
@@ -3664,14 +3664,14 @@ export default function AdminPage() {
         </div>
       </div>
 
-      <div className="fixed bottom-16 md:bottom-0 left-0 right-0 p-4 bg-white border-t-2 border-black flex justify-center gap-4 z-40 md:static md:bg-transparent md:border-none md:p-0 md:mt-8">
+      <div className="fixed bottom-16 md:bottom-0 left-0 right-0 p-4 bg-surface border-t border-edge-strong flex justify-center gap-4 z-40 md:static md:bg-transparent md:border-none md:p-0 md:mt-8">
         <button
           onClick={() => handleButtonClick("cancel")}
           className={clsx(
-            "px-6 py-3 font-bold border-2 border-black shadow-md transition-all",
+            "px-6 py-3 font-bold border border-edge-strong shadow-md transition-all",
             clickedBtn === "cancel"
-              ? "bg-ink-black translate-x-[4px] translate-y-[4px] shadow-none"
-              : "bg-white hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-md",
+              ? "bg-surface-3 translate-x-[4px] translate-y-[4px] shadow-none"
+              : "bg-surface hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-md",
           )}
         >
           변경취소
@@ -3679,10 +3679,10 @@ export default function AdminPage() {
         <button
           onClick={() => handleButtonClick("save", handleSave)}
           className={clsx(
-            "px-6 py-3 font-bold border-2 border-black shadow-md transition-all",
+            "px-6 py-3 font-bold border border-edge-strong shadow-md transition-all",
             clickedBtn === "save"
-              ? "bg-ink-black translate-x-[4px] translate-y-[4px] shadow-none"
-              : "bg-fresh-green hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-md",
+              ? "bg-surface-3 translate-x-[4px] translate-y-[4px] shadow-none"
+              : "bg-mint text-ink hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-md",
           )}
         >
           저장하기
@@ -3693,9 +3693,9 @@ export default function AdminPage() {
       {showCardExcelModal &&
         typeof document !== "undefined" &&
         createPortal(
-          <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/80">
-            <div className="bg-white border border-border-light p-6 max-w-2xl w-full mx-4 shadow-lg max-h-[80vh] overflow-y-auto">
-              <div className="flex justify-between items-center mb-4 pb-4 border-b-2 border-black">
+          <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-base/80">
+            <div className="bg-surface border border-edge p-6 max-w-2xl w-full mx-4 shadow-lg max-h-[80vh] overflow-y-auto">
+              <div className="flex justify-between items-center mb-4 pb-4 border-b border-edge-strong">
                 <h3 className="text-xl font-black">엑셀 업로드</h3>
                 <button
                   onClick={() =>
@@ -3705,10 +3705,10 @@ export default function AdminPage() {
                     )
                   }
                   className={clsx(
-                    "p-2 border-2 border-black shadow-sm transition-all",
+                    "p-2 border border-edge-strong shadow-sm transition-all",
                     clickedBtn === "cardExcelClose"
-                      ? "bg-ink-black translate-x-[2px] translate-y-[2px] shadow-none"
-                      : "bg-white hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-sm",
+                      ? "bg-surface-3 translate-x-[2px] translate-y-[2px] shadow-none"
+                      : "bg-surface hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-sm",
                   )}
                 >
                   <X size={20} />
@@ -3746,14 +3746,14 @@ export default function AdminPage() {
                       }
                       disabled={isDisabled}
                       className={clsx(
-                        "flex-1 py-3 font-bold border-2 border-black transition-all",
+                        "flex-1 py-3 font-bold border border-edge-strong transition-all",
                         cardType === type
-                          ? "bg-fresh-green shadow-none translate-x-[2px] translate-y-[2px]"
+                          ? "bg-mint text-ink shadow-none translate-x-[2px] translate-y-[2px]"
                           : isDisabled
-                            ? "bg-gray-200 text-gray-400 cursor-not-allowed opacity-50"
+                            ? "bg-surface-3 text-dim cursor-not-allowed opacity-50"
                             : clickedBtn === btnId
-                              ? "bg-ink-black translate-x-[2px] translate-y-[2px] shadow-none"
-                              : "bg-white shadow-md hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-md",
+                              ? "bg-surface-3 translate-x-[2px] translate-y-[2px] shadow-none"
+                              : "bg-surface shadow-md hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-md",
                       )}
                     >
                       {label}
@@ -3771,11 +3771,11 @@ export default function AdminPage() {
                 }}
                 onDragLeave={() => setIsCardExcelDragging(false)}
                 className={clsx(
-                  "border-2 border-dashed p-8 text-center mb-6 transition-all",
+                  "border border-dashed p-8 text-center mb-6 transition-all",
                   isCardExcelDragging
-                    ? "border-fresh-green bg-highlight-green/20"
-                    : "border-gray-300",
-                  cardExcelFile && "border-fresh-green bg-highlight-green/20",
+                    ? "border-mint bg-mint/12"
+                    : "border-edge",
+                  cardExcelFile && "border-mint bg-mint/12",
                 )}
               >
                 <input
@@ -3787,7 +3787,7 @@ export default function AdminPage() {
                 />
                 {cardExcelFile ? (
                   <div className="flex items-center justify-center gap-3">
-                    <CheckCircle size={24} className="text-green-500" />
+                    <CheckCircle size={24} className="text-mint" />
                     <span className="font-bold">{cardExcelFile.name}</span>
                     <button
                       onClick={() => {
@@ -3796,18 +3796,18 @@ export default function AdminPage() {
                         if (cardExcelInputRef.current)
                           cardExcelInputRef.current.value = "";
                       }}
-                      className="p-1 hover:bg-red-100 text-red-500"
+                      className="p-1 hover:bg-rose/12 text-rose"
                     >
                       <X size={16} />
                     </button>
                   </div>
                 ) : (
                   <>
-                    <Upload size={32} className="mx-auto mb-2 text-gray-400" />
+                    <Upload size={32} className="mx-auto mb-2 text-dim" />
                     <p className="font-bold mb-2">엑셀 파일을 드래그하거나</p>
                     <button
                       onClick={() => cardExcelInputRef.current?.click()}
-                      className="px-4 py-2 bg-fresh-green font-bold border-2 border-black shadow-sm hover:shadow-md transition-all"
+                      className="px-4 py-2 bg-mint text-ink font-bold border border-edge-strong shadow-sm hover:shadow-md transition-all"
                     >
                       파일 선택
                     </button>
@@ -3820,29 +3820,29 @@ export default function AdminPage() {
                 <div className="mb-6">
                   <div className="flex justify-between items-center mb-3">
                     <span className="font-bold">파싱 결과 미리보기</span>
-                    <span className="text-sm text-gray-500">
+                    <span className="text-sm text-mid">
                       총 {cardExcelPreview.length}건
                       {excludedCount > 0 && (
-                        <span className="text-red-500 ml-2">
+                        <span className="text-rose ml-2">
                           (제외: {excludedCount}건)
                         </span>
                       )}
                     </span>
                   </div>
-                  <div className="max-h-48 overflow-y-auto border-2 border-black">
+                  <div className="max-h-48 overflow-y-auto border border-edge-strong">
                     <table className="w-full text-sm">
-                      <thead className="bg-gray-100 sticky top-0">
+                      <thead className="bg-surface-2 sticky top-0">
                         <tr>
-                          <th className="p-2 text-left border-b-2 border-black">
+                          <th className="p-2 text-left border-b border-edge-strong">
                             날짜
                           </th>
-                          <th className="p-2 text-left border-b-2 border-black">
+                          <th className="p-2 text-left border-b border-edge-strong">
                             가맹점
                           </th>
-                          <th className="p-2 text-right border-b-2 border-black">
+                          <th className="p-2 text-right border-b border-edge-strong">
                             금액
                           </th>
-                          <th className="p-2 text-center border-b-2 border-black">
+                          <th className="p-2 text-center border-b border-edge-strong">
                             분류
                           </th>
                         </tr>
@@ -3853,12 +3853,12 @@ export default function AdminPage() {
                             key={idx}
                             className={clsx(
                               item.category === "excluded" &&
-                                "bg-red-50 text-red-400 line-through",
-                              item.category === "transport" && "bg-blue-50",
-                              item.category === "insurance" && "bg-purple-50",
-                              item.category === "medical" && "bg-green-50",
-                              item.category === "market" && "bg-orange-50",
-                              item.category === "culture" && "bg-pink-50",
+                                "bg-rose/8 text-rose line-through",
+                              item.category === "transport" && "bg-sky/8",
+                              item.category === "insurance" && "bg-sky/8",
+                              item.category === "medical" && "bg-mint/8",
+                              item.category === "market" && "bg-amber/8",
+                              item.category === "culture" && "bg-rose/8",
                             )}
                           >
                             <td className="p-2 border-b">{item.date}</td>
@@ -3868,31 +3868,31 @@ export default function AdminPage() {
                             </td>
                             <td className="p-2 border-b text-center">
                               {item.category === "excluded" ? (
-                                <span className="text-xs bg-red-100 text-red-600 px-2 py-1 rounded">
+                                <span className="text-xs bg-rose/12 text-rose px-2 py-1 rounded">
                                   제외
                                 </span>
                               ) : item.category === "transport" ? (
-                                <span className="text-xs bg-blue-100 text-blue-600 px-2 py-1 rounded">
+                                <span className="text-xs bg-sky/12 text-sky px-2 py-1 rounded">
                                   대중교통
                                 </span>
                               ) : item.category === "insurance" ? (
-                                <span className="text-xs bg-purple-100 text-purple-600 px-2 py-1 rounded">
+                                <span className="text-xs bg-sky/12 text-sky px-2 py-1 rounded">
                                   보험료
                                 </span>
                               ) : item.category === "medical" ? (
-                                <span className="text-xs bg-teal-100 text-teal-600 px-2 py-1 rounded">
+                                <span className="text-xs bg-mint/12 text-mint px-2 py-1 rounded">
                                   의료비
                                 </span>
                               ) : item.category === "market" ? (
-                                <span className="text-xs bg-orange-100 text-orange-600 px-2 py-1 rounded">
+                                <span className="text-xs bg-amber/12 text-amber px-2 py-1 rounded">
                                   전통시장
                                 </span>
                               ) : item.category === "culture" ? (
-                                <span className="text-xs bg-pink-100 text-pink-600 px-2 py-1 rounded">
+                                <span className="text-xs bg-rose/12 text-rose px-2 py-1 rounded">
                                   문화체육
                                 </span>
                               ) : (
-                                <span className="text-xs bg-green-100 text-green-600 px-2 py-1 rounded">
+                                <span className="text-xs bg-mint/12 text-mint px-2 py-1 rounded">
                                   {cardType === "credit"
                                     ? "신용"
                                     : cardType === "debit"
@@ -3906,7 +3906,7 @@ export default function AdminPage() {
                       </tbody>
                     </table>
                   </div>
-                  <div className="mt-3 p-3 bg-highlight-orange/30 border-2 border-black space-y-1">
+                  <div className="mt-3 p-3 bg-amber/12 border border-edge-strong space-y-1">
                     <div className="flex justify-between font-bold text-sm">
                       <span>
                         {cardType === "credit"
@@ -3924,7 +3924,7 @@ export default function AdminPage() {
                         원
                       </span>
                     </div>
-                    <div className="flex justify-between text-sm text-blue-600">
+                    <div className="flex justify-between text-sm text-sky">
                       <span>🚌 대중교통:</span>
                       <span>
                         {cardExcelPreview
@@ -3934,7 +3934,7 @@ export default function AdminPage() {
                         원
                       </span>
                     </div>
-                    <div className="flex justify-between text-sm text-purple-600">
+                    <div className="flex justify-between text-sm text-sky">
                       <span>🛡️ 보험료:</span>
                       <span>
                         {cardExcelPreview
@@ -3944,7 +3944,7 @@ export default function AdminPage() {
                         원
                       </span>
                     </div>
-                    <div className="flex justify-between text-sm text-teal-600">
+                    <div className="flex justify-between text-sm text-mint">
                       <span>🏥 의료비:</span>
                       <span>
                         {cardExcelPreview
@@ -3954,7 +3954,7 @@ export default function AdminPage() {
                         원
                       </span>
                     </div>
-                    <div className="flex justify-between text-sm text-orange-600">
+                    <div className="flex justify-between text-sm text-amber">
                       <span>🏪 전통시장:</span>
                       <span>
                         {cardExcelPreview
@@ -3964,7 +3964,7 @@ export default function AdminPage() {
                         원
                       </span>
                     </div>
-                    <div className="flex justify-between text-sm text-pink-600">
+                    <div className="flex justify-between text-sm text-rose">
                       <span>🎭 문화체육:</span>
                       <span>
                         {cardExcelPreview
@@ -3974,7 +3974,7 @@ export default function AdminPage() {
                         원
                       </span>
                     </div>
-                    <div className="flex justify-between text-sm text-red-500">
+                    <div className="flex justify-between text-sm text-rose">
                       <span>❌ 제외:</span>
                       <span>
                         {cardExcelPreview
@@ -3989,29 +3989,29 @@ export default function AdminPage() {
               )}
 
               {/* 안내 문구 */}
-              <div className="mb-6 p-3 bg-gray-100 border-2 border-black text-sm">
+              <div className="mb-6 p-3 bg-surface-2 border border-edge-strong text-sm">
                 <p className="font-bold mb-2">📋 자동 분류 안내:</p>
-                <p className="text-blue-600">
+                <p className="text-sky">
                   🚌 대중교통: 버스, 지하철, 모바일이즐 → 대중교통 항목으로 분류
                 </p>
-                <p className="text-purple-600">
+                <p className="text-sky">
                   🛡️ 보험료: 메리츠화재, DB손해보험 등 → 보험료 항목으로 분류
                 </p>
-                <p className="text-teal-600">
+                <p className="text-mint">
                   🏥 의료비: 병원, 의원, 약국 등 → 의료비 항목으로 분류
                 </p>
-                <p className="text-orange-600">
+                <p className="text-amber">
                   🏪 전통시장: 전통시장, 재래시장 등 → 전통시장 항목으로 분류
                 </p>
-                <p className="text-pink-600">
+                <p className="text-rose">
                   🎭 문화체육: 서점, 도서, 영화관, 헬스 등 → 문화체육 항목으로
                   분류
                 </p>
-                <p className="text-red-500">
+                <p className="text-rose">
                   ❌ 제외: 세금, 공과금, 통신비, 도로통행료, 사업자번호 없는
                   항목 → 공제 불가
                 </p>
-                <p className="text-gray-500 mt-1">
+                <p className="text-mid mt-1">
                   취소된 거래는 자동으로 제외됩니다.
                 </p>
               </div>
@@ -4020,7 +4020,7 @@ export default function AdminPage() {
               <div className="flex gap-3 justify-end">
                 <button
                   onClick={handleCardExcelModalClose}
-                  className="px-4 py-2 font-bold border-2 border-black bg-white shadow-sm hover:shadow-md transition-all"
+                  className="px-4 py-2 font-bold border border-edge-strong bg-surface shadow-sm hover:shadow-md transition-all"
                 >
                   취소
                 </button>
@@ -4028,10 +4028,10 @@ export default function AdminPage() {
                   onClick={handleCardExcelApply}
                   disabled={!cardExcelFile || cardExcelPreview.length === 0}
                   className={clsx(
-                    "px-4 py-2 font-bold border-2 border-black shadow-sm transition-all",
+                    "px-4 py-2 font-bold border border-edge-strong shadow-sm transition-all",
                     cardExcelFile && cardExcelPreview.length > 0
-                      ? "bg-fresh-green hover:shadow-md"
-                      : "bg-gray-200 cursor-not-allowed opacity-50",
+                      ? "bg-mint text-ink hover:shadow-md"
+                      : "bg-surface-3 cursor-not-allowed opacity-50",
                   )}
                 >
                   적용하기
@@ -4047,9 +4047,9 @@ export default function AdminPage() {
         selectedItemDetails &&
         typeof document !== "undefined" &&
         createPortal(
-          <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/80">
-            <div className="bg-white border border-border-light p-6 max-w-2xl w-full mx-4 shadow-lg max-h-[80vh] overflow-y-auto">
-              <div className="flex justify-between items-center mb-4 pb-4 border-b-2 border-black">
+          <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-base/80">
+            <div className="bg-surface border border-edge p-6 max-w-2xl w-full mx-4 shadow-lg max-h-[80vh] overflow-y-auto">
+              <div className="flex justify-between items-center mb-4 pb-4 border-b border-edge-strong">
                 <h3 className="text-xl font-black">
                   {selectedItemDetails.name} 상세 내역
                 </h3>
@@ -4061,17 +4061,17 @@ export default function AdminPage() {
                     })
                   }
                   className={clsx(
-                    "p-2 border-2 border-black shadow-sm transition-all",
+                    "p-2 border border-edge-strong shadow-sm transition-all",
                     clickedBtn === "detailsClose"
-                      ? "bg-ink-black translate-x-[2px] translate-y-[2px] shadow-none"
-                      : "bg-white hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-sm",
+                      ? "bg-surface-3 translate-x-[2px] translate-y-[2px] shadow-none"
+                      : "bg-surface hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-sm",
                   )}
                 >
                   <X size={20} />
                 </button>
               </div>
 
-              <div className="mb-4 p-3 bg-highlight-orange/30 border-2 border-black">
+              <div className="mb-4 p-3 bg-amber/12 border border-edge-strong">
                 <div className="flex justify-between font-bold">
                   <span>총 {selectedItemDetails.details?.length || 0}건</span>
                   <span className="text-lg">
@@ -4080,24 +4080,24 @@ export default function AdminPage() {
                 </div>
               </div>
 
-              <div className="max-h-96 overflow-y-auto border-2 border-black">
+              <div className="max-h-96 overflow-y-auto border border-edge-strong">
                 <table className="w-full text-sm">
-                  <thead className="bg-gray-100 sticky top-0">
+                  <thead className="bg-surface-2 sticky top-0">
                     <tr>
-                      <th className="p-2 text-left border-b-2 border-black">
+                      <th className="p-2 text-left border-b border-edge-strong">
                         날짜
                       </th>
-                      <th className="p-2 text-left border-b-2 border-black">
+                      <th className="p-2 text-left border-b border-edge-strong">
                         가맹점
                       </th>
-                      <th className="p-2 text-right border-b-2 border-black">
+                      <th className="p-2 text-right border-b border-edge-strong">
                         금액
                       </th>
                     </tr>
                   </thead>
                   <tbody>
                     {selectedItemDetails.details?.map((detail, idx) => (
-                      <tr key={idx} className="hover:bg-gray-50">
+                      <tr key={idx} className="hover:bg-surface-2">
                         <td className="p-2 border-b">{detail.date}</td>
                         <td className="p-2 border-b">{detail.merchant}</td>
                         <td className="p-2 border-b text-right">
@@ -4115,7 +4115,7 @@ export default function AdminPage() {
                     setShowDetailsModal(false);
                     setSelectedItemDetails(null);
                   }}
-                  className="px-4 py-2 font-bold border-2 border-black bg-white shadow-sm hover:shadow-md transition-all"
+                  className="px-4 py-2 font-bold border border-edge-strong bg-surface shadow-sm hover:shadow-md transition-all"
                 >
                   닫기
                 </button>
@@ -4130,22 +4130,22 @@ export default function AdminPage() {
         uncertainMarketItems.length > 0 &&
         typeof document !== "undefined" &&
         createPortal(
-          <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/80">
-            <div className="bg-white border border-border-light p-6 max-w-2xl w-full mx-4 shadow-lg max-h-[80vh] overflow-y-auto">
-              <div className="flex justify-between items-center mb-4 pb-4 border-b-2 border-black">
+          <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-base/80">
+            <div className="bg-surface border border-edge p-6 max-w-2xl w-full mx-4 shadow-lg max-h-[80vh] overflow-y-auto">
+              <div className="flex justify-between items-center mb-4 pb-4 border-b border-edge-strong">
                 <h3 className="text-xl font-black">🏪 전통시장 확인</h3>
                 <button
                   onClick={() => {
                     setShowMarketConfirmModal(false);
                     setUncertainMarketItems([]);
                   }}
-                  className="p-2 border-2 border-black bg-white shadow-sm hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-sm transition-all"
+                  className="p-2 border border-edge-strong bg-surface shadow-sm hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-sm transition-all"
                 >
                   <X size={20} />
                 </button>
               </div>
 
-              <p className="text-sm text-gray-600 mb-4">
+              <p className="text-sm text-mid mb-4">
                 아래 가맹점이 전통시장 DB에서 유사한 이름으로 검색되었습니다.
                 <br />
                 전통시장으로 분류할 항목을 선택해주세요.
@@ -4155,20 +4155,20 @@ export default function AdminPage() {
                 {uncertainMarketItems.map((item, idx) => (
                   <div
                     key={idx}
-                    className="border-2 border-black p-3 bg-yellow-50"
+                    className="border border-edge-strong p-3 bg-amber/8"
                   >
                     <div className="flex justify-between items-start mb-2">
                       <div className="flex-1">
                         <p className="font-bold text-base">
                           {item.merchantName}
                         </p>
-                        <p className="text-sm text-gray-500 mt-1">
+                        <p className="text-sm text-mid mt-1">
                           🔍 유사 매칭:{" "}
-                          <span className="font-bold text-black">
+                          <span className="font-bold text-hi">
                             {item.matchedMarketName}
                           </span>
                         </p>
-                        <p className="text-xs text-gray-400">
+                        <p className="text-xs text-dim">
                           📍 {item.belongsTo} ({item.address}) · 매칭률{" "}
                           {(item.matchRatio * 100).toFixed(0)}%
                         </p>
@@ -4197,7 +4197,7 @@ export default function AdminPage() {
                             `🏪 ${item.merchantName} → 전통시장으로 분류`,
                           );
                         }}
-                        className="flex-1 py-2 px-3 font-bold text-sm border-2 border-black bg-fresh-green shadow-sm hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-md transition-all"
+                        className="flex-1 py-2 px-3 font-bold text-sm border border-edge-strong bg-mint text-ink shadow-sm hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-md transition-all"
                       >
                         ✅ 전통시장 맞음
                       </button>
@@ -4211,7 +4211,7 @@ export default function AdminPage() {
                             `❌ 사용자 거부: ${item.merchantName} → 전통시장 아님`,
                           );
                         }}
-                        className="flex-1 py-2 px-3 font-bold text-sm border-2 border-black bg-gray-200 shadow-sm hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-md transition-all"
+                        className="flex-1 py-2 px-3 font-bold text-sm border border-edge-strong bg-surface-3 shadow-sm hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-md transition-all"
                       >
                         ❌ 아님
                       </button>
@@ -4221,22 +4221,22 @@ export default function AdminPage() {
               </div>
 
               {uncertainMarketItems.length === 0 && (
-                <div className="text-center py-8 text-gray-400">
+                <div className="text-center py-8 text-dim">
                   <CheckCircle
                     size={48}
-                    className="mx-auto mb-2 text-green-500"
+                    className="mx-auto mb-2 text-mint"
                   />
                   <p className="font-bold">모든 항목 처리 완료!</p>
                 </div>
               )}
 
-              <div className="flex justify-end mt-4 pt-4 border-t-2 border-black">
+              <div className="flex justify-end mt-4 pt-4 border-t border-edge-strong">
                 <button
                   onClick={() => {
                     setShowMarketConfirmModal(false);
                     setUncertainMarketItems([]);
                   }}
-                  className="px-6 py-2 font-bold border-2 border-black bg-white shadow-sm hover:shadow-md transition-all"
+                  className="px-6 py-2 font-bold border border-edge-strong bg-surface shadow-sm hover:shadow-md transition-all"
                 >
                   닫기
                 </button>

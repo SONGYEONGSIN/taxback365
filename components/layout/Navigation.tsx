@@ -16,8 +16,7 @@ import { Button } from "@/components/ui/Button";
 
 const SESSION_TIMEOUT = 30 * 60; // 30분 (초)
 
-/** 임시 인라인 로고 — Phase 5 (T25) 에서 /public/logo.svg 로 분리 예정.
- *  ㅌ 자모: 가로획 3 + 세로획 1. Dub은 monochrome (ink-black). */
+/** 인라인 로고 — ㅌ 자모: 가로획 3 + 세로획 1. currentColor. */
 function LogoMark({ size = 22 }: { size?: number }) {
   return (
     <svg
@@ -104,11 +103,11 @@ export function Navigation() {
 
   return (
     <>
-      <nav className="sticky top-0 z-40 h-16 bg-canvas-white border-b border-border-light">
+      <nav className="sticky top-0 z-40 h-16 bg-base/80 backdrop-blur-md border-b border-edge">
         <div className="container mx-auto h-full px-4 md:px-6 max-w-[1200px] flex items-center justify-between">
           <Link
             href="/"
-            className="flex items-center gap-2 text-ink-black hover:opacity-80 transition-opacity shrink-0"
+            className="flex items-center gap-2 text-hi hover:text-mint transition-colors shrink-0"
             aria-label="taxback365 홈"
           >
             <LogoMark />
@@ -129,8 +128,8 @@ export function Navigation() {
                     className={clsx(
                       "relative px-3 py-2 rounded-md text-body font-medium transition-colors duration-150",
                       active
-                        ? "text-ink-black after:absolute after:left-3 after:right-3 after:-bottom-[1.05rem] after:h-[2px] after:bg-ink-black"
-                        : "text-thunder-gray hover:text-ink-black hover:bg-subtle-ash",
+                        ? "text-hi after:absolute after:left-3 after:right-3 after:-bottom-[1.05rem] after:h-[2px] after:bg-mint"
+                        : "text-mid hover:text-hi hover:bg-surface",
                     )}
                   >
                     {item.label}
@@ -144,15 +143,15 @@ export function Navigation() {
             {session ? (
               <>
                 <div className="hidden md:flex items-center gap-2">
-                  <span className="text-body-sm font-medium text-ink-black">
+                  <span className="text-body-sm font-medium text-hi">
                     {session.user?.name || "사용자"}님
                   </span>
                   <span
                     className={clsx(
                       "inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-caption font-medium",
                       isTimeWarning
-                        ? "bg-warm-orange/10 text-warm-orange"
-                        : "bg-subtle-ash text-shadow-gray",
+                        ? "bg-amber/10 text-amber"
+                        : "bg-surface text-mid",
                     )}
                   >
                     <Clock size={11} strokeWidth={2} />
@@ -161,7 +160,7 @@ export function Navigation() {
                     </span>
                   </span>
                 </div>
-                <div className="w-8 h-8 rounded-full border border-border-light bg-subtle-ash overflow-hidden">
+                <div className="w-8 h-8 rounded-full border border-edge bg-surface overflow-hidden">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={
@@ -184,13 +183,13 @@ export function Navigation() {
               <div className="flex items-center gap-2">
                 <Link
                   href="/login"
-                  className="inline-flex items-center justify-center h-9 px-4 rounded-full text-body font-medium text-thunder-gray hover:text-ink-black hover:bg-subtle-ash transition-colors"
+                  className="inline-flex items-center justify-center h-9 px-4 rounded-full text-body font-medium text-mid hover:text-hi hover:bg-surface transition-colors"
                 >
                   로그인
                 </Link>
                 <Link
                   href="/signup"
-                  className="inline-flex items-center justify-center h-9 px-4 rounded-full text-body font-medium bg-ink-black text-canvas-white hover:opacity-90 transition-opacity shadow-subtle"
+                  className="inline-flex items-center justify-center h-9 px-4 rounded-full text-body font-semibold bg-mint text-ink hover:brightness-110 active:scale-[0.98] transition-all"
                 >
                   회원가입
                 </Link>
@@ -202,7 +201,7 @@ export function Navigation() {
 
       {/* Mobile Bottom Navigation */}
       {showMobileNav && (
-        <nav className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-canvas-white border-t border-border-light shadow-sm">
+        <nav className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-base border-t border-edge">
           <div className="flex justify-around items-center h-16 px-2">
             {[
               {
@@ -235,9 +234,7 @@ export function Navigation() {
                 href={href}
                 className={clsx(
                   "flex flex-col items-center justify-center flex-1 h-full gap-0.5 rounded-md transition-colors",
-                  active
-                    ? "text-ink-black"
-                    : "text-shadow-gray hover:text-ink-black",
+                  active ? "text-mint" : "text-dim hover:text-hi",
                 )}
               >
                 <Icon size={20} strokeWidth={active ? 2.25 : 1.75} />
