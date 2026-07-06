@@ -884,14 +884,13 @@ export default function CalculatorPage() {
       {/* Input Section */}
       <div className="lg:col-span-2 space-y-4">
         <div className="flex justify-between items-center mb-6">
-          <h2 className="text-h2 text-ink-black">계산기</h2>
+          <h2 className="text-h2 text-hi">계산기</h2>
           <div className="flex gap-2">
             <button
               onClick={handleLoadData}
               className={clsx(
-                "inline-flex items-center justify-center gap-2 h-9 px-3.5 rounded-md border border-border-light bg-canvas-white text-ink-black text-[13px] font-medium transition-colors hover:bg-subtle-ash hover:border-border-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring-blue disabled:opacity-50",
-                isLoadingData &&
-                  "bg-ink-black/5 border-ink-black text-ink-black",
+                "inline-flex items-center justify-center gap-2 h-9 px-3.5 rounded-md border border-edge bg-surface text-hi text-[13px] font-medium transition-colors hover:bg-surface-2 hover:border-edge-strong focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mint disabled:opacity-50",
+                isLoadingData && "bg-surface-2 border-edge-strong text-hi",
               )}
             >
               <Download
@@ -903,10 +902,10 @@ export default function CalculatorPage() {
             <button
               onClick={handleReset}
               className={clsx(
-                "inline-flex items-center justify-center gap-2 h-9 px-3.5 rounded-md text-[13px] font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring-blue disabled:opacity-50",
+                "inline-flex items-center justify-center gap-2 h-9 px-3.5 rounded-md text-[13px] font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mint disabled:opacity-50",
                 isResetting
-                  ? "bg-highlight-orange/20 border border-warm-orange/30 text-warm-orange"
-                  : "bg-ink-black text-canvas-white hover:opacity-90",
+                  ? "bg-amber/12 border border-amber/30 text-amber"
+                  : "bg-mint text-ink hover:brightness-110",
               )}
             >
               <RefreshCw
@@ -921,7 +920,7 @@ export default function CalculatorPage() {
         {categories.map((cat) => (
           <div
             key={cat.id}
-            className="rounded-lg border border-border-light bg-canvas-white overflow-hidden"
+            className="rounded-lg border border-edge bg-surface overflow-hidden"
           >
             <button
               onClick={() =>
@@ -930,8 +929,8 @@ export default function CalculatorPage() {
               className={clsx(
                 "w-full flex items-center justify-between p-4 text-body font-semibold transition-colors",
                 openSection === cat.id
-                  ? "bg-subtle-ash text-ink-black border-l-2 border-ink-black"
-                  : "text-thunder-gray hover:bg-subtle-ash",
+                  ? "bg-surface-2 text-hi border-l border-mint"
+                  : "text-mid hover:bg-surface-2",
               )}
             >
               <div className="flex items-center gap-3">
@@ -953,7 +952,7 @@ export default function CalculatorPage() {
                   exit={{ height: 0, opacity: 0 }}
                   style={{ overflow: "visible" }}
                 >
-                  <div className="p-6 border-t-[3px] border-black space-y-6 bg-white">
+                  <div className="p-6 border-t border-edge-strong space-y-6 bg-surface">
                     {/* 총급여 */}
                     {cat.id === "salary" && (
                       <>
@@ -963,13 +962,13 @@ export default function CalculatorPage() {
                             <Tooltip content="연간 총 급여와 상여의 합계 금액입니다.">
                               <Info
                                 size={16}
-                                className="text-gray-400 cursor-help"
+                                className="text-dim cursor-help"
                               />
                             </Tooltip>
                           </label>
                           <input
                             type="text"
-                            className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black font-mono tabular-nums text-right placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
+                            className="w-full h-11 rounded-md border border-edge bg-surface px-3.5 text-body text-hi font-mono tabular-nums text-right placeholder:text-dim hover:border-edge-strong focus-visible:outline-none focus-visible:border-mint focus-visible:ring-2 focus-visible:ring-mint/30 transition-colors"
                             value={formatNumber(inputs.annualSalary)}
                             onChange={(e) =>
                               handleInputChange("annualSalary", e.target.value)
@@ -982,13 +981,13 @@ export default function CalculatorPage() {
                             <Tooltip content="월 20만원 한도의 식대 비과세 금액입니다. 연간 총액을 입력하세요.">
                               <Info
                                 size={16}
-                                className="text-gray-400 cursor-help"
+                                className="text-dim cursor-help"
                               />
                             </Tooltip>
                           </label>
                           <input
                             type="text"
-                            className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black font-mono tabular-nums text-right placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
+                            className="w-full h-11 rounded-md border border-edge bg-surface px-3.5 text-body text-hi font-mono tabular-nums text-right placeholder:text-dim hover:border-edge-strong focus-visible:outline-none focus-visible:border-mint focus-visible:ring-2 focus-visible:ring-mint/30 transition-colors"
                             value={formatNumber(inputs.mealAllowance)}
                             onChange={(e) =>
                               handleInputChange("mealAllowance", e.target.value)
@@ -1001,7 +1000,7 @@ export default function CalculatorPage() {
                             <Tooltip content="6세 이하 자녀 1인당 월 20만원(연 240만원)의 보육수당이 비과세로 적용됩니다.">
                               <Info
                                 size={16}
-                                className="text-gray-400 cursor-help"
+                                className="text-dim cursor-help"
                               />
                             </Tooltip>
                           </label>
@@ -1013,10 +1012,10 @@ export default function CalculatorPage() {
                                   handleInputChange("childrenUnder6", num)
                                 }
                                 className={clsx(
-                                  "flex-1 py-2 border-2 border-black font-bold transition-colors",
+                                  "flex-1 py-2 border border-edge-strong font-bold transition-colors",
                                   inputs.childrenUnder6 === num
-                                    ? "bg-black text-white"
-                                    : "bg-white hover:bg-gray-100",
+                                    ? "bg-mint text-ink"
+                                    : "bg-surface hover:bg-surface-2",
                                 )}
                               >
                                 {num}명
@@ -1024,7 +1023,7 @@ export default function CalculatorPage() {
                             ))}
                           </div>
                         </div>
-                        <div className="bg-subtle-ash p-4 border border-border-light rounded-md space-y-2">
+                        <div className="bg-surface-2 p-4 border border-edge rounded-md space-y-2">
                           <p className="font-bold text-sm">계산식</p>
                           <div className="text-sm space-y-1">
                             <p>
@@ -1039,7 +1038,7 @@ export default function CalculatorPage() {
                               )}
                               원
                             </p>
-                            <p className="border-t border-black pt-1">
+                            <p className="border-t border-edge-strong pt-1">
                               총 비과세:{" "}
                               {formatNumber(
                                 inputs.mealAllowance +
@@ -1049,12 +1048,12 @@ export default function CalculatorPage() {
                             </p>
                           </div>
                         </div>
-                        <div className="bg-highlight-orange/20 p-4 border border-warm-orange/30 rounded-md">
+                        <div className="bg-amber/12 p-4 border border-amber/30 rounded-md">
                           <p className="font-bold mb-1">총급여액 (자동 계산)</p>
                           <p className="text-2xl font-black">
                             {formatNumber(inputs.salary)}원
                           </p>
-                          <p className="text-sm text-gray-600 mt-1">
+                          <p className="text-sm text-mid mt-1">
                             연봉 - 총 비과세 ={" "}
                             {formatNumber(inputs.annualSalary)} -{" "}
                             {formatNumber(
@@ -1065,8 +1064,8 @@ export default function CalculatorPage() {
                         </div>
 
                         {/* 기납부세액 */}
-                        <div className="space-y-4 border-t-2 border-black pt-4">
-                          <h4 className="font-black text-sm border-b-2 border-black pb-2">
+                        <div className="space-y-4 border-t border-edge-strong pt-4">
+                          <h4 className="font-black text-sm border-b border-edge-strong pb-2">
                             💳 기납부세액
                           </h4>
                           <div className="space-y-2">
@@ -1075,13 +1074,13 @@ export default function CalculatorPage() {
                               <Tooltip content="근로소득 원천징수영수증의 '결정세액' 또는 매월 급여명세서의 소득세 합계">
                                 <Info
                                   size={14}
-                                  className="text-gray-400 cursor-help"
+                                  className="text-dim cursor-help"
                                 />
                               </Tooltip>
                             </label>
                             <input
                               type="text"
-                              className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black font-mono tabular-nums text-right placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
+                              className="w-full h-11 rounded-md border border-edge bg-surface px-3.5 text-body text-hi font-mono tabular-nums text-right placeholder:text-dim hover:border-edge-strong focus-visible:outline-none focus-visible:border-mint focus-visible:ring-2 focus-visible:ring-mint/30 transition-colors"
                               value={formatNumber(inputs.withheldTax)}
                               onChange={(e) =>
                                 handleInputChange("withheldTax", e.target.value)
@@ -1094,13 +1093,13 @@ export default function CalculatorPage() {
                               <Tooltip content="매월 급여명세서의 지방소득세 합계 (소득세의 10%)">
                                 <Info
                                   size={14}
-                                  className="text-gray-400 cursor-help"
+                                  className="text-dim cursor-help"
                                 />
                               </Tooltip>
                             </label>
                             <input
                               type="text"
-                              className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black font-mono tabular-nums text-right placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
+                              className="w-full h-11 rounded-md border border-edge bg-surface px-3.5 text-body text-hi font-mono tabular-nums text-right placeholder:text-dim hover:border-edge-strong focus-visible:outline-none focus-visible:border-mint focus-visible:ring-2 focus-visible:ring-mint/30 transition-colors"
                               value={formatNumber(inputs.localIncomeTax || 0)}
                               onChange={(e) =>
                                 handleInputChange(
@@ -1119,7 +1118,7 @@ export default function CalculatorPage() {
                       <>
                         {/* 본인/배우자 공제 */}
                         <div className="space-y-4">
-                          <h4 className="font-black text-sm border-b-2 border-black pb-2">
+                          <h4 className="font-black text-sm border-b border-edge-strong pb-2">
                             기본공제 (본인/배우자)
                           </h4>
                           <div className="grid grid-cols-2 gap-4">
@@ -1127,7 +1126,7 @@ export default function CalculatorPage() {
                               <label className="font-bold text-sm h-6 flex items-center">
                                 본인공제
                               </label>
-                              <div className="w-full h-11 rounded-md border border-border-light bg-subtle-ash px-3.5 flex items-center justify-end text-body text-shadow-gray font-mono tabular-nums cursor-not-allowed">
+                              <div className="w-full h-11 rounded-md border border-edge bg-surface-2 px-3.5 flex items-center justify-end text-body text-mid font-mono tabular-nums cursor-not-allowed">
                                 1,500,000
                               </div>
                             </div>
@@ -1137,7 +1136,7 @@ export default function CalculatorPage() {
                                 <Tooltip content="근로소득자: 연봉 500만원 이하 / 다른소득자: 소득금액 100만원 이하">
                                   <Info
                                     size={14}
-                                    className="text-gray-400 cursor-help"
+                                    className="text-dim cursor-help"
                                   />
                                 </Tooltip>
                               </label>
@@ -1149,10 +1148,10 @@ export default function CalculatorPage() {
                                       handleInputChange("spouse", num)
                                     }
                                     className={clsx(
-                                      "flex-1 h-11 rounded-md border border-border-light text-body font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring-blue",
+                                      "flex-1 h-11 rounded-md border border-edge text-body font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mint",
                                       inputs.spouse === num
-                                        ? "bg-black text-white"
-                                        : "bg-white hover:bg-gray-100",
+                                        ? "bg-mint text-ink"
+                                        : "bg-surface hover:bg-surface-2",
                                     )}
                                   >
                                     {num === 0 ? "없음" : "있음"}
@@ -1164,8 +1163,8 @@ export default function CalculatorPage() {
                         </div>
 
                         {/* 부양가족공제 */}
-                        <div className="space-y-4 border-t-2 border-gray-200 pt-4">
-                          <h4 className="font-black text-sm border-b-2 border-black pb-2">
+                        <div className="space-y-4 border-t border-edge pt-4">
+                          <h4 className="font-black text-sm border-b border-edge-strong pb-2">
                             부양가족공제 (1인당 150만원)
                           </h4>
                           <div className="grid grid-cols-2 gap-4">
@@ -1175,7 +1174,7 @@ export default function CalculatorPage() {
                                 <Tooltip content="부모, 장인/장모 등 만60세 이상">
                                   <Info
                                     size={14}
-                                    className="text-gray-400 cursor-help"
+                                    className="text-dim cursor-help"
                                   />
                                 </Tooltip>
                               </label>
@@ -1183,7 +1182,7 @@ export default function CalculatorPage() {
                                 type="number"
                                 min="0"
                                 max="10"
-                                className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black font-mono tabular-nums text-right placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
+                                className="w-full h-11 rounded-md border border-edge bg-surface px-3.5 text-body text-hi font-mono tabular-nums text-right placeholder:text-dim hover:border-edge-strong focus-visible:outline-none focus-visible:border-mint focus-visible:ring-2 focus-visible:ring-mint/30 transition-colors"
                                 value={inputs.parents}
                                 onChange={(e) =>
                                   setInputs((prev) => ({
@@ -1213,7 +1212,7 @@ export default function CalculatorPage() {
                                 <Tooltip content="만20세 이하 자녀">
                                   <Info
                                     size={14}
-                                    className="text-gray-400 cursor-help"
+                                    className="text-dim cursor-help"
                                   />
                                 </Tooltip>
                               </label>
@@ -1221,7 +1220,7 @@ export default function CalculatorPage() {
                                 type="number"
                                 min="0"
                                 max="10"
-                                className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black font-mono tabular-nums text-right placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
+                                className="w-full h-11 rounded-md border border-edge bg-surface px-3.5 text-body text-hi font-mono tabular-nums text-right placeholder:text-dim hover:border-edge-strong focus-visible:outline-none focus-visible:border-mint focus-visible:ring-2 focus-visible:ring-mint/30 transition-colors"
                                 value={inputs.children}
                                 onChange={(e) =>
                                   setInputs((prev) => ({
@@ -1251,7 +1250,7 @@ export default function CalculatorPage() {
                                 <Tooltip content="만20세 이하 또는 만60세 이상">
                                   <Info
                                     size={14}
-                                    className="text-gray-400 cursor-help"
+                                    className="text-dim cursor-help"
                                   />
                                 </Tooltip>
                               </label>
@@ -1259,7 +1258,7 @@ export default function CalculatorPage() {
                                 type="number"
                                 min="0"
                                 max="10"
-                                className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black font-mono tabular-nums text-right placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
+                                className="w-full h-11 rounded-md border border-edge bg-surface px-3.5 text-body text-hi font-mono tabular-nums text-right placeholder:text-dim hover:border-edge-strong focus-visible:outline-none focus-visible:border-mint focus-visible:ring-2 focus-visible:ring-mint/30 transition-colors"
                                 value={inputs.siblings}
                                 onChange={(e) =>
                                   setInputs((prev) => ({
@@ -1289,7 +1288,7 @@ export default function CalculatorPage() {
                                 <Tooltip content="6개월 이상 위탁양육">
                                   <Info
                                     size={14}
-                                    className="text-gray-400 cursor-help"
+                                    className="text-dim cursor-help"
                                   />
                                 </Tooltip>
                               </label>
@@ -1297,7 +1296,7 @@ export default function CalculatorPage() {
                                 type="number"
                                 min="0"
                                 max="10"
-                                className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black font-mono tabular-nums text-right placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
+                                className="w-full h-11 rounded-md border border-edge bg-surface px-3.5 text-body text-hi font-mono tabular-nums text-right placeholder:text-dim hover:border-edge-strong focus-visible:outline-none focus-visible:border-mint focus-visible:ring-2 focus-visible:ring-mint/30 transition-colors"
                                 value={inputs.foster}
                                 onChange={(e) =>
                                   setInputs((prev) => ({
@@ -1327,7 +1326,7 @@ export default function CalculatorPage() {
                                 <Tooltip content="기초생활수급자">
                                   <Info
                                     size={14}
-                                    className="text-gray-400 cursor-help"
+                                    className="text-dim cursor-help"
                                   />
                                 </Tooltip>
                               </label>
@@ -1335,7 +1334,7 @@ export default function CalculatorPage() {
                                 type="number"
                                 min="0"
                                 max="10"
-                                className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black font-mono tabular-nums text-right placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
+                                className="w-full h-11 rounded-md border border-edge bg-surface px-3.5 text-body text-hi font-mono tabular-nums text-right placeholder:text-dim hover:border-edge-strong focus-visible:outline-none focus-visible:border-mint focus-visible:ring-2 focus-visible:ring-mint/30 transition-colors"
                                 value={inputs.recipient}
                                 onChange={(e) =>
                                   setInputs((prev) => ({
@@ -1363,7 +1362,7 @@ export default function CalculatorPage() {
                         </div>
 
                         {/* 계산식 */}
-                        <div className="bg-subtle-ash p-4 border border-border-light rounded-md space-y-2">
+                        <div className="bg-surface-2 p-4 border border-edge rounded-md space-y-2">
                           <p className="font-bold text-sm">계산식</p>
                           <div className="text-sm space-y-1">
                             <p>본인: 1명 × 150만원 = 1,500,000원</p>
@@ -1407,14 +1406,14 @@ export default function CalculatorPage() {
                         </div>
 
                         {/* 인적공제 합계 */}
-                        <div className="bg-highlight-orange/20 p-4 border border-warm-orange/30 rounded-md">
+                        <div className="bg-amber/12 p-4 border border-amber/30 rounded-md">
                           <p className="font-bold mb-1">
                             인적공제 합계 (자동 계산)
                           </p>
                           <p className="text-2xl font-black">
                             {formatNumber(inputs.dependents * 1500000)}원
                           </p>
-                          <p className="text-sm text-gray-600 mt-1">
+                          <p className="text-sm text-mid mt-1">
                             총 {inputs.dependents}명 (본인 1 + 배우자{" "}
                             {inputs.spouse} + 직계존속 {inputs.parents} + 자녀{" "}
                             {inputs.children} + 형제자매 {inputs.siblings} +
@@ -1434,13 +1433,13 @@ export default function CalculatorPage() {
                             <Tooltip content="급여에서 공제된 연간 국민연금 납입액입니다.">
                               <Info
                                 size={16}
-                                className="text-gray-400 cursor-help"
+                                className="text-dim cursor-help"
                               />
                             </Tooltip>
                           </label>
                           <input
                             type="text"
-                            className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black font-mono tabular-nums text-right placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
+                            className="w-full h-11 rounded-md border border-edge bg-surface px-3.5 text-body text-hi font-mono tabular-nums text-right placeholder:text-dim hover:border-edge-strong focus-visible:outline-none focus-visible:border-mint focus-visible:ring-2 focus-visible:ring-mint/30 transition-colors"
                             value={formatNumber(inputs.nationalPension)}
                             onChange={(e) =>
                               handleInputChange(
@@ -1456,13 +1455,13 @@ export default function CalculatorPage() {
                             <Tooltip content="급여에서 공제된 연간 건강보험료입니다.">
                               <Info
                                 size={16}
-                                className="text-gray-400 cursor-help"
+                                className="text-dim cursor-help"
                               />
                             </Tooltip>
                           </label>
                           <input
                             type="text"
-                            className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black font-mono tabular-nums text-right placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
+                            className="w-full h-11 rounded-md border border-edge bg-surface px-3.5 text-body text-hi font-mono tabular-nums text-right placeholder:text-dim hover:border-edge-strong focus-visible:outline-none focus-visible:border-mint focus-visible:ring-2 focus-visible:ring-mint/30 transition-colors"
                             value={formatNumber(inputs.healthInsurance)}
                             onChange={(e) =>
                               handleInputChange(
@@ -1478,13 +1477,13 @@ export default function CalculatorPage() {
                             <Tooltip content="건강보험료와 함께 납부하는 장기요양보험료입니다.">
                               <Info
                                 size={16}
-                                className="text-gray-400 cursor-help"
+                                className="text-dim cursor-help"
                               />
                             </Tooltip>
                           </label>
                           <input
                             type="text"
-                            className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black font-mono tabular-nums text-right placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
+                            className="w-full h-11 rounded-md border border-edge bg-surface px-3.5 text-body text-hi font-mono tabular-nums text-right placeholder:text-dim hover:border-edge-strong focus-visible:outline-none focus-visible:border-mint focus-visible:ring-2 focus-visible:ring-mint/30 transition-colors"
                             value={formatNumber(inputs.longTermCare)}
                             onChange={(e) =>
                               handleInputChange("longTermCare", e.target.value)
@@ -1497,13 +1496,13 @@ export default function CalculatorPage() {
                             <Tooltip content="급여에서 공제된 연간 고용보험료입니다.">
                               <Info
                                 size={16}
-                                className="text-gray-400 cursor-help"
+                                className="text-dim cursor-help"
                               />
                             </Tooltip>
                           </label>
                           <input
                             type="text"
-                            className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black font-mono tabular-nums text-right placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
+                            className="w-full h-11 rounded-md border border-edge bg-surface px-3.5 text-body text-hi font-mono tabular-nums text-right placeholder:text-dim hover:border-edge-strong focus-visible:outline-none focus-visible:border-mint focus-visible:ring-2 focus-visible:ring-mint/30 transition-colors"
                             value={formatNumber(inputs.employmentInsurance)}
                             onChange={(e) =>
                               handleInputChange(
@@ -1515,7 +1514,7 @@ export default function CalculatorPage() {
                         </div>
 
                         {/* 계산식 */}
-                        <div className="bg-subtle-ash p-4 border border-border-light rounded-md space-y-2">
+                        <div className="bg-surface-2 p-4 border border-edge rounded-md space-y-2">
                           <p className="font-bold text-sm">계산식</p>
                           <div className="text-sm space-y-1">
                             <p>
@@ -1537,7 +1536,7 @@ export default function CalculatorPage() {
                         </div>
 
                         {/* 4대보험 합계 */}
-                        <div className="bg-highlight-orange/20 p-4 border border-warm-orange/30 rounded-md">
+                        <div className="bg-amber/12 p-4 border border-amber/30 rounded-md">
                           <p className="font-bold mb-1">
                             4대보험 소득공제 합계
                           </p>
@@ -1550,7 +1549,7 @@ export default function CalculatorPage() {
                             )}
                             원
                           </p>
-                          <p className="text-sm text-gray-600 mt-1">
+                          <p className="text-sm text-mid mt-1">
                             전액 소득공제 적용
                           </p>
                         </div>
@@ -1562,7 +1561,7 @@ export default function CalculatorPage() {
                       <>
                         {/* 기본 카드 사용액 */}
                         <div className="space-y-4">
-                          <h4 className="font-black text-sm border-b-2 border-black pb-2">
+                          <h4 className="font-black text-sm border-b border-edge-strong pb-2">
                             💳 신용카드·직불카드·현금영수증
                           </h4>
                           <div className="grid grid-cols-1 gap-4">
@@ -1572,13 +1571,13 @@ export default function CalculatorPage() {
                                 <Tooltip content="2026년 기준: 자녀 1명당 50만원, 최대 100만원까지 한도 인상">
                                   <Info
                                     size={14}
-                                    className="text-gray-400 cursor-help"
+                                    className="text-dim cursor-help"
                                   />
                                 </Tooltip>
                               </label>
                               <input
                                 type="number"
-                                className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black font-mono tabular-nums text-right placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
+                                className="w-full h-11 rounded-md border border-edge bg-surface px-3.5 text-body text-hi font-mono tabular-nums text-right placeholder:text-dim hover:border-edge-strong focus-visible:outline-none focus-visible:border-mint focus-visible:ring-2 focus-visible:ring-mint/30 transition-colors"
                                 min="0"
                                 value={inputs.cardChildren}
                                 onChange={(e) =>
@@ -1589,7 +1588,7 @@ export default function CalculatorPage() {
                                 }
                               />
                               {inputs.cardChildren > 0 && (
-                                <p className="text-sm text-gray-600">
+                                <p className="text-sm text-mid">
                                   💰 한도 확대:{" "}
                                   {formatNumber(
                                     Math.min(
@@ -1608,13 +1607,13 @@ export default function CalculatorPage() {
                                 <Tooltip content="공제율 15%">
                                   <Info
                                     size={14}
-                                    className="text-gray-400 cursor-help"
+                                    className="text-dim cursor-help"
                                   />
                                 </Tooltip>
                               </label>
                               <input
                                 type="text"
-                                className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black font-mono tabular-nums text-right placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
+                                className="w-full h-11 rounded-md border border-edge bg-surface px-3.5 text-body text-hi font-mono tabular-nums text-right placeholder:text-dim hover:border-edge-strong focus-visible:outline-none focus-visible:border-mint focus-visible:ring-2 focus-visible:ring-mint/30 transition-colors"
                                 value={formatNumber(inputs.creditCard)}
                                 onChange={(e) =>
                                   handleInputChange(
@@ -1630,13 +1629,13 @@ export default function CalculatorPage() {
                                 <Tooltip content="공제율 30%">
                                   <Info
                                     size={14}
-                                    className="text-gray-400 cursor-help"
+                                    className="text-dim cursor-help"
                                   />
                                 </Tooltip>
                               </label>
                               <input
                                 type="text"
-                                className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black font-mono tabular-nums text-right placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
+                                className="w-full h-11 rounded-md border border-edge bg-surface px-3.5 text-body text-hi font-mono tabular-nums text-right placeholder:text-dim hover:border-edge-strong focus-visible:outline-none focus-visible:border-mint focus-visible:ring-2 focus-visible:ring-mint/30 transition-colors"
                                 value={formatNumber(inputs.debitCard)}
                                 onChange={(e) =>
                                   handleInputChange("debitCard", e.target.value)
@@ -1649,13 +1648,13 @@ export default function CalculatorPage() {
                                 <Tooltip content="공제율 30%">
                                   <Info
                                     size={14}
-                                    className="text-gray-400 cursor-help"
+                                    className="text-dim cursor-help"
                                   />
                                 </Tooltip>
                               </label>
                               <input
                                 type="text"
-                                className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black font-mono tabular-nums text-right placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
+                                className="w-full h-11 rounded-md border border-edge bg-surface px-3.5 text-body text-hi font-mono tabular-nums text-right placeholder:text-dim hover:border-edge-strong focus-visible:outline-none focus-visible:border-mint focus-visible:ring-2 focus-visible:ring-mint/30 transition-colors"
                                 value={formatNumber(inputs.cash)}
                                 onChange={(e) =>
                                   handleInputChange("cash", e.target.value)
@@ -1666,8 +1665,8 @@ export default function CalculatorPage() {
                         </div>
 
                         {/* 추가 공제 항목 */}
-                        <div className="space-y-4 border-t-2 border-gray-200 pt-4">
-                          <h4 className="font-black text-sm border-b-2 border-black pb-2">
+                        <div className="space-y-4 border-t border-edge pt-4">
+                          <h4 className="font-black text-sm border-b border-edge-strong pb-2">
                             ➕ 추가 공제 항목
                           </h4>
                           <div className="grid grid-cols-1 gap-4">
@@ -1677,13 +1676,13 @@ export default function CalculatorPage() {
                                 <Tooltip content="공제율 40%">
                                   <Info
                                     size={14}
-                                    className="text-gray-400 cursor-help"
+                                    className="text-dim cursor-help"
                                   />
                                 </Tooltip>
                               </label>
                               <input
                                 type="text"
-                                className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black font-mono tabular-nums text-right placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
+                                className="w-full h-11 rounded-md border border-edge bg-surface px-3.5 text-body text-hi font-mono tabular-nums text-right placeholder:text-dim hover:border-edge-strong focus-visible:outline-none focus-visible:border-mint focus-visible:ring-2 focus-visible:ring-mint/30 transition-colors"
                                 value={formatNumber(inputs.traditionalMarket)}
                                 onChange={(e) =>
                                   handleInputChange(
@@ -1699,13 +1698,13 @@ export default function CalculatorPage() {
                                 <Tooltip content="공제율 40%">
                                   <Info
                                     size={14}
-                                    className="text-gray-400 cursor-help"
+                                    className="text-dim cursor-help"
                                   />
                                 </Tooltip>
                               </label>
                               <input
                                 type="text"
-                                className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black font-mono tabular-nums text-right placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
+                                className="w-full h-11 rounded-md border border-edge bg-surface px-3.5 text-body text-hi font-mono tabular-nums text-right placeholder:text-dim hover:border-edge-strong focus-visible:outline-none focus-visible:border-mint focus-visible:ring-2 focus-visible:ring-mint/30 transition-colors"
                                 value={formatNumber(inputs.publicTransport)}
                                 onChange={(e) =>
                                   handleInputChange(
@@ -1721,13 +1720,13 @@ export default function CalculatorPage() {
                                 <Tooltip content="공제율 30%">
                                   <Info
                                     size={14}
-                                    className="text-gray-400 cursor-help"
+                                    className="text-dim cursor-help"
                                   />
                                 </Tooltip>
                               </label>
                               <input
                                 type="text"
-                                className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black font-mono tabular-nums text-right placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
+                                className="w-full h-11 rounded-md border border-edge bg-surface px-3.5 text-body text-hi font-mono tabular-nums text-right placeholder:text-dim hover:border-edge-strong focus-visible:outline-none focus-visible:border-mint focus-visible:ring-2 focus-visible:ring-mint/30 transition-colors"
                                 value={formatNumber(inputs.culture)}
                                 onChange={(e) =>
                                   handleInputChange("culture", e.target.value)
@@ -1738,7 +1737,7 @@ export default function CalculatorPage() {
                         </div>
 
                         {/* 계산식 */}
-                        <div className="bg-subtle-ash p-4 border border-border-light rounded-md space-y-2">
+                        <div className="bg-surface-2 p-4 border border-edge rounded-md space-y-2">
                           <p className="font-bold text-sm">계산식</p>
                           <div className="text-sm space-y-1">
                             {(() => {
@@ -1859,7 +1858,7 @@ export default function CalculatorPage() {
                                   </p>
 
                                   {/* 순차 소진 상세 */}
-                                  <p className="font-bold border-t border-black pt-1 mt-2">
+                                  <p className="font-bold border-t border-edge-strong pt-1 mt-2">
                                     ▸ 25% 소진 순서 (초과분만 공제)
                                   </p>
                                   {inputs.creditCard > 0 && (
@@ -1929,10 +1928,10 @@ export default function CalculatorPage() {
                                   )}
 
                                   {/* 기본 공제 한도 */}
-                                  <p className="font-bold border-t border-black pt-1 mt-2">
+                                  <p className="font-bold border-t border-edge-strong pt-1 mt-2">
                                     ▸ 기본 공제 (신용카드·직불카드·현금영수증)
                                   </p>
-                                  <p className="text-gray-700">
+                                  <p className="text-mid">
                                     공제액: {formatNumber(basicDeduction)}원 /
                                     한도: {formatNumber(basicLimit)}원 →{" "}
                                     <span className="font-bold">
@@ -1945,10 +1944,10 @@ export default function CalculatorPage() {
                                     inputs.traditionalMarket > 0 ||
                                     inputs.culture > 0) && (
                                     <>
-                                      <p className="font-bold border-t border-black pt-1 mt-2">
+                                      <p className="font-bold border-t border-edge-strong pt-1 mt-2">
                                         ▸ 추가 공제 (대중교통·전통시장·문화체육)
                                       </p>
-                                      <p className="text-gray-700">
+                                      <p className="text-mid">
                                         공제액:{" "}
                                         {formatNumber(additionalDeduction)}원 /
                                         한도: {formatNumber(additionalLimit)}원
@@ -1966,7 +1965,7 @@ export default function CalculatorPage() {
                         </div>
 
                         {/* 카드 소득공제 합계 */}
-                        <div className="bg-highlight-orange/20 p-4 border border-warm-orange/30 rounded-md">
+                        <div className="bg-amber/12 p-4 border border-amber/30 rounded-md">
                           <p className="font-bold mb-1">신용카드 등 소득공제</p>
                           <p className="text-2xl font-black">
                             {(() => {
@@ -2055,7 +2054,7 @@ export default function CalculatorPage() {
                             })()}
                             원
                           </p>
-                          <p className="text-sm text-gray-600 mt-2 border-t border-black pt-2">
+                          <p className="text-sm text-mid mt-2 border-t border-edge-strong pt-2">
                             {(() => {
                               const threshold = Math.round(
                                 inputs.salary * 0.25,
@@ -2111,7 +2110,7 @@ export default function CalculatorPage() {
                           {(inputs.publicTransport > 0 ||
                             inputs.traditionalMarket > 0 ||
                             inputs.culture > 0) && (
-                            <p className="text-sm text-gray-600 mt-1">
+                            <p className="text-sm text-mid mt-1">
                               {(() => {
                                 const threshold = Math.round(
                                   inputs.salary * 0.25,
@@ -2186,7 +2185,7 @@ export default function CalculatorPage() {
                       <>
                         {/* 의료비 세부 항목 */}
                         <div className="space-y-4">
-                          <h4 className="font-black text-sm border-b-2 border-black pb-2">
+                          <h4 className="font-black text-sm border-b border-edge-strong pb-2">
                             🏥 의료비 세부 항목
                           </h4>
                           <div className="grid grid-cols-1 gap-4">
@@ -2196,13 +2195,13 @@ export default function CalculatorPage() {
                                 <Tooltip content="30% 공제, 한도 없음">
                                   <Info
                                     size={14}
-                                    className="text-gray-400 cursor-help"
+                                    className="text-dim cursor-help"
                                   />
                                 </Tooltip>
                               </label>
                               <input
                                 type="text"
-                                className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black font-mono tabular-nums text-right placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
+                                className="w-full h-11 rounded-md border border-edge bg-surface px-3.5 text-body text-hi font-mono tabular-nums text-right placeholder:text-dim hover:border-edge-strong focus-visible:outline-none focus-visible:border-mint focus-visible:ring-2 focus-visible:ring-mint/30 transition-colors"
                                 value={formatNumber(inputs.infertility)}
                                 onChange={(e) =>
                                   handleInputChange(
@@ -2218,13 +2217,13 @@ export default function CalculatorPage() {
                                 <Tooltip content="20% 공제, 한도 없음">
                                   <Info
                                     size={14}
-                                    className="text-gray-400 cursor-help"
+                                    className="text-dim cursor-help"
                                   />
                                 </Tooltip>
                               </label>
                               <input
                                 type="text"
-                                className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black font-mono tabular-nums text-right placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
+                                className="w-full h-11 rounded-md border border-edge bg-surface px-3.5 text-body text-hi font-mono tabular-nums text-right placeholder:text-dim hover:border-edge-strong focus-visible:outline-none focus-visible:border-mint focus-visible:ring-2 focus-visible:ring-mint/30 transition-colors"
                                 value={formatNumber(inputs.premature)}
                                 onChange={(e) =>
                                   handleInputChange("premature", e.target.value)
@@ -2237,13 +2236,13 @@ export default function CalculatorPage() {
                                 <Tooltip content="15% 공제, 한도 없음">
                                   <Info
                                     size={14}
-                                    className="text-gray-400 cursor-help"
+                                    className="text-dim cursor-help"
                                   />
                                 </Tooltip>
                               </label>
                               <input
                                 type="text"
-                                className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black font-mono tabular-nums text-right placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
+                                className="w-full h-11 rounded-md border border-edge bg-surface px-3.5 text-body text-hi font-mono tabular-nums text-right placeholder:text-dim hover:border-edge-strong focus-visible:outline-none focus-visible:border-mint focus-visible:ring-2 focus-visible:ring-mint/30 transition-colors"
                                 value={formatNumber(inputs.selfDisabledSenior)}
                                 onChange={(e) =>
                                   handleInputChange(
@@ -2259,13 +2258,13 @@ export default function CalculatorPage() {
                                 <Tooltip content="15% 공제, 700만원 한도">
                                   <Info
                                     size={14}
-                                    className="text-gray-400 cursor-help"
+                                    className="text-dim cursor-help"
                                   />
                                 </Tooltip>
                               </label>
                               <input
                                 type="text"
-                                className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black font-mono tabular-nums text-right placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
+                                className="w-full h-11 rounded-md border border-edge bg-surface px-3.5 text-body text-hi font-mono tabular-nums text-right placeholder:text-dim hover:border-edge-strong focus-visible:outline-none focus-visible:border-mint focus-visible:ring-2 focus-visible:ring-mint/30 transition-colors"
                                 value={formatNumber(inputs.otherFamily)}
                                 onChange={(e) =>
                                   handleInputChange(
@@ -2281,13 +2280,13 @@ export default function CalculatorPage() {
                                 <Tooltip content="공제대상에서 차감">
                                   <Info
                                     size={14}
-                                    className="text-gray-400 cursor-help"
+                                    className="text-dim cursor-help"
                                   />
                                 </Tooltip>
                               </label>
                               <input
                                 type="text"
-                                className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black font-mono tabular-nums text-right placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
+                                className="w-full h-11 rounded-md border border-edge bg-surface px-3.5 text-body text-hi font-mono tabular-nums text-right placeholder:text-dim hover:border-edge-strong focus-visible:outline-none focus-visible:border-mint focus-visible:ring-2 focus-visible:ring-mint/30 transition-colors"
                                 value={formatNumber(
                                   inputs.insuranceReimbursement,
                                 )}
@@ -2303,7 +2302,7 @@ export default function CalculatorPage() {
                         </div>
 
                         {/* 계산식 */}
-                        <div className="bg-subtle-ash p-4 border border-border-light rounded-md space-y-2">
+                        <div className="bg-surface-2 p-4 border border-edge rounded-md space-y-2">
                           <p className="font-bold text-sm">계산식</p>
                           <div className="text-sm space-y-1">
                             {(() => {
@@ -2394,7 +2393,7 @@ export default function CalculatorPage() {
                                   </p>
 
                                   {/* 3% 기준 */}
-                                  <p className="font-bold border-t border-black pt-1 mt-2">
+                                  <p className="font-bold border-t border-edge-strong pt-1 mt-2">
                                     ▸ 총급여 3% 기준 (최저한도)
                                   </p>
                                   <p>{formatNumber(threshold)}원</p>
@@ -2406,7 +2405,7 @@ export default function CalculatorPage() {
                                   {/* 순차 소진 상세 */}
                                   {excessAmount > 0 && (
                                     <>
-                                      <p className="font-bold border-t border-black pt-1 mt-2">
+                                      <p className="font-bold border-t border-edge-strong pt-1 mt-2">
                                         ▸ 항목별 세액공제 (공제율 높은순 소진)
                                       </p>
                                       {inputs.infertility > 0 && (
@@ -2479,7 +2478,7 @@ export default function CalculatorPage() {
                         </div>
 
                         {/* 의료비 공제 합계 */}
-                        <div className="bg-highlight-orange/20 p-4 border border-warm-orange/30 rounded-md">
+                        <div className="bg-amber/12 p-4 border border-amber/30 rounded-md">
                           <p className="font-bold mb-1">🏥 의료비 세액공제</p>
                           <p className="text-2xl font-black">
                             {(() => {
@@ -2553,7 +2552,7 @@ export default function CalculatorPage() {
                             })()}
                             원
                           </p>
-                          <p className="text-sm text-gray-600 mt-2 border-t border-black pt-2">
+                          <p className="text-sm text-mid mt-2 border-t border-edge-strong pt-2">
                             {(() => {
                               const totalMedical =
                                 inputs.infertility +
@@ -2586,7 +2585,7 @@ export default function CalculatorPage() {
                       <>
                         {/* 교육비 세부 항목 */}
                         <div className="space-y-4">
-                          <h4 className="font-black text-sm border-b-2 border-black pb-2">
+                          <h4 className="font-black text-sm border-b border-edge-strong pb-2">
                             📚 교육비 세부 항목
                           </h4>
                           <div className="grid grid-cols-1 gap-4">
@@ -2596,13 +2595,13 @@ export default function CalculatorPage() {
                                 <Tooltip content="한도 없음, 15% 공제">
                                   <Info
                                     size={14}
-                                    className="text-gray-400 cursor-help"
+                                    className="text-dim cursor-help"
                                   />
                                 </Tooltip>
                               </label>
                               <input
                                 type="text"
-                                className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black font-mono tabular-nums text-right placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
+                                className="w-full h-11 rounded-md border border-edge bg-surface px-3.5 text-body text-hi font-mono tabular-nums text-right placeholder:text-dim hover:border-edge-strong focus-visible:outline-none focus-visible:border-mint focus-visible:ring-2 focus-visible:ring-mint/30 transition-colors"
                                 value={formatNumber(inputs.selfEducation)}
                                 onChange={(e) =>
                                   handleInputChange(
@@ -2618,13 +2617,13 @@ export default function CalculatorPage() {
                                 <Tooltip content="1인당 연 300만원 한도, 15% 공제">
                                   <Info
                                     size={14}
-                                    className="text-gray-400 cursor-help"
+                                    className="text-dim cursor-help"
                                   />
                                 </Tooltip>
                               </label>
                               <input
                                 type="text"
-                                className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black font-mono tabular-nums text-right placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
+                                className="w-full h-11 rounded-md border border-edge bg-surface px-3.5 text-body text-hi font-mono tabular-nums text-right placeholder:text-dim hover:border-edge-strong focus-visible:outline-none focus-visible:border-mint focus-visible:ring-2 focus-visible:ring-mint/30 transition-colors"
                                 value={formatNumber(inputs.preschool)}
                                 onChange={(e) =>
                                   handleInputChange("preschool", e.target.value)
@@ -2637,13 +2636,13 @@ export default function CalculatorPage() {
                                 <Tooltip content="1인당 연 300만원 한도, 15% 공제">
                                   <Info
                                     size={14}
-                                    className="text-gray-400 cursor-help"
+                                    className="text-dim cursor-help"
                                   />
                                 </Tooltip>
                               </label>
                               <input
                                 type="text"
-                                className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black font-mono tabular-nums text-right placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
+                                className="w-full h-11 rounded-md border border-edge bg-surface px-3.5 text-body text-hi font-mono tabular-nums text-right placeholder:text-dim hover:border-edge-strong focus-visible:outline-none focus-visible:border-mint focus-visible:ring-2 focus-visible:ring-mint/30 transition-colors"
                                 value={formatNumber(inputs.elementary)}
                                 onChange={(e) =>
                                   handleInputChange(
@@ -2659,13 +2658,13 @@ export default function CalculatorPage() {
                                 <Tooltip content="1인당 연 900만원 한도, 15% 공제">
                                   <Info
                                     size={14}
-                                    className="text-gray-400 cursor-help"
+                                    className="text-dim cursor-help"
                                   />
                                 </Tooltip>
                               </label>
                               <input
                                 type="text"
-                                className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black font-mono tabular-nums text-right placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
+                                className="w-full h-11 rounded-md border border-edge bg-surface px-3.5 text-body text-hi font-mono tabular-nums text-right placeholder:text-dim hover:border-edge-strong focus-visible:outline-none focus-visible:border-mint focus-visible:ring-2 focus-visible:ring-mint/30 transition-colors"
                                 value={formatNumber(inputs.university)}
                                 onChange={(e) =>
                                   handleInputChange(
@@ -2679,7 +2678,7 @@ export default function CalculatorPage() {
                         </div>
 
                         {/* 계산식 */}
-                        <div className="bg-subtle-ash p-4 border border-border-light rounded-md space-y-2">
+                        <div className="bg-surface-2 p-4 border border-edge rounded-md space-y-2">
                           <p className="font-bold text-sm">계산식</p>
                           <div className="text-sm space-y-1">
                             {inputs.selfEducation > 0 && (
@@ -2719,7 +2718,7 @@ export default function CalculatorPage() {
                         </div>
 
                         {/* 교육비 공제 합계 */}
-                        <div className="bg-highlight-orange/20 p-4 border border-warm-orange/30 rounded-md">
+                        <div className="bg-amber/12 p-4 border border-amber/30 rounded-md">
                           <p className="font-bold mb-1">교육비 세액공제</p>
                           <p className="text-2xl font-black">
                             {formatNumber(
@@ -2733,7 +2732,7 @@ export default function CalculatorPage() {
                             )}
                             원
                           </p>
-                          <p className="text-sm text-gray-600 mt-1">
+                          <p className="text-sm text-mid mt-1">
                             💡 교육비의 15% 세액공제
                           </p>
                         </div>
@@ -2745,7 +2744,7 @@ export default function CalculatorPage() {
                       <>
                         {/* 주택자금 세부 항목 */}
                         <div className="space-y-4">
-                          <h4 className="font-black text-sm border-b-2 border-black pb-2">
+                          <h4 className="font-black text-sm border-b border-edge-strong pb-2">
                             🏠 주택자금 세부 항목
                           </h4>
                           <div className="grid grid-cols-1 gap-4">
@@ -2755,17 +2754,17 @@ export default function CalculatorPage() {
                                 <Tooltip content="연 납입액 최대 300만원 한도, 40% 소득공제 (총급여 7천만원 이하)">
                                   <Info
                                     size={14}
-                                    className="text-gray-400 cursor-help"
+                                    className="text-dim cursor-help"
                                   />
                                 </Tooltip>
                               </label>
                               <input
                                 type="text"
                                 className={clsx(
-                                  "w-full h-11 rounded-md border bg-canvas-white px-3.5 text-body text-ink-black font-mono tabular-nums text-right placeholder:text-steel-gray focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors",
+                                  "w-full h-11 rounded-md border bg-surface px-3.5 text-body text-hi font-mono tabular-nums text-right placeholder:text-dim focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mint/30 transition-colors",
                                   inputs.salary > 70000000
-                                    ? "border-warm-orange bg-highlight-orange/15"
-                                    : "border-border-light hover:border-border-muted focus-visible:border-focus-ring-blue",
+                                    ? "border-amber bg-amber/12"
+                                    : "border-edge hover:border-edge-strong focus-visible:border-mint",
                                 )}
                                 value={formatNumber(inputs.housingSubscription)}
                                 onChange={(e) =>
@@ -2788,13 +2787,13 @@ export default function CalculatorPage() {
                                 <Tooltip content="연간 상환액의 40% 소득 공제, 연간 최대 400만원까지 공제">
                                   <Info
                                     size={14}
-                                    className="text-gray-400 cursor-help"
+                                    className="text-dim cursor-help"
                                   />
                                 </Tooltip>
                               </label>
                               <input
                                 type="text"
-                                className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black font-mono tabular-nums text-right placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
+                                className="w-full h-11 rounded-md border border-edge bg-surface px-3.5 text-body text-hi font-mono tabular-nums text-right placeholder:text-dim hover:border-edge-strong focus-visible:outline-none focus-visible:border-mint focus-visible:ring-2 focus-visible:ring-mint/30 transition-colors"
                                 value={formatNumber(inputs.rentLoanPayment)}
                                 onChange={(e) =>
                                   handleInputChange(
@@ -2810,13 +2809,13 @@ export default function CalculatorPage() {
                                 <Tooltip content="상환기간·방식에 따라 300~1,800만원 한도, 전액 소득공제">
                                   <Info
                                     size={14}
-                                    className="text-gray-400 cursor-help"
+                                    className="text-dim cursor-help"
                                   />
                                 </Tooltip>
                               </label>
                               <input
                                 type="text"
-                                className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black font-mono tabular-nums text-right placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
+                                className="w-full h-11 rounded-md border border-edge bg-surface px-3.5 text-body text-hi font-mono tabular-nums text-right placeholder:text-dim hover:border-edge-strong focus-visible:outline-none focus-visible:border-mint focus-visible:ring-2 focus-visible:ring-mint/30 transition-colors"
                                 value={formatNumber(inputs.mortgageInterest)}
                                 onChange={(e) =>
                                   handleInputChange(
@@ -2832,13 +2831,13 @@ export default function CalculatorPage() {
                                 <Tooltip content="연간 1,000만원 한도, 총급여 5,500만원 이하 17%, 초과 15%">
                                   <Info
                                     size={14}
-                                    className="text-gray-400 cursor-help"
+                                    className="text-dim cursor-help"
                                   />
                                 </Tooltip>
                               </label>
                               <input
                                 type="text"
-                                className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black font-mono tabular-nums text-right placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
+                                className="w-full h-11 rounded-md border border-edge bg-surface px-3.5 text-body text-hi font-mono tabular-nums text-right placeholder:text-dim hover:border-edge-strong focus-visible:outline-none focus-visible:border-mint focus-visible:ring-2 focus-visible:ring-mint/30 transition-colors"
                                 value={formatNumber(inputs.monthlyRent)}
                                 onChange={(e) =>
                                   handleInputChange(
@@ -2852,7 +2851,7 @@ export default function CalculatorPage() {
                         </div>
 
                         {/* 계산식 */}
-                        <div className="bg-subtle-ash p-4 border border-border-light rounded-md space-y-2">
+                        <div className="bg-surface-2 p-4 border border-edge rounded-md space-y-2">
                           <p className="font-bold text-sm">계산식</p>
                           <div className="text-sm space-y-1">
                             {((inputs.housingSubscription > 0 &&
@@ -2901,7 +2900,7 @@ export default function CalculatorPage() {
                             )}
                             {inputs.monthlyRent > 0 && (
                               <>
-                                <p className="font-bold border-t border-black pt-1 mt-2">
+                                <p className="font-bold border-t border-edge-strong pt-1 mt-2">
                                   ▸ 세액공제
                                 </p>
                                 <p>
@@ -2919,7 +2918,7 @@ export default function CalculatorPage() {
                         </div>
 
                         {/* 주택자금 공제 합계 */}
-                        <div className="bg-highlight-orange/20 p-4 border border-warm-orange/30 rounded-md">
+                        <div className="bg-amber/12 p-4 border border-amber/30 rounded-md">
                           <p className="font-bold mb-1">주택자금 공제</p>
                           <p className="text-2xl font-black">
                             {formatNumber(
@@ -2943,7 +2942,7 @@ export default function CalculatorPage() {
                             )}
                             원
                           </p>
-                          <div className="text-sm text-gray-600 mt-2 border-t border-black pt-2 space-y-1">
+                          <div className="text-sm text-mid mt-2 border-t border-edge-strong pt-2 space-y-1">
                             {((inputs.housingSubscription > 0 &&
                               inputs.salary <= 70000000) ||
                               inputs.rentLoanPayment > 0 ||
@@ -3035,7 +3034,7 @@ export default function CalculatorPage() {
                               </p>
                             )}
                           </div>
-                          <p className="text-sm text-gray-600 mt-1">
+                          <p className="text-sm text-mid mt-1">
                             💡 무주택 세대주 요건 충족 시 적용 (주택청약저축은
                             총급여 7천만원 이하)
                           </p>
@@ -3048,7 +3047,7 @@ export default function CalculatorPage() {
                       <>
                         {/* 연금계좌 세부 항목 */}
                         <div className="space-y-4">
-                          <h4 className="font-black text-sm border-b-2 border-black pb-2">
+                          <h4 className="font-black text-sm border-b border-edge-strong pb-2">
                             💰 연금계좌 세부 항목
                           </h4>
                           <div className="grid grid-cols-1 gap-4">
@@ -3058,13 +3057,13 @@ export default function CalculatorPage() {
                                 <Tooltip content="연간 600만원 한도, 12% 세액공제 (지방세 제외)">
                                   <Info
                                     size={14}
-                                    className="text-gray-400 cursor-help"
+                                    className="text-dim cursor-help"
                                   />
                                 </Tooltip>
                               </label>
                               <input
                                 type="text"
-                                className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black font-mono tabular-nums text-right placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
+                                className="w-full h-11 rounded-md border border-edge bg-surface px-3.5 text-body text-hi font-mono tabular-nums text-right placeholder:text-dim hover:border-edge-strong focus-visible:outline-none focus-visible:border-mint focus-visible:ring-2 focus-visible:ring-mint/30 transition-colors"
                                 value={formatNumber(inputs.pensionSavings)}
                                 onChange={(e) =>
                                   handleInputChange(
@@ -3080,13 +3079,13 @@ export default function CalculatorPage() {
                                 <Tooltip content="연금저축 포함 연간 900만원 한도, 12% 세액공제 (지방세 제외)">
                                   <Info
                                     size={14}
-                                    className="text-gray-400 cursor-help"
+                                    className="text-dim cursor-help"
                                   />
                                 </Tooltip>
                               </label>
                               <input
                                 type="text"
-                                className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black font-mono tabular-nums text-right placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
+                                className="w-full h-11 rounded-md border border-edge bg-surface px-3.5 text-body text-hi font-mono tabular-nums text-right placeholder:text-dim hover:border-edge-strong focus-visible:outline-none focus-visible:border-mint focus-visible:ring-2 focus-visible:ring-mint/30 transition-colors"
                                 value={formatNumber(inputs.irp)}
                                 onChange={(e) =>
                                   handleInputChange("irp", e.target.value)
@@ -3099,13 +3098,13 @@ export default function CalculatorPage() {
                                 <Tooltip content="ISA 만기 후 연금계좌 전환 시 추가 300만원 한도 (10%), 12% 세액공제 (지방세 제외)">
                                   <Info
                                     size={14}
-                                    className="text-gray-400 cursor-help"
+                                    className="text-dim cursor-help"
                                   />
                                 </Tooltip>
                               </label>
                               <input
                                 type="text"
-                                className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black font-mono tabular-nums text-right placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
+                                className="w-full h-11 rounded-md border border-edge bg-surface px-3.5 text-body text-hi font-mono tabular-nums text-right placeholder:text-dim hover:border-edge-strong focus-visible:outline-none focus-visible:border-mint focus-visible:ring-2 focus-visible:ring-mint/30 transition-colors"
                                 value={formatNumber(inputs.isaTransfer)}
                                 onChange={(e) =>
                                   handleInputChange(
@@ -3119,8 +3118,8 @@ export default function CalculatorPage() {
                         </div>
 
                         {/* 보장성 보험료 세부 항목 */}
-                        <div className="space-y-4 border-t-2 border-black pt-4">
-                          <h4 className="font-black text-sm border-b-2 border-black pb-2">
+                        <div className="space-y-4 border-t border-edge-strong pt-4">
+                          <h4 className="font-black text-sm border-b border-edge-strong pb-2">
                             🛡️ 보장성 보험료
                           </h4>
                           <div className="grid grid-cols-1 gap-4">
@@ -3130,13 +3129,13 @@ export default function CalculatorPage() {
                                 <Tooltip content="연간 100만원 한도, 12% 세액공제">
                                   <Info
                                     size={14}
-                                    className="text-gray-400 cursor-help"
+                                    className="text-dim cursor-help"
                                   />
                                 </Tooltip>
                               </label>
                               <input
                                 type="text"
-                                className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black font-mono tabular-nums text-right placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
+                                className="w-full h-11 rounded-md border border-edge bg-surface px-3.5 text-body text-hi font-mono tabular-nums text-right placeholder:text-dim hover:border-edge-strong focus-visible:outline-none focus-visible:border-mint focus-visible:ring-2 focus-visible:ring-mint/30 transition-colors"
                                 value={formatNumber(inputs.generalInsurance)}
                                 onChange={(e) =>
                                   handleInputChange(
@@ -3152,13 +3151,13 @@ export default function CalculatorPage() {
                                 <Tooltip content="연간 100만원 한도, 15% 세액공제">
                                   <Info
                                     size={14}
-                                    className="text-gray-400 cursor-help"
+                                    className="text-dim cursor-help"
                                   />
                                 </Tooltip>
                               </label>
                               <input
                                 type="text"
-                                className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black font-mono tabular-nums text-right placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
+                                className="w-full h-11 rounded-md border border-edge bg-surface px-3.5 text-body text-hi font-mono tabular-nums text-right placeholder:text-dim hover:border-edge-strong focus-visible:outline-none focus-visible:border-mint focus-visible:ring-2 focus-visible:ring-mint/30 transition-colors"
                                 value={formatNumber(inputs.disabledInsurance)}
                                 onChange={(e) =>
                                   handleInputChange(
@@ -3172,7 +3171,7 @@ export default function CalculatorPage() {
                         </div>
 
                         {/* 계산식 */}
-                        <div className="bg-subtle-ash p-4 border border-border-light rounded-md space-y-2">
+                        <div className="bg-surface-2 p-4 border border-edge rounded-md space-y-2">
                           <p className="font-bold text-sm">계산식</p>
                           <div className="text-sm space-y-1">
                             {(inputs.pensionSavings > 0 ||
@@ -3222,7 +3221,7 @@ export default function CalculatorPage() {
                             {(inputs.generalInsurance > 0 ||
                               inputs.disabledInsurance > 0) && (
                               <>
-                                <p className="font-bold border-t border-black pt-1 mt-2">
+                                <p className="font-bold border-t border-edge-strong pt-1 mt-2">
                                   ▸ 보장성 보험료
                                 </p>
                                 {inputs.generalInsurance > 0 && (
@@ -3255,7 +3254,7 @@ export default function CalculatorPage() {
                         </div>
 
                         {/* 연금계좌·보험료 공제 합계 */}
-                        <div className="bg-highlight-orange/20 p-4 border border-warm-orange/30 rounded-md">
+                        <div className="bg-amber/12 p-4 border border-amber/30 rounded-md">
                           <p className="font-bold mb-1">
                             연금계좌·보험료 세액공제
                           </p>
@@ -3282,7 +3281,7 @@ export default function CalculatorPage() {
                             )}
                             원
                           </p>
-                          <div className="text-sm text-gray-600 mt-2 border-t border-black pt-2 space-y-1">
+                          <div className="text-sm text-mid mt-2 border-t border-edge-strong pt-2 space-y-1">
                             <p>
                               • <span className="font-bold">연금계좌:</span>{" "}
                               {formatNumber(
@@ -3337,7 +3336,7 @@ export default function CalculatorPage() {
                               </p>
                             )}
                           </div>
-                          <p className="text-sm text-gray-600 mt-1">
+                          <p className="text-sm text-mid mt-1">
                             💡 연금저축 + IRP 합계 최대 900만원, ISA 전환 추가
                             300만원
                           </p>
@@ -3350,7 +3349,7 @@ export default function CalculatorPage() {
                       <>
                         {/* 기부금 세부 항목 */}
                         <div className="space-y-4">
-                          <h4 className="font-black text-sm border-b-2 border-black pb-2">
+                          <h4 className="font-black text-sm border-b border-edge-strong pb-2">
                             ❤️ 기부금 세부 항목
                           </h4>
                           <div className="grid grid-cols-1 gap-4">
@@ -3360,13 +3359,13 @@ export default function CalculatorPage() {
                                 <Tooltip content="10만원 이하 100/110, 초과 15%, 3천만원 초과 25%">
                                   <Info
                                     size={14}
-                                    className="text-gray-400 cursor-help"
+                                    className="text-dim cursor-help"
                                   />
                                 </Tooltip>
                               </label>
                               <input
                                 type="text"
-                                className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black font-mono tabular-nums text-right placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
+                                className="w-full h-11 rounded-md border border-edge bg-surface px-3.5 text-body text-hi font-mono tabular-nums text-right placeholder:text-dim hover:border-edge-strong focus-visible:outline-none focus-visible:border-mint focus-visible:ring-2 focus-visible:ring-mint/30 transition-colors"
                                 value={formatNumber(inputs.politicalDonation)}
                                 onChange={(e) =>
                                   handleInputChange(
@@ -3382,13 +3381,13 @@ export default function CalculatorPage() {
                                 <Tooltip content="10만원 이하 100/110, 초과 15% (일반+특별재난 합산 2,000만원 한도)">
                                   <Info
                                     size={14}
-                                    className="text-gray-400 cursor-help"
+                                    className="text-dim cursor-help"
                                   />
                                 </Tooltip>
                               </label>
                               <input
                                 type="text"
-                                className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black font-mono tabular-nums text-right placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
+                                className="w-full h-11 rounded-md border border-edge bg-surface px-3.5 text-body text-hi font-mono tabular-nums text-right placeholder:text-dim hover:border-edge-strong focus-visible:outline-none focus-visible:border-mint focus-visible:ring-2 focus-visible:ring-mint/30 transition-colors"
                                 value={formatNumber(inputs.hometownDonation)}
                                 onChange={(e) =>
                                   handleInputChange(
@@ -3404,13 +3403,13 @@ export default function CalculatorPage() {
                                 <Tooltip content="10만원 이하 100/110, 초과 30% (일반+특별재난 합산 2,000만원 한도)">
                                   <Info
                                     size={14}
-                                    className="text-gray-400 cursor-help"
+                                    className="text-dim cursor-help"
                                   />
                                 </Tooltip>
                               </label>
                               <input
                                 type="text"
-                                className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black font-mono tabular-nums text-right placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
+                                className="w-full h-11 rounded-md border border-edge bg-surface px-3.5 text-body text-hi font-mono tabular-nums text-right placeholder:text-dim hover:border-edge-strong focus-visible:outline-none focus-visible:border-mint focus-visible:ring-2 focus-visible:ring-mint/30 transition-colors"
                                 value={formatNumber(inputs.hometownDisaster)}
                                 onChange={(e) =>
                                   handleInputChange(
@@ -3426,13 +3425,13 @@ export default function CalculatorPage() {
                                 <Tooltip content="소득 100% 한도, 1천만원 이하 15%, 초과 30%">
                                   <Info
                                     size={14}
-                                    className="text-gray-400 cursor-help"
+                                    className="text-dim cursor-help"
                                   />
                                 </Tooltip>
                               </label>
                               <input
                                 type="text"
-                                className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black font-mono tabular-nums text-right placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
+                                className="w-full h-11 rounded-md border border-edge bg-surface px-3.5 text-body text-hi font-mono tabular-nums text-right placeholder:text-dim hover:border-edge-strong focus-visible:outline-none focus-visible:border-mint focus-visible:ring-2 focus-visible:ring-mint/30 transition-colors"
                                 value={formatNumber(inputs.specialDonation)}
                                 onChange={(e) =>
                                   handleInputChange(
@@ -3448,13 +3447,13 @@ export default function CalculatorPage() {
                                 <Tooltip content="소득 30% 한도, 1천만원 이하 15%, 초과 30%">
                                   <Info
                                     size={14}
-                                    className="text-gray-400 cursor-help"
+                                    className="text-dim cursor-help"
                                   />
                                 </Tooltip>
                               </label>
                               <input
                                 type="text"
-                                className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black font-mono tabular-nums text-right placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
+                                className="w-full h-11 rounded-md border border-edge bg-surface px-3.5 text-body text-hi font-mono tabular-nums text-right placeholder:text-dim hover:border-edge-strong focus-visible:outline-none focus-visible:border-mint focus-visible:ring-2 focus-visible:ring-mint/30 transition-colors"
                                 value={formatNumber(inputs.employeeDonation)}
                                 onChange={(e) =>
                                   handleInputChange(
@@ -3470,13 +3469,13 @@ export default function CalculatorPage() {
                                 <Tooltip content="소득 30% 한도, 1천만원 이하 15%, 초과 30%">
                                   <Info
                                     size={14}
-                                    className="text-gray-400 cursor-help"
+                                    className="text-dim cursor-help"
                                   />
                                 </Tooltip>
                               </label>
                               <input
                                 type="text"
-                                className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black font-mono tabular-nums text-right placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
+                                className="w-full h-11 rounded-md border border-edge bg-surface px-3.5 text-body text-hi font-mono tabular-nums text-right placeholder:text-dim hover:border-edge-strong focus-visible:outline-none focus-visible:border-mint focus-visible:ring-2 focus-visible:ring-mint/30 transition-colors"
                                 value={formatNumber(inputs.designatedDonation)}
                                 onChange={(e) =>
                                   handleInputChange(
@@ -3492,13 +3491,13 @@ export default function CalculatorPage() {
                                 <Tooltip content="소득 10% 한도, 1천만원 이하 15%, 초과 30%">
                                   <Info
                                     size={14}
-                                    className="text-gray-400 cursor-help"
+                                    className="text-dim cursor-help"
                                   />
                                 </Tooltip>
                               </label>
                               <input
                                 type="text"
-                                className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black font-mono tabular-nums text-right placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
+                                className="w-full h-11 rounded-md border border-edge bg-surface px-3.5 text-body text-hi font-mono tabular-nums text-right placeholder:text-dim hover:border-edge-strong focus-visible:outline-none focus-visible:border-mint focus-visible:ring-2 focus-visible:ring-mint/30 transition-colors"
                                 value={formatNumber(inputs.religiousDonation)}
                                 onChange={(e) =>
                                   handleInputChange(
@@ -3512,7 +3511,7 @@ export default function CalculatorPage() {
                         </div>
 
                         {/* 계산식 */}
-                        <div className="bg-subtle-ash p-4 border border-border-light rounded-md space-y-2">
+                        <div className="bg-surface-2 p-4 border border-edge rounded-md space-y-2">
                           <p className="font-bold text-sm">계산식</p>
                           <div className="text-sm space-y-1">
                             {(() => {
@@ -3656,7 +3655,7 @@ export default function CalculatorPage() {
                                   )}
                                   {inputs.hometownDonation > 0 && (
                                     <>
-                                      <p className="font-bold border-t border-black pt-1 mt-2">
+                                      <p className="font-bold border-t border-edge-strong pt-1 mt-2">
                                         ▸ 고향사랑 기부금
                                       </p>
                                       {Math.min(hometownLimited, 100000) >
@@ -3698,7 +3697,7 @@ export default function CalculatorPage() {
                                   )}
                                   {inputs.hometownDisaster > 0 && (
                                     <>
-                                      <p className="font-bold border-t border-black pt-1 mt-2">
+                                      <p className="font-bold border-t border-edge-strong pt-1 mt-2">
                                         ▸ 고향사랑 특별재난지역
                                       </p>
                                       {Math.min(
@@ -3747,7 +3746,7 @@ export default function CalculatorPage() {
                                   )}
                                   {inputs.specialDonation > 0 && (
                                     <>
-                                      <p className="font-bold border-t border-black pt-1 mt-2">
+                                      <p className="font-bold border-t border-edge-strong pt-1 mt-2">
                                         ▸ 특례기부금
                                       </p>
                                       {Math.min(
@@ -3796,7 +3795,7 @@ export default function CalculatorPage() {
                                   )}
                                   {inputs.employeeDonation > 0 && (
                                     <>
-                                      <p className="font-bold border-t border-black pt-1 mt-2">
+                                      <p className="font-bold border-t border-edge-strong pt-1 mt-2">
                                         ▸ 우리사주조합 기부금
                                       </p>
                                       <p>
@@ -3843,7 +3842,7 @@ export default function CalculatorPage() {
                                   )}
                                   {inputs.designatedDonation > 0 && (
                                     <>
-                                      <p className="font-bold border-t border-black pt-1 mt-2">
+                                      <p className="font-bold border-t border-edge-strong pt-1 mt-2">
                                         ▸ 일반기부금 (종교단체 외)
                                       </p>
                                       <p>
@@ -3893,7 +3892,7 @@ export default function CalculatorPage() {
                                   )}
                                   {inputs.religiousDonation > 0 && (
                                     <>
-                                      <p className="font-bold border-t border-black pt-1 mt-2">
+                                      <p className="font-bold border-t border-edge-strong pt-1 mt-2">
                                         ▸ 일반기부금 (종교단체)
                                       </p>
                                       <p>
@@ -3948,7 +3947,7 @@ export default function CalculatorPage() {
                         </div>
 
                         {/* 기부금 공제 합계 */}
-                        <div className="bg-highlight-orange/20 p-4 border border-warm-orange/30 rounded-md">
+                        <div className="bg-amber/12 p-4 border border-amber/30 rounded-md">
                           <p className="font-bold mb-1">💗 기부금 세액공제</p>
                           <p className="text-2xl font-black">
                             {(() => {
@@ -4046,7 +4045,7 @@ export default function CalculatorPage() {
                             })()}
                             원
                           </p>
-                          <div className="text-sm text-gray-600 mt-2 border-t border-black pt-2 space-y-1">
+                          <div className="text-sm text-mid mt-2 border-t border-edge-strong pt-2 space-y-1">
                             {inputs.politicalDonation > 0 && (
                               <p>
                                 • <span className="font-bold">정치자금:</span>{" "}
@@ -4243,7 +4242,7 @@ export default function CalculatorPage() {
                               </p>
                             )}
                           </div>
-                          <p className="text-sm text-gray-600 mt-1">
+                          <p className="text-sm text-mid mt-1">
                             💡 총 기부액:{" "}
                             {formatNumber(
                               inputs.politicalDonation +
@@ -4265,7 +4264,7 @@ export default function CalculatorPage() {
                       <>
                         {/* 자녀공제 세부 항목 */}
                         <div className="space-y-4">
-                          <h4 className="font-black text-sm border-b-2 border-black pb-2">
+                          <h4 className="font-black text-sm border-b border-edge-strong pb-2">
                             👶 자녀 세액공제
                           </h4>
                           <div className="grid grid-cols-1 gap-4">
@@ -4275,7 +4274,7 @@ export default function CalculatorPage() {
                                 <Tooltip content="1명 25만원, 2명 55만원, 3명 이상 55만원 + 2명 초과 1명당 40만원">
                                   <Info
                                     size={14}
-                                    className="text-gray-400 cursor-help"
+                                    className="text-dim cursor-help"
                                   />
                                 </Tooltip>
                               </label>
@@ -4283,7 +4282,7 @@ export default function CalculatorPage() {
                                 type="number"
                                 min="0"
                                 max="10"
-                                className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black font-mono tabular-nums text-right placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
+                                className="w-full h-11 rounded-md border border-edge bg-surface px-3.5 text-body text-hi font-mono tabular-nums text-right placeholder:text-dim hover:border-edge-strong focus-visible:outline-none focus-visible:border-mint focus-visible:ring-2 focus-visible:ring-mint/30 transition-colors"
                                 value={inputs.childrenOver8}
                                 onChange={(e) =>
                                   setInputs((prev) => ({
@@ -4302,12 +4301,12 @@ export default function CalculatorPage() {
                                 <Tooltip content="첫째 30만원, 둘째 50만원, 셋째 이상 70만원/명">
                                   <Info
                                     size={14}
-                                    className="text-gray-400 cursor-help"
+                                    className="text-dim cursor-help"
                                   />
                                 </Tooltip>
                               </label>
                               <select
-                                className="w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black font-mono tabular-nums text-right placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors"
+                                className="w-full h-11 rounded-md border border-edge bg-surface px-3.5 text-body text-hi font-mono tabular-nums text-right placeholder:text-dim hover:border-edge-strong focus-visible:outline-none focus-visible:border-mint focus-visible:ring-2 focus-visible:ring-mint/30 transition-colors"
                                 value={inputs.birthAdoption}
                                 onChange={(e) =>
                                   setInputs((prev) => ({
@@ -4335,7 +4334,7 @@ export default function CalculatorPage() {
                         </div>
 
                         {/* 계산식 */}
-                        <div className="bg-subtle-ash p-4 border border-border-light rounded-md space-y-2">
+                        <div className="bg-surface-2 p-4 border border-edge rounded-md space-y-2">
                           <p className="font-bold text-sm">계산식</p>
                           <div className="text-sm space-y-1">
                             {inputs.childrenOver8 > 0 && (
@@ -4374,7 +4373,7 @@ export default function CalculatorPage() {
                             )}
                             {inputs.birthAdoption !== "none" && (
                               <>
-                                <p className="font-bold border-t border-black pt-1 mt-2">
+                                <p className="font-bold border-t border-edge-strong pt-1 mt-2">
                                   ▸ 출생·입양
                                 </p>
                                 {inputs.birthAdoption === "first" && (
@@ -4423,7 +4422,7 @@ export default function CalculatorPage() {
                         </div>
 
                         {/* 자녀공제 합계 */}
-                        <div className="bg-highlight-orange/20 p-4 border border-warm-orange/30 rounded-md">
+                        <div className="bg-amber/12 p-4 border border-amber/30 rounded-md">
                           <p className="font-bold mb-1">👶 자녀 세액공제</p>
                           <p className="text-2xl font-black">
                             {formatNumber(
@@ -4453,7 +4452,7 @@ export default function CalculatorPage() {
                             )}
                             원
                           </p>
-                          <div className="text-sm text-gray-600 mt-2 border-t border-black pt-2 space-y-1">
+                          <div className="text-sm text-mid mt-2 border-t border-edge-strong pt-2 space-y-1">
                             {inputs.childrenOver8 > 0 && (
                               <p>
                                 •{" "}
@@ -4493,7 +4492,7 @@ export default function CalculatorPage() {
                               </p>
                             )}
                           </div>
-                          <p className="text-sm text-gray-600 mt-1">
+                          <p className="text-sm text-mid mt-1">
                             💡 기본공제 대상 자녀 중 출생·입양자가 있으면 추가
                             공제
                           </p>
@@ -4512,10 +4511,10 @@ export default function CalculatorPage() {
           onClick={handleCalculate}
           disabled={isCalculating}
           className={clsx(
-            "inline-flex items-center justify-center gap-2 w-full h-12 rounded-lg text-base font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring-blue disabled:opacity-50",
+            "inline-flex items-center justify-center gap-2 w-full h-12 rounded-lg text-base font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mint disabled:opacity-50",
             isCalculating
-              ? "bg-border-light text-shadow-gray cursor-not-allowed"
-              : "bg-ink-black text-canvas-white hover:opacity-90",
+              ? "bg-surface-2 text-mid cursor-not-allowed"
+              : "bg-mint text-ink hover:brightness-110",
           )}
         >
           {isCalculating ? (
@@ -4536,8 +4535,8 @@ export default function CalculatorPage() {
       <div className="lg:col-span-1">
         <div className="sticky top-24">
           {/* 예상 환급액 - 9번 결과 */}
-          <div className="rounded-lg bg-ink-black text-canvas-white p-6 mb-4 shadow-md">
-            <h3 className="text-caption font-semibold text-steel-gray uppercase tracking-[0.06em] mb-2">
+          <div className="rounded-lg bg-surface-2 text-hi p-6 mb-4 shadow-md">
+            <h3 className="text-caption font-semibold text-dim uppercase tracking-[0.06em] mb-2">
               ⑨ 예상 환급액
             </h3>
             {(() => {
@@ -4556,39 +4555,35 @@ export default function CalculatorPage() {
                   <div
                     className={clsx(
                       "text-mono-display font-bold tabular-nums mb-2",
-                      totalRefund <= 0
-                        ? "text-fresh-green"
-                        : "text-warm-orange",
+                      totalRefund <= 0 ? "text-mint" : "text-rose",
                     )}
                   >
                     {formatNumber(totalRefund)}원
                   </div>
-                  <div className="text-xs text-steel-gray space-y-1">
-                    <p className="font-semibold text-steel-gray">▸ 소득세</p>
+                  <div className="text-xs text-dim space-y-1">
+                    <p className="font-semibold text-dim">▸ 소득세</p>
                     <p className="pl-2">
                       결정세액: {formatNumber(result.finalTax)}원
                     </p>
                     <p className="pl-2">
                       기납부세액: -{formatNumber(result.withheldTax)}원
                     </p>
-                    <p className="pl-2 text-fresh-green">
+                    <p className="pl-2 text-mint">
                       → 소득세 환급: {formatNumber(incomeTaxRefund)}원
                     </p>
 
-                    <p className="font-semibold text-steel-gray pt-1">
-                      ▸ 지방소득세
-                    </p>
+                    <p className="font-semibold text-dim pt-1">▸ 지방소득세</p>
                     <p className="pl-2">
                       결정세액 (10%): {formatNumber(localTaxDue)}원
                     </p>
                     <p className="pl-2">
                       기납부세액: -{formatNumber(inputs.localIncomeTax)}원
                     </p>
-                    <p className="pl-2 text-fresh-green">
+                    <p className="pl-2 text-mint">
                       → 지방소득세 환급: {formatNumber(localTaxRefund)}원
                     </p>
 
-                    <p className="border-t border-gray-600 pt-1 mt-1 font-bold">
+                    <p className="border-t border-edge-strong pt-1 mt-1 font-bold">
                       총 환급액: {formatNumber(incomeTaxRefund)} +{" "}
                       {formatNumber(localTaxRefund)} ={" "}
                       {formatNumber(totalRefund)}원
@@ -4598,7 +4593,7 @@ export default function CalculatorPage() {
               );
             })()}
             {!result && (
-              <div className="text-4xl font-black mb-2 text-gray-500">
+              <div className="text-4xl font-black mb-2 text-mid">
                 계산을 시작하세요
               </div>
             )}
@@ -4606,14 +4601,14 @@ export default function CalculatorPage() {
 
           {/* 계산 플로우 1~8 */}
           {result && (
-            <div className="rounded-lg border border-border-light bg-canvas-white p-6 mb-4 text-sm">
-              <h4 className="font-bold mb-3 border-b-2 border-black pb-2">
+            <div className="rounded-lg border border-edge bg-surface p-6 mb-4 text-sm">
+              <h4 className="font-bold mb-3 border-b border-edge-strong pb-2">
                 📋 계산 플로우
               </h4>
               <div className="space-y-3">
                 {/* 1. 총급여액 */}
                 <div className="flex justify-between items-center">
-                  <span className="text-gray-600">① 총급여액</span>
+                  <span className="text-mid">① 총급여액</span>
                   <span className="font-bold">
                     {formatNumber(result.salary)}원
                   </span>
@@ -4621,14 +4616,14 @@ export default function CalculatorPage() {
 
                 {/* 2. 근로소득공제 */}
                 <div className="flex justify-between items-center">
-                  <span className="text-gray-600">② 근로소득공제</span>
+                  <span className="text-mid">② 근로소득공제</span>
                   <span className="font-bold text-blue-600">
                     -{formatNumber(result.incomeDeduction)}원
                   </span>
                 </div>
 
                 {/* 3. 근로소득금액 */}
-                <div className="flex justify-between items-center bg-ink-black/5 p-2 -mx-2 border-y border-border-light">
+                <div className="flex justify-between items-center bg-surface-2 p-2 -mx-2 border-y border-edge">
                   <span className="font-bold">③ 근로소득금액</span>
                   <span className="font-bold">
                     {formatNumber(result.earnedIncome)}원
@@ -4637,14 +4632,14 @@ export default function CalculatorPage() {
 
                 {/* 4. 소득공제 */}
                 <div className="flex justify-between items-center">
-                  <span className="text-gray-600">④ 소득공제 합계</span>
+                  <span className="text-mid">④ 소득공제 합계</span>
                   <span className="font-bold text-blue-600">
                     -{formatNumber(result.totalIncomeDeduction)}원
                   </span>
                 </div>
 
                 {/* 5. 과세표준 */}
-                <div className="flex justify-between items-center bg-ink-black/5 p-2 -mx-2 border-y border-border-light">
+                <div className="flex justify-between items-center bg-surface-2 p-2 -mx-2 border-y border-edge">
                   <span className="font-bold">⑤ 과세표준</span>
                   <span className="font-bold">
                     {formatNumber(result.taxableIncome)}원
@@ -4653,7 +4648,7 @@ export default function CalculatorPage() {
 
                 {/* 6. 산출세액 */}
                 <div className="flex justify-between items-center">
-                  <span className="text-gray-600">⑥ 산출세액</span>
+                  <span className="text-mid">⑥ 산출세액</span>
                   <span className="font-bold">
                     {formatNumber(result.calculatedTax)}원
                   </span>
@@ -4661,14 +4656,14 @@ export default function CalculatorPage() {
 
                 {/* 7. 세액공제 */}
                 <div className="flex justify-between items-center">
-                  <span className="text-gray-600">⑦ 세액공제 합계</span>
+                  <span className="text-mid">⑦ 세액공제 합계</span>
                   <span className="font-bold text-blue-600">
                     -{formatNumber(result.totalTaxCredit)}원
                   </span>
                 </div>
 
                 {/* 8. 결정세액 */}
-                <div className="flex justify-between items-center bg-ink-black/5 p-2 -mx-2 border-y border-border-light">
+                <div className="flex justify-between items-center bg-surface-2 p-2 -mx-2 border-y border-edge">
                   <span className="font-bold">⑧ 결정세액</span>
                   <span className="font-bold">
                     {formatNumber(result.finalTax)}원
@@ -4677,13 +4672,13 @@ export default function CalculatorPage() {
 
                 {/* 기납부세액 */}
                 <div className="flex justify-between items-center">
-                  <span className="text-gray-600">기납부세액 (소득세)</span>
+                  <span className="text-mid">기납부세액 (소득세)</span>
                   <span className="font-bold text-blue-600">
                     -{formatNumber(result.withheldTax)}원
                   </span>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className="text-gray-600">기납부세액 (지방소득세)</span>
+                  <span className="text-mid">기납부세액 (지방소득세)</span>
                   <span className="font-bold text-blue-600">
                     -{formatNumber(inputs.localIncomeTax)}원
                   </span>
@@ -4694,12 +4689,12 @@ export default function CalculatorPage() {
 
           {/* 공제 내역 상세 */}
           {result && (
-            <div className="rounded-lg border border-border-light bg-canvas-white p-6 mb-4 text-sm">
-              <h4 className="font-bold mb-3 border-b-2 border-black pb-2">
+            <div className="rounded-lg border border-edge bg-surface p-6 mb-4 text-sm">
+              <h4 className="font-bold mb-3 border-b border-edge-strong pb-2">
                 📊 공제 내역 상세
               </h4>
-              <div className="space-y-2 text-gray-600">
-                <div className="flex justify-between font-bold text-sm text-black border-b border-black pb-1">
+              <div className="space-y-2 text-mid">
+                <div className="flex justify-between font-bold text-sm text-hi border-b border-edge-strong pb-1">
                   <span>소득공제 (④)</span>
                   <span className="text-blue-600">
                     {formatNumber(result.totalIncomeDeduction)}원
@@ -4729,7 +4724,7 @@ export default function CalculatorPage() {
                     <span>{formatNumber(result.housingDeduction)}원</span>
                   </div>
                 )}
-                <div className="flex justify-between font-bold text-sm text-black border-b border-black pb-1 pt-2">
+                <div className="flex justify-between font-bold text-sm text-hi border-b border-edge-strong pb-1 pt-2">
                   <span>세액공제 (⑦)</span>
                   <span className="text-blue-600">
                     {formatNumber(result.totalTaxCredit)}원
@@ -4775,17 +4770,17 @@ export default function CalculatorPage() {
             </div>
           )}
 
-          <button className="inline-flex items-center justify-center gap-2 w-full h-12 rounded-lg text-base font-semibold border border-ink-black text-ink-black bg-canvas-white hover:bg-ink-black/5 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring-blue disabled:opacity-50">
+          <button className="inline-flex items-center justify-center gap-2 w-full h-12 rounded-lg text-base font-semibold border border-edge-strong text-hi bg-surface hover:bg-surface-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mint disabled:opacity-50">
             <Sparkles size={24} />
             AI 최적화 제안 받기
           </button>
 
-          <div className="mt-4 bg-white border-2 border-black p-4 text-sm">
+          <div className="mt-4 bg-surface border border-edge-strong p-4 text-sm">
             <h4 className="font-bold mb-2 flex items-center gap-2">
               <AlertCircle size={16} className="text-red-500" />
               주의사항
             </h4>
-            <p className="text-gray-600">
+            <p className="text-mid">
               이 결과는 시뮬레이션 값이며, 실제 국세청 확정 자료와 다를 수
               있습니다.
             </p>

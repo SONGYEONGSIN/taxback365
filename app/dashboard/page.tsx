@@ -215,10 +215,10 @@ const MOCK_NEWS_ARTICLES = [
 ];
 
 function getUtilizationFill(rate: number): string {
-  if (rate >= 90) return "bg-fresh-green";
-  if (rate >= 70) return "bg-fresh-green";
-  if (rate >= 40) return "bg-warm-orange";
-  return "bg-warm-orange";
+  if (rate >= 90) return "bg-mint";
+  if (rate >= 70) return "bg-mint";
+  if (rate >= 40) return "bg-amber";
+  return "bg-amber";
 }
 
 function StatusBadge({
@@ -421,10 +421,10 @@ export default function DashboardPage() {
               <span
                 className={clsx(
                   "w-1.5 h-1.5 rounded-full",
-                  currentAmount >= 0 ? "bg-fresh-green" : "bg-warm-orange",
+                  currentAmount >= 0 ? "bg-mint" : "bg-rose",
                 )}
               />
-              <span className="text-caption font-semibold text-shadow-gray uppercase tracking-[0.06em]">
+              <span className="text-caption font-semibold text-mid uppercase tracking-[0.06em]">
                 2026년 예상 {currentAmount >= 0 ? "환급액" : "추가 납부액"}
               </span>
             </div>
@@ -434,13 +434,13 @@ export default function DashboardPage() {
                 <span
                   className={clsx(
                     "text-mono-display text-[48px] md:text-[56px] leading-[1] font-semibold",
-                    currentAmount >= 0 ? "text-ink-black" : "text-warm-orange",
+                    currentAmount >= 0 ? "text-hi" : "text-rose",
                   )}
                 >
                   {currentAmount > 0 ? "+" : currentAmount < 0 ? "-" : ""}
                   {formatKRW(Math.abs(currentAmount))}
                 </span>
-                <span className="text-h3 text-shadow-gray font-normal">원</span>
+                <span className="text-h3 text-mid font-normal">원</span>
                 {currentAmount >= 0 ? (
                   <Badge variant="success">예상 환급</Badge>
                 ) : (
@@ -448,26 +448,22 @@ export default function DashboardPage() {
                 )}
               </div>
             ) : (
-              <p className="text-h3 text-steel-gray">
-                기초자료를 먼저 입력해주세요
-              </p>
+              <p className="text-h3 text-dim">기초자료를 먼저 입력해주세요</p>
             )}
 
             {/* Progress to Goal */}
             <div className="mt-6">
               <div className="flex justify-between items-center mb-2">
-                <span className="text-body-sm text-shadow-gray">
-                  목표 달성률
-                </span>
-                <span className="text-body-sm font-mono tabular-nums text-ink-black">
+                <span className="text-body-sm text-mid">목표 달성률</span>
+                <span className="text-body-sm font-mono tabular-nums text-hi">
                   {currentAmount >= 0 ? `${goalProgress}%` : "—"}
                 </span>
               </div>
-              <div className="w-full bg-subtle-ash h-1.5 rounded-full overflow-hidden">
+              <div className="w-full bg-surface-2 h-1.5 rounded-full overflow-hidden">
                 <div
                   className={clsx(
                     "h-full transition-all duration-500 rounded-full",
-                    currentAmount >= 0 ? "bg-fresh-green" : "bg-warm-orange",
+                    currentAmount >= 0 ? "bg-mint" : "bg-rose",
                   )}
                   style={{
                     width: currentAmount >= 0 ? `${goalProgress}%` : "0%",
@@ -475,15 +471,15 @@ export default function DashboardPage() {
                 />
               </div>
               {currentAmount >= 0 ? (
-                <p className="text-caption text-shadow-gray mt-2">
+                <p className="text-caption text-mid mt-2">
                   목표까지{" "}
-                  <span className="text-ink-black font-mono tabular-nums">
+                  <span className="text-hi font-mono tabular-nums">
                     {formatKRW(goalAmount - currentAmount)}원
                   </span>{" "}
                   남음
                 </p>
               ) : (
-                <p className="text-caption text-warm-orange mt-2">
+                <p className="text-caption text-amber mt-2">
                   추가 공제 받을 수 있는 항목을 확인해주세요.
                 </p>
               )}
@@ -491,18 +487,18 @@ export default function DashboardPage() {
           </div>
 
           {/* Goal Setting */}
-          <div className="border-t pt-6 lg:border-t-0 lg:border-l lg:pt-0 lg:pl-6 border-border-light">
+          <div className="border-t pt-6 lg:border-t-0 lg:border-l lg:pt-0 lg:pl-6 border-edge">
             <div className="flex items-center gap-2 mb-4">
-              <Target size={16} strokeWidth={1.75} className="text-ink-black" />
-              <h3 className="text-body-sm font-semibold text-ink-black">
+              <Target size={16} strokeWidth={1.75} className="text-hi" />
+              <h3 className="text-body-sm font-semibold text-hi">
                 환급액 목표 설정
               </h3>
             </div>
             <div className="space-y-3">
               {totalPrepaidTax > 0 && (
-                <p className="text-caption text-shadow-gray">
+                <p className="text-caption text-mid">
                   최대 환급 가능:{" "}
-                  <span className="font-mono tabular-nums text-ink-black">
+                  <span className="font-mono tabular-nums text-hi">
                     {formatKRW(totalPrepaidTax)}원
                   </span>
                 </p>
@@ -512,14 +508,14 @@ export default function DashboardPage() {
                   onClick={() =>
                     setGoalAmount((prev) => Math.max(100000, prev - 100000))
                   }
-                  className="w-9 h-9 rounded-md border border-border-light bg-canvas-white hover:bg-subtle-ash flex items-center justify-center text-thunder-gray transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring-blue"
+                  className="w-9 h-9 rounded-md border border-edge bg-surface hover:bg-surface-2 flex items-center justify-center text-mid transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mint"
                   aria-label="목표 금액 감소"
                 >
                   <ChevronDown size={16} strokeWidth={1.75} />
                 </button>
-                <div className="flex-1 h-9 rounded-md border border-border-light bg-canvas-white flex items-center justify-center text-mono-display text-[18px] font-semibold tabular-nums text-ink-black">
+                <div className="flex-1 h-9 rounded-md border border-edge bg-surface flex items-center justify-center text-mono-display text-[18px] font-semibold tabular-nums text-hi">
                   {formatKRW(goalAmount)}
-                  <span className="text-caption text-shadow-gray ml-1">원</span>
+                  <span className="text-caption text-mid ml-1">원</span>
                 </div>
                 <button
                   onClick={() => {
@@ -530,7 +526,7 @@ export default function DashboardPage() {
                   disabled={
                     totalPrepaidTax > 0 && goalAmount >= totalPrepaidTax
                   }
-                  className="w-9 h-9 rounded-md border border-border-light bg-canvas-white hover:bg-subtle-ash disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center text-thunder-gray transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring-blue"
+                  className="w-9 h-9 rounded-md border border-edge bg-surface hover:bg-surface-2 disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center text-mid transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mint"
                   aria-label="목표 금액 증가"
                 >
                   <ChevronUp size={16} strokeWidth={1.75} />
@@ -546,12 +542,12 @@ export default function DashboardPage() {
                       onClick={() => !isDisabled && setGoalAmount(amount)}
                       disabled={isDisabled}
                       className={clsx(
-                        "h-8 rounded-md border text-caption font-mono tabular-nums transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring-blue",
+                        "h-8 rounded-md border text-caption font-mono tabular-nums transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mint",
                         isDisabled
-                          ? "border-border-light bg-subtle-ash text-steel-gray cursor-not-allowed"
+                          ? "border-edge bg-surface-2 text-dim cursor-not-allowed"
                           : goalAmount === amount
-                            ? "border-ink-black bg-ink-black/5 text-ink-black font-semibold"
-                            : "border-border-light bg-canvas-white text-thunder-gray hover:bg-subtle-ash",
+                            ? "border-mint bg-mint/10 text-mint font-semibold"
+                            : "border-edge bg-surface text-mid hover:bg-surface-2",
                       )}
                     >
                       {formatKRW(amount)}
@@ -563,9 +559,9 @@ export default function DashboardPage() {
                 const optimizedAmount = currentAmount + totalPotentialSaving;
                 if (optimizedAmount >= 0) {
                   return (
-                    <p className="text-caption text-shadow-gray">
+                    <p className="text-caption text-mid">
                       최적화 시{" "}
-                      <span className="text-fresh-green font-mono tabular-nums">
+                      <span className="text-mint font-mono tabular-nums">
                         {formatKRW(optimizedAmount)}원
                       </span>{" "}
                       달성 가능
@@ -573,9 +569,9 @@ export default function DashboardPage() {
                   );
                 } else {
                   return (
-                    <p className="text-caption text-shadow-gray">
+                    <p className="text-caption text-mid">
                       최적화 시 추가 납부{" "}
-                      <span className="text-warm-orange font-mono tabular-nums">
+                      <span className="text-rose font-mono tabular-nums">
                         {formatKRW(Math.abs(optimizedAmount))}원
                       </span>
                       으로 감소 가능
@@ -590,39 +586,39 @@ export default function DashboardPage() {
 
       {/* AI Deduction Analysis */}
       <Card padding="lg">
-        <div className="flex items-center justify-between mb-5 pb-4 border-b border-border-light">
+        <div className="flex items-center justify-between mb-5 pb-4 border-b border-edge">
           <div className="flex items-center gap-2">
-            <Sparkles size={16} strokeWidth={1.75} className="text-ink-black" />
-            <h3 className="text-h3 text-ink-black">AI 공제 항목별 분석</h3>
+            <Sparkles size={16} strokeWidth={1.75} className="text-hi" />
+            <h3 className="text-h3 text-hi">AI 공제 항목별 분석</h3>
           </div>
-          <span className="text-caption text-shadow-gray">2026년 기준</span>
+          <span className="text-caption text-mid">2026년 기준</span>
         </div>
 
         <div className="overflow-x-auto -mx-2">
           <table className="w-full text-body-sm">
             <thead>
-              <tr className="border-b border-border-light">
-                <th className="text-left py-2.5 px-3 font-semibold text-caption text-shadow-gray uppercase tracking-[0.06em]">
+              <tr className="border-b border-edge">
+                <th className="text-left py-2.5 px-3 font-semibold text-caption text-mid uppercase tracking-[0.06em]">
                   공제 항목
                 </th>
-                <th className="text-center py-2.5 px-3 font-semibold text-caption text-shadow-gray uppercase tracking-[0.06em] hidden sm:table-cell">
+                <th className="text-center py-2.5 px-3 font-semibold text-caption text-mid uppercase tracking-[0.06em] hidden sm:table-cell">
                   구분
                 </th>
-                <th className="text-right py-2.5 px-3 font-semibold text-caption text-shadow-gray uppercase tracking-[0.06em]">
+                <th className="text-right py-2.5 px-3 font-semibold text-caption text-mid uppercase tracking-[0.06em]">
                   공제 금액
                 </th>
-                <th className="text-right py-2.5 px-3 font-semibold text-caption text-shadow-gray uppercase tracking-[0.06em] hidden md:table-cell">
+                <th className="text-right py-2.5 px-3 font-semibold text-caption text-mid uppercase tracking-[0.06em] hidden md:table-cell">
                   최대 한도
                 </th>
-                <th className="text-center py-2.5 px-3 font-semibold text-caption text-shadow-gray uppercase tracking-[0.06em]">
+                <th className="text-center py-2.5 px-3 font-semibold text-caption text-mid uppercase tracking-[0.06em]">
                   활용률
                 </th>
-                <th className="text-center py-2.5 px-3 font-semibold text-caption text-shadow-gray uppercase tracking-[0.06em]">
+                <th className="text-center py-2.5 px-3 font-semibold text-caption text-mid uppercase tracking-[0.06em]">
                   상태
                 </th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-border-light">
+            <tbody className="divide-y divide-edge">
               {deductionItems.map((item) => {
                 const iconMap: Record<string, React.ElementType> = {
                   "기본공제 (인적공제)": Users,
@@ -649,14 +645,14 @@ export default function DashboardPage() {
                 return (
                   <tr
                     key={item.id}
-                    className="hover:bg-subtle-ash transition-colors"
+                    className="hover:bg-surface-2 transition-colors"
                   >
                     <td className="py-3 px-3">
                       <div className="flex items-center gap-2.5">
-                        <span className="w-7 h-7 rounded-md bg-subtle-ash text-thunder-gray flex items-center justify-center flex-shrink-0">
+                        <span className="w-7 h-7 rounded-md bg-surface-2 text-mid flex items-center justify-center flex-shrink-0">
                           <Icon size={14} strokeWidth={1.75} />
                         </span>
-                        <span className="text-body-sm font-medium text-ink-black whitespace-pre-line">
+                        <span className="text-body-sm font-medium text-hi whitespace-pre-line">
                           {item.category}
                         </span>
                       </div>
@@ -670,15 +666,15 @@ export default function DashboardPage() {
                         {item.type}
                       </Badge>
                     </td>
-                    <td className="text-right py-3 px-3 font-mono tabular-nums text-ink-black">
+                    <td className="text-right py-3 px-3 font-mono tabular-nums text-hi">
                       {formatKRW(Math.round(item.amount))}
                       {item.thresholdInfo && (
-                        <div className="text-caption text-steel-gray mt-0.5 whitespace-pre-line text-right font-sans">
+                        <div className="text-caption text-dim mt-0.5 whitespace-pre-line text-right font-sans">
                           {item.thresholdInfo}
                         </div>
                       )}
                     </td>
-                    <td className="text-right py-3 px-3 text-shadow-gray hidden md:table-cell whitespace-pre-line">
+                    <td className="text-right py-3 px-3 text-mid hidden md:table-cell whitespace-pre-line">
                       {item.category === "교육비" ? (
                         <span className="text-caption">
                           본인: 한도 없음{"\n"}미취학: 1인당 3,000,000원{"\n"}
@@ -730,7 +726,7 @@ export default function DashboardPage() {
                     </td>
                     <td className="py-3 px-3">
                       <div className="flex items-center justify-center gap-2">
-                        <div className="w-12 sm:w-16 h-1.5 bg-subtle-ash rounded-full overflow-hidden">
+                        <div className="w-12 sm:w-16 h-1.5 bg-surface-2 rounded-full overflow-hidden">
                           <div
                             className={clsx(
                               "h-full rounded-full",
@@ -741,7 +737,7 @@ export default function DashboardPage() {
                             }}
                           />
                         </div>
-                        <span className="text-caption font-mono tabular-nums text-ink-black w-9 text-right">
+                        <span className="text-caption font-mono tabular-nums text-hi w-9 text-right">
                           {utilizationRate}%
                         </span>
                       </div>
@@ -761,30 +757,30 @@ export default function DashboardPage() {
 
         {/* Summary */}
         <div className="mt-6 grid md:grid-cols-2 gap-4">
-          <div className="rounded-md border border-border-light bg-subtle-ash p-4">
+          <div className="rounded-md border border-edge bg-surface-2 p-4">
             <div className="flex items-center justify-between mb-3">
-              <span className="text-caption font-semibold text-shadow-gray uppercase tracking-[0.06em]">
+              <span className="text-caption font-semibold text-mid uppercase tracking-[0.06em]">
                 소득공제
               </span>
               <Badge variant="neutral">과세표준 감소</Badge>
             </div>
             <div className="flex items-end justify-between">
               <div>
-                <p className="text-caption text-shadow-gray">현재 공제액</p>
-                <p className="text-mono-display text-[20px] font-semibold text-ink-black">
+                <p className="text-caption text-mid">현재 공제액</p>
+                <p className="text-mono-display text-[20px] font-semibold text-hi">
                   {formatKRW(incomeDeductTotal)}
                 </p>
               </div>
               <div className="text-right">
-                <p className="text-caption text-shadow-gray">최대 한도</p>
-                <p className="text-body-sm font-mono tabular-nums text-thunder-gray">
+                <p className="text-caption text-mid">최대 한도</p>
+                <p className="text-body-sm font-mono tabular-nums text-mid">
                   {formatKRW(incomeDeductLimit)}
                 </p>
               </div>
             </div>
-            <div className="mt-3 w-full bg-canvas-white h-1 rounded-full overflow-hidden">
+            <div className="mt-3 w-full bg-surface h-1 rounded-full overflow-hidden">
               <div
-                className="h-full bg-ink-black"
+                className="h-full bg-sky"
                 style={{
                   width: `${incomeDeductLimit > 0 ? Math.round((incomeDeductTotal / incomeDeductLimit) * 100) : 0}%`,
                 }}
@@ -792,30 +788,30 @@ export default function DashboardPage() {
             </div>
           </div>
 
-          <div className="rounded-md border border-border-light bg-subtle-ash p-4">
+          <div className="rounded-md border border-edge bg-surface-2 p-4">
             <div className="flex items-center justify-between mb-3">
-              <span className="text-caption font-semibold text-shadow-gray uppercase tracking-[0.06em]">
+              <span className="text-caption font-semibold text-mid uppercase tracking-[0.06em]">
                 세액공제
               </span>
               <Badge variant="success">납부세액 직접 감소</Badge>
             </div>
             <div className="flex items-end justify-between">
               <div>
-                <p className="text-caption text-shadow-gray">현재 공제액</p>
-                <p className="text-mono-display text-[20px] font-semibold text-ink-black">
+                <p className="text-caption text-mid">현재 공제액</p>
+                <p className="text-mono-display text-[20px] font-semibold text-hi">
                   {formatKRW(taxDeductTotal)}
                 </p>
               </div>
               <div className="text-right">
-                <p className="text-caption text-shadow-gray">최대 한도</p>
-                <p className="text-body-sm font-mono tabular-nums text-thunder-gray">
+                <p className="text-caption text-mid">최대 한도</p>
+                <p className="text-body-sm font-mono tabular-nums text-mid">
                   {formatKRW(taxDeductLimit)}
                 </p>
               </div>
             </div>
-            <div className="mt-3 w-full bg-canvas-white h-1 rounded-full overflow-hidden">
+            <div className="mt-3 w-full bg-surface h-1 rounded-full overflow-hidden">
               <div
-                className="h-full bg-fresh-green"
+                className="h-full bg-mint"
                 style={{
                   width: `${taxDeductLimit > 0 ? Math.round((taxDeductTotal / taxDeductLimit) * 100) : 0}%`,
                 }}
@@ -824,14 +820,10 @@ export default function DashboardPage() {
           </div>
         </div>
 
-        <div className="mt-4 flex items-center gap-2 text-caption text-shadow-gray">
-          <CheckCircle2
-            size={14}
-            strokeWidth={1.75}
-            className="text-fresh-green"
-          />
+        <div className="mt-4 flex items-center gap-2 text-caption text-mid">
+          <CheckCircle2 size={14} strokeWidth={1.75} className="text-mint" />
           {deductionItems.length}개 항목 중{" "}
-          <span className="font-mono tabular-nums text-ink-black">
+          <span className="font-mono tabular-nums text-hi">
             {deductionItems.filter((d) => d.status === "optimal").length}
           </span>
           개 최적화 완료
@@ -841,14 +833,10 @@ export default function DashboardPage() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* AI Recommendations */}
         <Card padding="lg">
-          <div className="flex items-start justify-between mb-5 pb-4 border-b border-border-light gap-2">
+          <div className="flex items-start justify-between mb-5 pb-4 border-b border-edge gap-2">
             <div className="flex items-center gap-2 flex-wrap">
-              <Lightbulb
-                size={16}
-                strokeWidth={1.75}
-                className="text-warm-orange"
-              />
-              <h3 className="text-h3 text-ink-black">AI 절세 추천</h3>
+              <Lightbulb size={16} strokeWidth={1.75} className="text-amber" />
+              <h3 className="text-h3 text-hi">AI 절세 추천</h3>
               {hasAdminData && (
                 <Button
                   variant="secondary"
@@ -873,9 +861,9 @@ export default function DashboardPage() {
                 <Lightbulb
                   size={28}
                   strokeWidth={1.5}
-                  className="mx-auto mb-2 text-steel-gray"
+                  className="mx-auto mb-2 text-dim"
                 />
-                <p className="text-body-sm text-shadow-gray">
+                <p className="text-body-sm text-mid">
                   계산기에서 데이터를 입력하면 AI 추천을 받을 수 있습니다.
                 </p>
               </div>
@@ -883,25 +871,23 @@ export default function DashboardPage() {
               aiRecommendations.map((rec) => (
                 <div
                   key={rec.id}
-                  className="rounded-md border border-border-light bg-canvas-white p-4 hover:border-border-muted hover:shadow-subtle transition-all"
+                  className="rounded-md border border-edge bg-surface p-4 hover:border-edge-strong hover:shadow-subtle transition-all"
                 >
                   <div className="flex items-start justify-between gap-2 mb-2">
                     <Badge type={rec.priority} />
                     {rec.potentialSaving > 0 && (
-                      <span className="text-mono-display text-[18px] font-semibold text-fresh-green">
+                      <span className="text-mono-display text-[18px] font-semibold text-mint">
                         -{formatKRW(rec.potentialSaving)}
-                        <span className="text-caption text-shadow-gray ml-1">
-                          원
-                        </span>
+                        <span className="text-caption text-mid ml-1">원</span>
                       </span>
                     )}
                   </div>
-                  <h4 className="text-body-sm font-semibold text-ink-black leading-tight mb-1">
+                  <h4 className="text-body-sm font-semibold text-hi leading-tight mb-1">
                     {rec.message}
                   </h4>
-                  <p className="text-caption text-shadow-gray">{rec.detail}</p>
+                  <p className="text-caption text-mid">{rec.detail}</p>
                   {rec.action && (
-                    <p className="text-caption text-fresh-green font-medium mt-2">
+                    <p className="text-caption text-mint font-medium mt-2">
                       {rec.action}
                     </p>
                   )}
@@ -921,14 +907,14 @@ export default function DashboardPage() {
 
         {/* News */}
         <Card padding="lg">
-          <div className="flex items-center justify-between mb-5 pb-4 border-b border-border-light gap-2">
+          <div className="flex items-center justify-between mb-5 pb-4 border-b border-edge gap-2">
             <div className="flex items-center gap-2">
-              <Bell size={16} strokeWidth={1.75} className="text-ink-black" />
-              <h3 className="text-h3 text-ink-black">연말정산 뉴스</h3>
+              <Bell size={16} strokeWidth={1.75} className="text-hi" />
+              <h3 className="text-h3 text-hi">연말정산 뉴스</h3>
             </div>
             <button
               onClick={() => setShowAllNews(!showAllNews)}
-              className="text-caption text-shadow-gray hover:text-ink-black transition-colors"
+              className="text-caption text-mid hover:text-hi transition-colors"
             >
               {showAllNews ? "접기" : "더보기"}
             </button>
@@ -939,9 +925,9 @@ export default function DashboardPage() {
                 <Loader2
                   size={20}
                   strokeWidth={1.75}
-                  className="text-ink-black animate-spin"
+                  className="text-hi animate-spin"
                 />
-                <span className="ml-3 text-body-sm text-shadow-gray">
+                <span className="ml-3 text-body-sm text-mid">
                   뉴스를 불러오는 중…
                 </span>
               </div>
@@ -959,7 +945,7 @@ export default function DashboardPage() {
                       href={article.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="block rounded-md border border-border-light bg-canvas-white p-3 hover:bg-subtle-ash hover:border-border-muted transition-colors group"
+                      className="block rounded-md border border-edge bg-surface p-3 hover:bg-surface-2 hover:border-edge-strong transition-colors group"
                     >
                       <div className="flex items-start justify-between gap-2">
                         <div className="flex-1 min-w-0">
@@ -967,24 +953,22 @@ export default function DashboardPage() {
                             {article.isNew && (
                               <Badge variant="success">NEW</Badge>
                             )}
-                            <span className="text-caption text-shadow-gray">
+                            <span className="text-caption text-mid">
                               {article.source}
                             </span>
-                            <span className="text-caption text-steel-gray">
-                              ·
-                            </span>
-                            <span className="text-caption text-shadow-gray font-mono">
+                            <span className="text-caption text-dim">·</span>
+                            <span className="text-caption text-mid font-mono">
                               {article.time}
                             </span>
                           </div>
-                          <h4 className="text-body-sm font-medium text-ink-black group-hover:text-ink-black line-clamp-2 transition-colors">
+                          <h4 className="text-body-sm font-medium text-hi group-hover:text-hi line-clamp-2 transition-colors">
                             {article.title}
                           </h4>
                         </div>
                         <ArrowRight
                           size={14}
                           strokeWidth={1.75}
-                          className="text-steel-gray group-hover:text-ink-black transition-colors flex-shrink-0 mt-1"
+                          className="text-dim group-hover:text-hi transition-colors flex-shrink-0 mt-1"
                         />
                       </div>
                     </a>
@@ -1002,36 +986,34 @@ export default function DashboardPage() {
                         href={article.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="block rounded-md border border-border-light bg-subtle-ash p-3 hover:bg-canvas-white hover:border-border-muted transition-colors group opacity-90"
+                        className="block rounded-md border border-edge bg-surface-2 p-3 hover:bg-surface hover:border-edge-strong transition-colors group opacity-90"
                       >
                         <div className="flex items-start justify-between gap-2">
                           <div className="flex-1 min-w-0">
                             <div className="flex items-center gap-1.5 mb-1 flex-wrap">
-                              <span className="text-caption text-shadow-gray">
+                              <span className="text-caption text-mid">
                                 {article.source}
                               </span>
-                              <span className="text-caption text-steel-gray">
-                                ·
-                              </span>
-                              <span className="text-caption text-shadow-gray font-mono">
+                              <span className="text-caption text-dim">·</span>
+                              <span className="text-caption text-mid font-mono">
                                 {article.time}
                               </span>
                             </div>
-                            <h4 className="text-body-sm text-thunder-gray group-hover:text-ink-black line-clamp-2 transition-colors">
+                            <h4 className="text-body-sm text-mid group-hover:text-hi line-clamp-2 transition-colors">
                               {article.title}
                             </h4>
                           </div>
                           <ArrowRight
                             size={14}
                             strokeWidth={1.75}
-                            className="text-steel-gray group-hover:text-ink-black transition-colors flex-shrink-0 mt-1"
+                            className="text-dim group-hover:text-hi transition-colors flex-shrink-0 mt-1"
                           />
                         </div>
                       </a>
                     ))}
               </>
             ) : (
-              <div className="text-center py-8 text-body-sm text-shadow-gray">
+              <div className="text-center py-8 text-body-sm text-mid">
                 뉴스를 불러올 수 없습니다.
               </div>
             )}
@@ -1043,23 +1025,23 @@ export default function DashboardPage() {
       <Card
         variant="raised"
         padding="lg"
-        className="bg-ink-black text-canvas-white border-ink-black"
+        className="bg-mint text-ink border-mint"
       >
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
           <div>
-            <h3 className="text-h3 text-canvas-white mb-1.5">
+            <h3 className="text-h3 text-ink mb-1.5">
               절세 최적화를 시작하세요
             </h3>
-            <p className="text-body-sm text-canvas-white/70">
+            <p className="text-body-sm text-ink/70">
               추천 항목을 실행하면 최대{" "}
-              <span className="font-mono tabular-nums text-canvas-white font-semibold">
+              <span className="font-mono tabular-nums text-ink font-semibold">
                 {formatKRW(totalPotentialSaving)}원
               </span>{" "}
               추가 환급 가능
             </p>
           </div>
           <Link href="/calculator" className="flex-shrink-0">
-            <span className="inline-flex items-center justify-center gap-2 h-11 px-5 rounded-md bg-canvas-white text-ink-black text-body-sm font-semibold hover:bg-canvas-white/90 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-card focus-visible:ring-offset-2 focus-visible:ring-offset-primary">
+            <span className="inline-flex items-center justify-center gap-2 h-11 px-5 rounded-md bg-surface text-hi text-body-sm font-semibold hover:bg-surface/90 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mint/30">
               절세 시뮬레이션
               <ArrowRight size={14} strokeWidth={1.75} />
             </span>
@@ -1071,23 +1053,19 @@ export default function DashboardPage() {
       {showAiModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           <div
-            className="absolute inset-0 bg-ink-black/40 backdrop-blur-sm"
+            className="absolute inset-0 bg-base/70 backdrop-blur-sm"
             onClick={() => !aiAdviceLoading && setShowAiModal(false)}
           />
-          <div className="relative w-full max-w-2xl max-h-[80vh] bg-canvas-white rounded-lg shadow-md overflow-hidden flex flex-col">
-            <div className="flex items-center justify-between p-5 border-b border-border-light">
-              <h3 className="text-h3 text-ink-black flex items-center gap-2">
-                <Sparkles
-                  size={18}
-                  strokeWidth={1.75}
-                  className="text-ink-black"
-                />
+          <div className="relative w-full max-w-2xl max-h-[80vh] bg-surface rounded-lg shadow-md overflow-hidden flex flex-col">
+            <div className="flex items-center justify-between p-5 border-b border-edge">
+              <h3 className="text-h3 text-hi flex items-center gap-2">
+                <Sparkles size={18} strokeWidth={1.75} className="text-hi" />
                 Gemini AI 맞춤 절세 분석
               </h3>
               {!aiAdviceLoading && (
                 <button
                   onClick={() => setShowAiModal(false)}
-                  className="w-8 h-8 rounded-md hover:bg-subtle-ash flex items-center justify-center text-shadow-gray hover:text-ink-black transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring-blue"
+                  className="w-8 h-8 rounded-md hover:bg-surface-2 flex items-center justify-center text-mid hover:text-hi transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mint"
                   aria-label="모달 닫기"
                 >
                   <X size={16} strokeWidth={1.75} />
@@ -1101,18 +1079,18 @@ export default function DashboardPage() {
                   <Loader2
                     size={28}
                     strokeWidth={1.75}
-                    className="text-ink-black animate-spin mb-4"
+                    className="text-hi animate-spin mb-4"
                   />
-                  <p className="text-body font-medium text-ink-black">
+                  <p className="text-body font-medium text-hi">
                     Gemini AI가 분석 중입니다…
                   </p>
-                  <p className="text-body-sm text-shadow-gray mt-1">
+                  <p className="text-body-sm text-mid mt-1">
                     잠시만 기다려주세요
                   </p>
                 </div>
               ) : aiAdviceError ? (
-                <div className="rounded-md border border-warm-orange/30 bg-warm-orange/8 p-4">
-                  <p className="text-body-sm text-warm-orange flex items-center gap-2">
+                <div className="rounded-md border border-amber/30 bg-amber/8 p-4">
+                  <p className="text-body-sm text-amber flex items-center gap-2">
                     <AlertCircle size={16} strokeWidth={1.75} />
                     {aiAdviceError}
                   </p>
@@ -1126,33 +1104,33 @@ export default function DashboardPage() {
                   </Button>
                 </div>
               ) : aiAdvice ? (
-                <div className="text-ink-black leading-[1.7]">
+                <div className="text-hi leading-[1.7]">
                   <ReactMarkdown
                     remarkPlugins={[remarkGfm]}
                     rehypePlugins={[rehypeSanitize]}
                     components={{
                       h1: ({ children }) => (
-                        <h2 className="text-h3 text-ink-black mt-4 mb-2 pb-2 border-b border-border-light">
+                        <h2 className="text-h3 text-hi mt-4 mb-2 pb-2 border-b border-edge">
                           {children}
                         </h2>
                       ),
                       h2: ({ children }) => (
-                        <h3 className="text-h3 text-ink-black mt-4 mb-2 pb-2 border-b border-border-light">
+                        <h3 className="text-h3 text-hi mt-4 mb-2 pb-2 border-b border-edge">
                           {children}
                         </h3>
                       ),
                       h3: ({ children }) => (
-                        <h4 className="text-body font-semibold mt-4 mb-2 text-ink-black">
+                        <h4 className="text-body font-semibold mt-4 mb-2 text-hi">
                           {children}
                         </h4>
                       ),
                       h4: ({ children }) => (
-                        <h5 className="text-body-sm font-semibold mt-3 mb-1 text-ink-black">
+                        <h5 className="text-body-sm font-semibold mt-3 mb-1 text-hi">
                           {children}
                         </h5>
                       ),
                       strong: ({ children }) => (
-                        <strong className="font-semibold text-ink-black">
+                        <strong className="font-semibold text-hi">
                           {children}
                         </strong>
                       ),
@@ -1173,7 +1151,7 @@ export default function DashboardPage() {
                         <li className="text-body">{children}</li>
                       ),
                       code: ({ children }) => (
-                        <code className="px-1 py-0.5 bg-subtle-ash rounded font-mono text-[13px]">
+                        <code className="px-1 py-0.5 bg-surface-2 rounded font-mono text-[13px]">
                           {children}
                         </code>
                       ),
@@ -1186,7 +1164,7 @@ export default function DashboardPage() {
             </div>
 
             {!aiAdviceLoading && aiAdvice && (
-              <div className="p-5 bg-subtle-ash border-t border-border-light flex justify-end gap-2">
+              <div className="p-5 bg-surface-2 border-t border-edge flex justify-end gap-2">
                 <Button variant="secondary" size="md" onClick={fetchAiAdvice}>
                   다시 분석
                 </Button>

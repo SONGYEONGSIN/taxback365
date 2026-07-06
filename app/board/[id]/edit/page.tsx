@@ -78,7 +78,7 @@ export default function BoardEditPage({
   if (!session) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[50vh] gap-4 max-w-[760px] mx-auto">
-        <p className="text-h2 text-ink-black">로그인이 필요합니다</p>
+        <p className="text-h2 text-hi">로그인이 필요합니다</p>
         <Link href="/login">
           <Button variant="primary" size="md">
             로그인하기
@@ -92,8 +92,8 @@ export default function BoardEditPage({
     return (
       <div className="flex items-center justify-center min-h-[50vh]">
         <div className="flex flex-col items-center gap-3">
-          <div className="w-8 h-8 border-2 border-ink-black border-t-transparent rounded-full animate-spin" />
-          <span className="text-body-sm text-shadow-gray">불러오는 중…</span>
+          <div className="w-8 h-8 border-2 border-mint border-t-transparent rounded-full animate-spin" />
+          <span className="text-body-sm text-mid">불러오는 중…</span>
         </div>
       </div>
     );
@@ -139,39 +139,32 @@ export default function BoardEditPage({
   };
 
   const fieldClass =
-    "w-full h-11 rounded-md border border-border-light bg-canvas-white px-3.5 text-body text-ink-black placeholder:text-steel-gray hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors";
+    "w-full h-11 rounded-md border border-edge bg-surface px-3.5 text-body text-hi placeholder:text-dim hover:border-edge-strong focus-visible:outline-none focus-visible:border-mint focus-visible:ring-2 focus-visible:ring-mint/30 transition-colors";
 
   return (
     <div className="space-y-6 animate-fade-in max-w-[760px] mx-auto">
       <div>
-        <h1 className="text-h1 text-ink-black">글 수정</h1>
-        <p className="text-body-sm text-shadow-gray mt-1">
-          게시글 내용을 수정합니다.
-        </p>
+        <h1 className="text-h1 text-hi">글 수정</h1>
+        <p className="text-body-sm text-mid mt-1">게시글 내용을 수정합니다.</p>
       </div>
 
       <Card padding="lg" className="space-y-5">
         <div className="flex flex-col gap-1.5">
-          <label className="text-body-sm font-medium text-ink-black">
-            작성자
-          </label>
-          <div className="w-full h-11 rounded-md border border-border-light bg-subtle-ash px-3.5 flex items-center text-body text-thunder-gray">
+          <label className="text-body-sm font-medium text-hi">작성자</label>
+          <div className="w-full h-11 rounded-md border border-edge bg-surface-2 px-3.5 flex items-center text-body text-mid">
             {session.user?.name || "익명"}
           </div>
         </div>
 
         <div className="flex flex-col gap-1.5">
-          <label
-            htmlFor="title"
-            className="text-body-sm font-medium text-ink-black"
-          >
+          <label htmlFor="title" className="text-body-sm font-medium text-hi">
             제목
           </label>
           <div className="flex flex-col sm:flex-row gap-2">
             <select
               value={category}
               onChange={(e) => setCategory(e.target.value)}
-              className="h-11 rounded-md border border-border-light bg-canvas-white px-3 text-body-sm text-ink-black focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 sm:w-32"
+              className="h-11 rounded-md border border-edge bg-surface px-3 text-body-sm text-hi focus-visible:outline-none focus-visible:border-mint focus-visible:ring-2 focus-visible:ring-mint/30 sm:w-32"
             >
               <option value="일반">일반</option>
               <option value="질문">질문</option>
@@ -195,9 +188,7 @@ export default function BoardEditPage({
         </div>
 
         <div className="flex flex-col gap-1.5">
-          <label className="text-body-sm font-medium text-ink-black">
-            공개 여부
-          </label>
+          <label className="text-body-sm font-medium text-hi">공개 여부</label>
           <div role="radiogroup" className="grid grid-cols-2 gap-2">
             <button
               type="button"
@@ -205,10 +196,10 @@ export default function BoardEditPage({
               aria-checked={isPublic}
               onClick={() => setIsPublic(true)}
               className={clsx(
-                "h-11 inline-flex items-center justify-center gap-2 rounded-md border text-body-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring-blue",
+                "h-11 inline-flex items-center justify-center gap-2 rounded-md border text-body-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mint",
                 isPublic
-                  ? "border-ink-black bg-ink-black/5 text-ink-black"
-                  : "border-border-light bg-canvas-white text-thunder-gray hover:bg-subtle-ash",
+                  ? "border-mint bg-mint/10 text-mint"
+                  : "border-edge bg-surface text-mid hover:bg-surface-2",
               )}
             >
               <Globe size={15} strokeWidth={1.75} />
@@ -220,17 +211,17 @@ export default function BoardEditPage({
               aria-checked={!isPublic}
               onClick={() => setIsPublic(false)}
               className={clsx(
-                "h-11 inline-flex items-center justify-center gap-2 rounded-md border text-body-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring-blue",
+                "h-11 inline-flex items-center justify-center gap-2 rounded-md border text-body-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mint",
                 !isPublic
-                  ? "border-ink-black bg-ink-black/5 text-ink-black"
-                  : "border-border-light bg-canvas-white text-thunder-gray hover:bg-subtle-ash",
+                  ? "border-mint bg-mint/10 text-mint"
+                  : "border-edge bg-surface text-mid hover:bg-surface-2",
               )}
             >
               <Lock size={15} strokeWidth={1.75} />
               비공개
             </button>
           </div>
-          <p className="text-caption text-shadow-gray mt-1">
+          <p className="text-caption text-mid mt-1">
             {isPublic
               ? "모든 사용자가 이 글을 볼 수 있습니다."
               : "본인만 이 글을 볼 수 있습니다."}
@@ -238,10 +229,7 @@ export default function BoardEditPage({
         </div>
 
         <div className="flex flex-col gap-1.5">
-          <label
-            htmlFor="content"
-            className="text-body-sm font-medium text-ink-black"
-          >
+          <label htmlFor="content" className="text-body-sm font-medium text-hi">
             내용
           </label>
           <textarea
@@ -251,15 +239,15 @@ export default function BoardEditPage({
             placeholder="내용을 입력하세요…"
             rows={12}
             maxLength={5000}
-            className="w-full rounded-md border border-border-light bg-canvas-white p-3.5 text-body text-ink-black placeholder:text-steel-gray leading-[1.7] hover:border-border-muted focus-visible:outline-none focus-visible:border-focus-ring-blue focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 transition-colors resize-y"
+            className="w-full rounded-md border border-edge bg-surface p-3.5 text-body text-hi placeholder:text-dim leading-[1.7] hover:border-edge-strong focus-visible:outline-none focus-visible:border-mint focus-visible:ring-2 focus-visible:ring-mint/30 transition-colors resize-y"
           />
-          <div className="text-right text-caption text-shadow-gray font-mono tabular-nums">
+          <div className="text-right text-caption text-mid font-mono tabular-nums">
             {content.length.toLocaleString()} / 5,000
           </div>
         </div>
 
         {error && (
-          <div className="rounded-md border border-warm-orange/30 bg-warm-orange/8 p-3 flex items-start gap-2 text-body-sm text-warm-orange">
+          <div className="rounded-md border border-rose/30 bg-rose/8 p-3 flex items-start gap-2 text-body-sm text-rose">
             <AlertTriangle
               size={16}
               strokeWidth={1.75}
@@ -269,7 +257,7 @@ export default function BoardEditPage({
           </div>
         )}
 
-        <div className="flex items-center justify-between gap-3 pt-4 border-t border-border-light">
+        <div className="flex items-center justify-between gap-3 pt-4 border-t border-edge">
           <Link href={`/board/${id}`}>
             <Button variant="secondary" size="md">
               <ArrowLeft size={16} strokeWidth={1.75} />
