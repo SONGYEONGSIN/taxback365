@@ -6,7 +6,7 @@ import {
   ArrowRight,
   Sparkles,
   TrendingUp,
-  CheckCircle2,
+  ShieldCheck,
   HeartPulse,
   GraduationCap,
   Gift,
@@ -15,15 +15,12 @@ import {
   Home,
   PiggyBank,
   Building,
-  Star,
-  Quote,
 } from "lucide-react";
 
 /* ──────────────────────────────────────────────────────────────────────
- * Dub Design System 기반 랜딩 — design-ref/code.html 구조를 한국어 카피로 이식.
- * 중앙 정렬 hero / centered subtitle / black-pill CTA pair / outlined card grid /
- * subtle-ash CTA band / minimal footer.
- * 행동/로직 0 — 시각 정체성만 교체.
+ * Premium Dark Fintech (v3) 랜딩
+ * off-black base + electric mint accent + mono 숫자 + asymmetric hero.
+ * 행동/로직 0 변경 — 시각 정체성만 교체.
  * ──────────────────────────────────────────────────────────────────── */
 
 const deductions = [
@@ -37,25 +34,10 @@ const deductions = [
   { icon: Building, label: "월세" },
 ];
 
-const features = [
-  {
-    Icon: Sparkles,
-    title: "데이터 기반 분석",
-    description:
-      "입력된 소비 패턴을 분석하여 놓치기 쉬운 공제 항목을 자동으로 찾아냅니다.",
-  },
-  {
-    Icon: TrendingUp,
-    title: "정확한 환급 시뮬레이션",
-    description:
-      "2026년 세법 개정안을 반영해 예상 환급 가능 금액을 실시간으로 계산합니다.",
-  },
-  {
-    Icon: CheckCircle2,
-    title: "한 번의 정리, 한 해의 답",
-    description:
-      "복잡한 서류 없이, 한 번 정리한 데이터를 바탕으로 올해의 환급을 마무리합니다.",
-  },
+const previewRows = [
+  { label: "신용카드 소득공제", amount: "1,240,000" },
+  { label: "의료비 세액공제", amount: "382,500" },
+  { label: "연금저축 세액공제", amount: "660,000" },
 ];
 
 const reviews = [
@@ -71,17 +53,11 @@ const reviews = [
     content:
       "복잡한 공제 항목을 한눈에 볼 수 있어서 좋았습니다. 의료비 공제도 놓치지 않고 챙겼어요.",
   },
-  {
-    name: "박준혁",
-    role: "신입사원",
-    content:
-      "처음 연말정산 하는데 무엇을 준비해야 할지 단계별로 안내해줘서 헷갈리지 않았습니다.",
-  },
 ];
 
 const stats = [
-  { value: "10萬+", label: "누적 사용자" },
-  { value: "35萬원", label: "평균 환급액" },
+  { value: "10만+", label: "누적 사용자" },
+  { value: "35만원", label: "평균 환급액" },
   { value: "98%", label: "사용자 만족도" },
 ];
 
@@ -91,95 +67,90 @@ export default function LandingPage() {
   const primaryLabel = session ? "대시보드로 가기" : "무료로 시작하기";
 
   return (
-    <div className="-mt-8 flex flex-col items-center">
+    <div className="-mt-8">
       {/* ─────────────────────────────────────────────────────────
-       * Hero — 중앙 정렬 (design-ref §Hero)
+       * Hero — asymmetric split + ambient mint glow
        * ──────────────────────────────────────────────────────── */}
-      <section className="w-full max-w-[1200px] px-4 py-24 md:py-32 flex flex-col items-center text-center gap-8">
-        <span className="inline-flex items-center px-3 py-1 rounded-full bg-highlight-green/20 text-fresh-green text-caption font-medium">
-          2026 세법 개정안 반영
-        </span>
-        <h1 className="text-hero text-ink-black max-w-3xl tracking-tight">
-          올해의 환급,
-          <br />
-          분명하게 정리합니다.
-        </h1>
-        <p className="text-subheading text-shadow-gray max-w-2xl">
-          taxback365는 한국 직장인의 연말정산을 데이터로 정리합니다. 놓치기 쉬운
-          공제부터 추가 절세 여지까지 한 화면에서 확인하세요.
-        </p>
-        <div className="flex flex-col sm:flex-row items-center gap-3 mt-2">
-          <Link
-            href={primaryHref}
-            className="inline-flex items-center justify-center gap-2 h-11 px-6 rounded-full bg-ink-black text-canvas-white text-body font-medium hover:opacity-90 transition-opacity shadow-subtle focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 focus-visible:ring-offset-2 w-full sm:w-auto"
-          >
-            {primaryLabel}
-            <ArrowRight size={16} strokeWidth={1.75} />
-          </Link>
-          <Link
-            href="/calculator"
-            className="inline-flex items-center justify-center h-11 px-6 rounded-full bg-transparent text-ink-black text-body font-medium hover:bg-subtle-ash transition-colors w-full sm:w-auto"
-          >
-            환급 시뮬레이터
-          </Link>
-        </div>
-        <p className="text-caption text-shadow-gray">
-          카드사·금융기관 데이터 연동, 평균 5분 입력
-        </p>
-      </section>
-
-      {/* ─────────────────────────────────────────────────────────
-       * Product Preview — 다크 카드 안에 환급 시뮬레이션 (design-ref §Preview)
-       * ──────────────────────────────────────────────────────── */}
-      <section className="w-full max-w-[1200px] px-4 pb-16 md:pb-24">
-        <div className="w-full bg-canvas-white rounded-2xl shadow-subtle-2 border border-border-light overflow-hidden">
-          {/* mock browser chrome */}
-          <div className="h-12 border-b border-border-light bg-subtle-ash flex items-center px-4 gap-2">
-            <span className="w-3 h-3 rounded-full bg-border-muted" />
-            <span className="w-3 h-3 rounded-full bg-border-muted" />
-            <span className="w-3 h-3 rounded-full bg-border-muted" />
+      <section className="relative w-full max-w-[1200px] mx-auto px-4 pt-20 md:pt-28 pb-16">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute -top-28 -left-40 h-[560px] w-[560px] rounded-full blur-[130px] opacity-60"
+          style={{
+            background:
+              "radial-gradient(circle, rgba(53,228,164,0.18), transparent 70%)",
+          }}
+        />
+        <div className="relative grid lg:grid-cols-[1.05fr_0.95fr] gap-12 lg:gap-16 items-center">
+          {/* left — copy */}
+          <div className="flex flex-col items-start gap-6">
+            <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-edge bg-surface text-caption font-medium text-mint">
+              <span className="w-1.5 h-1.5 rounded-full bg-mint" />
+              2026 세법 개정안 반영
+            </span>
+            <h1 className="text-hero text-hi max-w-xl">
+              올해의 환급,
+              <br />
+              <span className="text-mint">분명하게</span> 정리합니다.
+            </h1>
+            <p className="text-subheading text-mid max-w-lg text-pretty">
+              taxback365는 한국 직장인의 연말정산을 데이터로 정리합니다. 놓치기
+              쉬운 공제부터 추가 절세 여지까지 한 화면에서 확인하세요.
+            </p>
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 mt-1 w-full sm:w-auto">
+              <Link
+                href={primaryHref}
+                className="group inline-flex items-center justify-center gap-2 h-12 px-6 rounded-xl bg-mint text-ink font-semibold hover:brightness-110 active:scale-[0.98] transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mint/40 focus-visible:ring-offset-2 focus-visible:ring-offset-base"
+              >
+                {primaryLabel}
+                <ArrowRight
+                  size={16}
+                  strokeWidth={2.25}
+                  className="group-hover:translate-x-0.5 transition-transform"
+                />
+              </Link>
+              <Link
+                href="/calculator"
+                className="inline-flex items-center justify-center h-12 px-6 rounded-xl border border-edge-strong text-hi text-body font-medium hover:bg-surface active:scale-[0.98] transition-all"
+              >
+                환급 시뮬레이터
+              </Link>
+            </div>
+            <p className="text-caption text-dim">
+              카드사·금융기관 데이터 연동, 평균 5분 입력
+            </p>
           </div>
 
-          {/* 환급 시뮬레이션 콘텐츠 */}
-          <div className="bg-canvas-white p-8 md:p-12">
-            <div className="grid md:grid-cols-2 gap-10 items-center">
-              <div>
-                <p className="text-caption font-medium uppercase tracking-[0.06em] text-shadow-gray">
+          {/* right — preview card */}
+          <div className="relative">
+            <div className="rounded-2xl border border-edge bg-surface p-6 md:p-7 shadow-[0_28px_70px_-24px_rgba(0,0,0,0.75)]">
+              <div className="flex items-center justify-between">
+                <p className="text-caption font-medium uppercase tracking-[0.08em] text-dim">
                   실시간 환급 예상
                 </p>
-                <div className="mt-3 flex items-baseline gap-2">
-                  <span className="text-mono-display text-[56px] leading-none font-semibold text-ink-black tabular-nums">
-                    +387,250
-                  </span>
-                  <span className="text-subheading text-shadow-gray font-mono">
-                    원
-                  </span>
-                </div>
-                <p className="mt-3 inline-flex items-center gap-1.5 text-body-sm text-fresh-green">
-                  <TrendingUp size={14} strokeWidth={2} />
+                <span className="inline-flex items-center gap-1 text-caption text-mint">
+                  <TrendingUp size={12} strokeWidth={2.25} />
                   <span className="font-mono tabular-nums">+12.4%</span>
-                  <span className="text-shadow-gray">전년 대비</span>
-                </p>
-                <p className="mt-6 text-body text-thunder-gray leading-relaxed">
-                  소득공제와 세액공제를 자동 분류해 가장 유리한 조합으로 환급
-                  금액을 계산합니다.
-                </p>
+                </span>
               </div>
-              <div className="rounded-xl border border-border-light bg-subtle-ash p-6 space-y-3">
-                {[
-                  { label: "신용카드 소득공제", amount: "1,240,000" },
-                  { label: "의료비 세액공제", amount: "382,500" },
-                  { label: "기부금 세액공제", amount: "95,000" },
-                  { label: "연금저축 세액공제", amount: "660,000" },
-                ].map((row) => (
+              <div className="mt-4 flex items-baseline gap-1.5">
+                <span className="text-mono-display text-[52px] leading-none font-semibold text-mint tabular-nums">
+                  +387,250
+                </span>
+                <span className="text-subheading text-mid font-mono">원</span>
+              </div>
+              <p className="mt-2 text-body-sm text-dim">
+                전년 대비 예상 환급 증가분 포함
+              </p>
+              <div className="mt-6 space-y-3 border-t border-edge pt-5">
+                {previewRows.map((row) => (
                   <div
                     key={row.label}
-                    className="flex items-center justify-between text-body"
+                    className="flex items-center justify-between text-body-sm"
                   >
-                    <span className="text-thunder-gray">{row.label}</span>
-                    <span className="font-mono tabular-nums text-ink-black">
+                    <span className="text-mid">{row.label}</span>
+                    <span className="font-mono tabular-nums text-hi">
                       {row.amount}
-                      <span className="text-shadow-gray ml-1">원</span>
+                      <span className="text-dim ml-1">원</span>
                     </span>
                   </div>
                 ))}
@@ -190,118 +161,101 @@ export default function LandingPage() {
       </section>
 
       {/* ─────────────────────────────────────────────────────────
-       * Feature Grid — 3-col outlined card (design-ref §Features)
+       * Deduction categories — pill cloud (카드 그리드와 다른 레이아웃 패밀리)
        * ──────────────────────────────────────────────────────── */}
-      <section className="w-full max-w-[1200px] px-4 py-16 flex flex-col gap-12">
-        <div className="text-center max-w-2xl mx-auto">
-          <h2 className="text-h2 text-ink-black">정확함과 속도, 둘 다.</h2>
-          <p className="text-body text-shadow-gray mt-2">
-            복잡함 없이 자신 있게 신고하기 위한 모든 도구가 한 곳에.
+      <section className="w-full max-w-[1200px] mx-auto px-4 py-14">
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8">
+          <h2 className="text-h2 text-hi max-w-md">
+            놓치기 쉬운 공제, <span className="text-mint">8가지</span>.
+          </h2>
+          <p className="text-body-sm text-mid max-w-sm md:text-right">
+            각 항목을 누르면 계산기로 이동합니다. 지출과 소득에 맞춰 환급 가능
+            금액을 즉시 확인하세요.
           </p>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {features.map(({ Icon, title, description }) => (
-            <div
-              key={title}
-              className="bg-canvas-white border border-border-light rounded-xl p-6 flex flex-col gap-4"
-            >
-              <div className="w-10 h-10 rounded-lg bg-subtle-ash flex items-center justify-center text-ink-black">
-                <Icon size={20} strokeWidth={1.75} />
-              </div>
-              <h3 className="text-h3 text-ink-black">{title}</h3>
-              <p className="text-body text-shadow-gray leading-relaxed">
-                {description}
-              </p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* ─────────────────────────────────────────────────────────
-       * Deduction Categories — 8개 outlined card grid
-       * ──────────────────────────────────────────────────────── */}
-      <section className="w-full max-w-[1200px] px-4 py-16 flex flex-col gap-12">
-        <div className="text-center max-w-2xl mx-auto">
-          <h2 className="text-h2 text-ink-black">놓치기 쉬운 공제 8가지.</h2>
-          <p className="text-body text-shadow-gray mt-2">
-            각 항목은 클릭만으로 계산기로 이동합니다. 지출과 소득에 맞춰 환급
-            가능 금액을 즉시 확인하세요.
-          </p>
-        </div>
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+        <div className="flex flex-wrap gap-2.5">
           {deductions.map(({ icon: Icon, label }) => (
             <Link
               key={label}
               href="/calculator"
-              className="group bg-canvas-white border border-border-light rounded-xl p-5 flex flex-col gap-3 hover:border-border-muted hover:shadow-subtle transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30"
+              className="group inline-flex items-center gap-2.5 pl-3 pr-4 h-11 rounded-full border border-edge bg-surface text-mid hover:text-mint hover:border-mint/40 active:scale-[0.98] transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mint/30"
             >
-              <span className="w-9 h-9 rounded-lg bg-subtle-ash group-hover:bg-highlight-green/20 group-hover:text-fresh-green text-ink-black flex items-center justify-center transition-colors">
-                <Icon size={18} strokeWidth={1.75} />
+              <span className="flex items-center justify-center w-6 h-6 rounded-full bg-surface-2 group-hover:bg-mint/10 transition-colors">
+                <Icon size={14} strokeWidth={1.75} />
               </span>
-              <span className="text-body font-medium text-ink-black">
-                {label}
-              </span>
+              <span className="text-body-sm font-medium">{label}</span>
             </Link>
           ))}
         </div>
       </section>
 
       {/* ─────────────────────────────────────────────────────────
-       * Reviews — outlined card 3-col
+       * Features — bento (1 large + 2 stacked), 3-equal 반복 회피
        * ──────────────────────────────────────────────────────── */}
-      <section className="w-full max-w-[1200px] px-4 py-16 flex flex-col gap-12">
-        <div className="text-center max-w-2xl mx-auto">
-          <h2 className="text-h2 text-ink-black">
-            실제 직장인이 받은 환급, 그 이야기.
-          </h2>
-          <p className="text-body text-shadow-gray mt-2">
-            taxback365를 사용한 사람들의 후기를 들어보세요.
+      <section className="w-full max-w-[1200px] mx-auto px-4 py-14">
+        <div className="max-w-xl mb-10">
+          <h2 className="text-h2 text-hi">정확함과 속도, 둘 다.</h2>
+          <p className="text-body text-mid mt-2">
+            복잡함 없이 자신 있게 신고하기 위한 모든 도구가 한 곳에.
           </p>
         </div>
-        <div className="grid md:grid-cols-3 gap-4">
-          {reviews.map((review) => (
+        <div className="grid md:grid-cols-2 gap-4">
+          {/* featured */}
+          <div className="md:row-span-2 flex flex-col justify-between gap-8 rounded-2xl border border-edge bg-surface p-7 relative overflow-hidden">
             <div
-              key={review.name}
-              className="bg-canvas-white border border-border-light rounded-xl p-6 flex flex-col gap-4 relative"
-            >
-              <Quote
-                size={20}
-                strokeWidth={1.5}
-                className="text-border-muted absolute top-5 right-5"
-              />
-              <div
-                className="flex gap-0.5 text-fresh-green"
-                aria-label="별점 5점"
-              >
-                {[...Array(5)].map((_, i) => (
-                  <Star key={i} size={12} fill="currentColor" strokeWidth={0} />
-                ))}
-              </div>
-              <p className="text-body text-ink-black leading-relaxed">
-                &ldquo;{review.content}&rdquo;
-              </p>
-              <div className="pt-4 border-t border-border-light">
-                <p className="text-body-sm font-medium text-ink-black">
-                  {review.name}
-                </p>
-                <p className="text-caption text-shadow-gray">{review.role}</p>
-              </div>
+              aria-hidden
+              className="pointer-events-none absolute -bottom-24 -right-16 h-64 w-64 rounded-full blur-[90px] opacity-50"
+              style={{
+                background:
+                  "radial-gradient(circle, rgba(53,228,164,0.16), transparent 70%)",
+              }}
+            />
+            <div className="relative flex items-center justify-center w-12 h-12 rounded-xl bg-mint/10 text-mint">
+              <Sparkles size={22} strokeWidth={1.75} />
             </div>
-          ))}
+            <div className="relative">
+              <h3 className="text-h3 text-hi">데이터 기반 자동 분석</h3>
+              <p className="text-body text-mid mt-3 leading-relaxed max-w-sm">
+                입력된 소비 패턴을 분석해 놓치기 쉬운 공제 항목을 자동으로
+                찾아냅니다. 서류를 뒤질 필요 없이, 데이터가 답을 제시합니다.
+              </p>
+            </div>
+          </div>
+          {/* two stacked */}
+          <div className="rounded-2xl border border-edge bg-surface p-7 flex flex-col gap-3">
+            <div className="flex items-center justify-center w-11 h-11 rounded-xl bg-surface-2 text-mint">
+              <TrendingUp size={20} strokeWidth={1.75} />
+            </div>
+            <h3 className="text-h3 text-hi">정확한 환급 시뮬레이션</h3>
+            <p className="text-body-sm text-mid leading-relaxed">
+              2026년 세법 개정안을 반영해 예상 환급 가능 금액을 실시간으로
+              계산합니다.
+            </p>
+          </div>
+          <div className="rounded-2xl border border-edge bg-surface p-7 flex flex-col gap-3">
+            <div className="flex items-center justify-center w-11 h-11 rounded-xl bg-surface-2 text-mint">
+              <ShieldCheck size={20} strokeWidth={1.75} />
+            </div>
+            <h3 className="text-h3 text-hi">한 번의 정리, 한 해의 답</h3>
+            <p className="text-body-sm text-mid leading-relaxed">
+              한 번 정리한 데이터를 바탕으로 복잡한 서류 없이 올해의 환급을
+              마무리합니다.
+            </p>
+          </div>
         </div>
       </section>
 
       {/* ─────────────────────────────────────────────────────────
-       * Stats — 단순 텍스트 행 (Dub은 풀블리드 다크 띠 미사용)
+       * Stats — mono 숫자 surface band
        * ──────────────────────────────────────────────────────── */}
-      <section className="w-full max-w-[1200px] px-4 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 border-y border-border-light py-12">
+      <section className="w-full max-w-[1200px] mx-auto px-4 py-14">
+        <div className="grid grid-cols-1 md:grid-cols-3 rounded-2xl border border-edge bg-surface divide-y md:divide-y-0 md:divide-x divide-edge overflow-hidden">
           {stats.map(({ value, label }) => (
-            <div key={label} className="flex flex-col items-center gap-1">
-              <span className="text-mono-display text-[40px] leading-none font-semibold text-ink-black tabular-nums">
+            <div key={label} className="flex flex-col items-center gap-1 py-10">
+              <span className="text-mono-display text-[40px] leading-none font-semibold text-hi tabular-nums">
                 {value}
               </span>
-              <span className="text-caption uppercase tracking-[0.06em] text-shadow-gray">
+              <span className="text-caption uppercase tracking-[0.08em] text-dim">
                 {label}
               </span>
             </div>
@@ -310,24 +264,71 @@ export default function LandingPage() {
       </section>
 
       {/* ─────────────────────────────────────────────────────────
-       * Final CTA — subtle-ash band (design-ref §CTA)
+       * Reviews — 2-col offset (features 카드와 시각 차별화)
        * ──────────────────────────────────────────────────────── */}
-      <section className="w-[100vw] ml-[calc(50%-50vw)] bg-subtle-ash border-y border-border-light">
-        <div className="max-w-[1200px] mx-auto px-4 py-24 flex flex-col items-center text-center gap-8">
-          <h2 className="text-h1 text-ink-black max-w-2xl">
+      <section className="w-full max-w-[1200px] mx-auto px-4 py-14">
+        <div className="max-w-xl mb-10">
+          <h2 className="text-h2 text-hi">실제 직장인이 받은 환급.</h2>
+          <p className="text-body text-mid mt-2">
+            taxback365를 사용한 사람들의 이야기를 들어보세요.
+          </p>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-start">
+          {reviews.map((review) => (
+            <figure
+              key={review.name}
+              className="min-w-0 rounded-2xl border border-edge bg-surface p-7 flex flex-col gap-5"
+            >
+              <blockquote className="text-subheading text-hi leading-relaxed">
+                &ldquo;{review.content}&rdquo;
+              </blockquote>
+              <figcaption className="flex items-center gap-3 pt-4 border-t border-edge">
+                <span className="flex items-center justify-center w-9 h-9 rounded-full bg-mint/10 text-mint text-body-sm font-semibold">
+                  {review.name.slice(0, 1)}
+                </span>
+                <span className="flex flex-col">
+                  <span className="text-body-sm font-medium text-hi">
+                    {review.name}
+                  </span>
+                  <span className="text-caption text-dim">{review.role}</span>
+                </span>
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+      </section>
+
+      {/* ─────────────────────────────────────────────────────────
+       * Final CTA — mint-glow dark card
+       * ──────────────────────────────────────────────────────── */}
+      <section className="w-full max-w-[1200px] mx-auto px-4 py-16">
+        <div className="relative overflow-hidden rounded-2xl border border-edge bg-surface px-6 py-16 md:py-20 flex flex-col items-center text-center gap-6">
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-x-0 -top-32 mx-auto h-72 w-[520px] rounded-full blur-[130px] opacity-60"
+            style={{
+              background:
+                "radial-gradient(circle, rgba(53,228,164,0.20), transparent 70%)",
+            }}
+          />
+          <h2 className="relative text-h1 text-hi max-w-2xl">
             환급은 멀리 있지 않습니다.
             <br />
             지금 바로 시작하세요.
           </h2>
-          <p className="text-subheading text-shadow-gray max-w-xl">
+          <p className="relative text-subheading text-mid max-w-xl">
             데이터를 한 번 정리하면, 매년 자동으로 답을 받아볼 수 있습니다.
           </p>
           <Link
             href={primaryHref}
-            className="inline-flex items-center justify-center gap-2 h-12 px-8 rounded-full bg-ink-black text-canvas-white text-body font-medium hover:opacity-90 transition-opacity shadow-subtle focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 focus-visible:ring-offset-2"
+            className="relative group inline-flex items-center justify-center gap-2 h-12 px-8 rounded-xl bg-mint text-ink font-semibold hover:brightness-110 active:scale-[0.98] transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mint/40 focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
           >
             {primaryLabel}
-            <ArrowRight size={16} strokeWidth={1.75} />
+            <ArrowRight
+              size={16}
+              strokeWidth={2.25}
+              className="group-hover:translate-x-0.5 transition-transform"
+            />
           </Link>
         </div>
       </section>

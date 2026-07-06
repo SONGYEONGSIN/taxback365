@@ -19,13 +19,13 @@ const paddingClass: Record<Padding, string> = {
 };
 
 const variantClass: Record<Variant, string> = {
-  // Outlined: Dub 표준 (1차 resting 매핑)
-  outlined: "bg-canvas-white border border-border-light rounded-xl",
-  resting: "bg-canvas-white border border-border-light rounded-xl",
-  // Raised: 4px halo (Dub raised)
-  raised: "bg-canvas-white rounded-2xl shadow-subtle-2",
-  // Subtle: ash 배경 (CTA band 등)
-  subtle: "bg-subtle-ash rounded-2xl",
+  // Outlined: dark surface + hairline
+  outlined: "bg-surface border border-edge rounded-xl",
+  resting: "bg-surface border border-edge rounded-xl",
+  // Raised: elevated surface
+  raised: "bg-surface-2 border border-edge rounded-2xl",
+  // Subtle: recessed surface (CTA band 등)
+  subtle: "bg-surface-2 rounded-2xl",
 };
 
 export const Card = React.forwardRef<HTMLDivElement, CardProps>(function Card(
@@ -45,7 +45,7 @@ export const Card = React.forwardRef<HTMLDivElement, CardProps>(function Card(
         variantClass[variant],
         paddingClass[padding],
         interactive &&
-          "transition-all duration-200 hover:shadow-subtle cursor-pointer",
+          "transition-all duration-200 hover:border-edge-strong cursor-pointer",
         className,
       )}
       {...props}
@@ -75,9 +75,9 @@ export function CardHeader({
       {...props}
     >
       <div className="min-w-0">
-        <h3 className="text-h3 text-ink-black">{title}</h3>
+        <h3 className="text-h3 text-hi">{title}</h3>
         {description ? (
-          <p className="text-body-sm text-shadow-gray mt-1">{description}</p>
+          <p className="text-body-sm text-mid mt-1">{description}</p>
         ) : null}
       </div>
       {action ? <div className="flex-shrink-0">{action}</div> : null}

@@ -24,10 +24,10 @@ export function Tooltip({ content, children }: TooltipProps) {
             initial={{ opacity: 0, y: 5 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 5 }}
-            className="absolute z-[9999] bottom-full left-1/2 -translate-x-1/2 mb-2 w-64 bg-ink-black text-canvas-white text-xs p-3 rounded-md shadow-md pointer-events-none"
+            className="absolute z-[9999] bottom-full left-1/2 -translate-x-1/2 mb-2 w-64 bg-surface-2 text-hi text-xs p-3 rounded-md border border-edge shadow-lg pointer-events-none"
           >
             {content}
-            <div className="absolute top-full left-1/2 -translate-x-1/2 border-8 border-transparent border-t-ink-black"></div>
+            <div className="absolute top-full left-1/2 -translate-x-1/2 border-8 border-transparent border-t-surface-2"></div>
           </motion.div>
         )}
       </AnimatePresence>
