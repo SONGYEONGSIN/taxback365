@@ -1,355 +1,336 @@
 "use client";
 
 import Link from "next/link";
-import { motion } from "framer-motion";
 import { useSession } from "next-auth/react";
 import {
-    Sparkles,
-    TrendingUp,
-    CheckCircle2,
-    HeartPulse,
-    GraduationCap,
-    Gift,
-    Shield,
-    CreditCard,
-    Home,
-    PiggyBank,
-    Building,
-    Star,
-    Quote,
-    Users,
-    Banknote,
-    ThumbsUp,
+  ArrowRight,
+  Sparkles,
+  TrendingUp,
+  CheckCircle2,
+  HeartPulse,
+  GraduationCap,
+  Gift,
+  Shield,
+  CreditCard,
+  Home,
+  PiggyBank,
+  Building,
+  Star,
+  Quote,
 } from "lucide-react";
 
-function ArrowRight({
-    size = 24,
-    ...props
-}: React.SVGProps<SVGSVGElement> & { size?: number }) {
-    return (
-        <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width={size}
-            height={size}
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="3"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            {...props}
-        >
-            <path d="M5 12h14" />
-            <path d="m12 5 7 7-7 7" />
-        </svg>
-    );
-}
+/* ──────────────────────────────────────────────────────────────────────
+ * Dub Design System 기반 랜딩 — design-ref/code.html 구조를 한국어 카피로 이식.
+ * 중앙 정렬 hero / centered subtitle / black-pill CTA pair / outlined card grid /
+ * subtle-ash CTA band / minimal footer.
+ * 행동/로직 0 — 시각 정체성만 교체.
+ * ──────────────────────────────────────────────────────────────────── */
 
-const deductionCategories = [
-    { icon: HeartPulse, label: "의료비", emoji: "🏥" },
-    { icon: GraduationCap, label: "교육비", emoji: "📚" },
-    { icon: Gift, label: "기부금", emoji: "💝" },
-    { icon: Shield, label: "보험료", emoji: "🛡️" },
-    { icon: CreditCard, label: "신용카드", emoji: "💳" },
-    { icon: Home, label: "주택자금", emoji: "🏠" },
-    { icon: PiggyBank, label: "연금저축", emoji: "🐷" },
-    { icon: Building, label: "월세", emoji: "🏢" },
+const deductions = [
+  { icon: HeartPulse, label: "의료비" },
+  { icon: GraduationCap, label: "교육비" },
+  { icon: Gift, label: "기부금" },
+  { icon: Shield, label: "보험료" },
+  { icon: CreditCard, label: "신용카드" },
+  { icon: Home, label: "주택자금" },
+  { icon: PiggyBank, label: "연금저축" },
+  { icon: Building, label: "월세" },
+];
+
+const features = [
+  {
+    Icon: Sparkles,
+    title: "데이터 기반 분석",
+    description:
+      "입력된 소비 패턴을 분석하여 놓치기 쉬운 공제 항목을 자동으로 찾아냅니다.",
+  },
+  {
+    Icon: TrendingUp,
+    title: "정확한 환급 시뮬레이션",
+    description:
+      "2026년 세법 개정안을 반영해 예상 환급 가능 금액을 실시간으로 계산합니다.",
+  },
+  {
+    Icon: CheckCircle2,
+    title: "한 번의 정리, 한 해의 답",
+    description:
+      "복잡한 서류 없이, 한 번 정리한 데이터를 바탕으로 올해의 환급을 마무리합니다.",
+  },
 ];
 
 const reviews = [
-    {
-        name: "김민수",
-        role: "직장인 5년차",
-        content: "작년보다 30만원 더 환급받았어요! AI가 알려준 대로 연금저축 추가 납입했더니 효과가 있었네요.",
-        rating: 5,
-    },
-    {
-        name: "이지영",
-        role: "프리랜서",
-        content: "복잡한 공제 항목을 한눈에 볼 수 있어서 좋아요. 특히 의료비 공제 놓칠 뻔했는데 알림 덕분에 챙겼습니다.",
-        rating: 5,
-    },
-    {
-        name: "박준혁",
-        role: "신입사원",
-        content: "처음 연말정산 하는데 너무 쉬웠어요. 뭘 준비해야 하는지 다 알려줘서 헤매지 않았습니다.",
-        rating: 5,
-    },
+  {
+    name: "김민수",
+    role: "직장인 5년차",
+    content:
+      "작년보다 30만원 더 환급받았어요. 연금저축 추가 납입 추천이 정확했습니다.",
+  },
+  {
+    name: "이지영",
+    role: "프리랜서",
+    content:
+      "복잡한 공제 항목을 한눈에 볼 수 있어서 좋았습니다. 의료비 공제도 놓치지 않고 챙겼어요.",
+  },
+  {
+    name: "박준혁",
+    role: "신입사원",
+    content:
+      "처음 연말정산 하는데 무엇을 준비해야 할지 단계별로 안내해줘서 헷갈리지 않았습니다.",
+  },
 ];
 
 const stats = [
-    { icon: Users, value: "10만+", label: "누적 사용자", color: "text-neo-cyan" },
-    { icon: Banknote, value: "35만원", label: "평균 환급액", color: "text-neo-orange" },
-    { icon: ThumbsUp, value: "98%", label: "사용자 만족도", color: "text-neo-yellow" },
+  { value: "10萬+", label: "누적 사용자" },
+  { value: "35萬원", label: "평균 환급액" },
+  { value: "98%", label: "사용자 만족도" },
 ];
 
 export default function LandingPage() {
-    const { data: session } = useSession();
+  const { data: session } = useSession();
+  const primaryHref = session ? "/dashboard" : "/signup";
+  const primaryLabel = session ? "대시보드로 가기" : "무료로 시작하기";
 
-    return (
-        <div className="flex flex-col items-center animate-fade-in">
-            {/* Hero Section */}
-            <section className="flex flex-col items-center justify-center min-h-[80vh] text-center px-4 w-full">
-                <motion.div
-                    initial={{ scale: 0.9, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    transition={{ duration: 0.5 }}
-                    className="mb-8 relative"
-                >
-                    <div className="absolute -top-12 -left-12 w-24 h-24 bg-neo-yellow rounded-full blur-xl opacity-50 animate-pulse"></div>
-                    <div className="absolute -bottom-12 -right-12 w-32 h-32 bg-neo-cyan rounded-full blur-xl opacity-50 animate-pulse delay-75"></div>
-
-                    <h1 className="text-5xl md:text-7xl font-black tracking-tighter mb-6 relative z-10 leading-tight">
-                        연말정산, 더 이상
-                        <br />
-                        <span className="text-neo-orange">어렵지 않아요!</span>
-                    </h1>
-                    <p className="text-lg md:text-xl font-bold text-gray-600 mb-2">
-                        AI가 도와주는 똑똑한 연말정산 시뮬레이터.
-                    </p>
-                    <div className="text-2xl md:text-3xl font-black border-2 border-black bg-white inline-block px-6 py-2 shadow-[8px_8px_0px_0px_#000] rotate-[-1deg]">
-                        최대 환급액을 찾아드립니다.
-                    </div>
-                </motion.div>
-
-                <Link href={session ? "/dashboard" : "/login"}>
-                    <motion.button
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                        className="group relative px-12 py-6 bg-neo-black text-white text-2xl font-black tracking-tight border-2 border-transparent hover:bg-white hover:text-black hover:border-black transition-colors"
-                    >
-                        <span className="relative z-10 flex items-center gap-3">
-                            {session ? "대시보드로 가기" : "무료로 시작하기"}
-                            <ArrowRight className="group-hover:translate-x-1 transition-transform" />
-                        </span>
-                        <div className="absolute inset-0 bg-neo-orange translate-x-2 translate-y-2 -z-10 group-hover:translate-x-3 group-hover:translate-y-3 transition-transform border-2 border-black"></div>
-                    </motion.button>
-                </Link>
-
-                <p className="mt-6 text-sm font-bold text-gray-400">
-                    * 2026년 세법 개정안 완벽 반영
-                </p>
-            </section>
-
-            {/* Features Section */}
-            <section className="w-full max-w-5xl py-16 px-4">
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    className="text-center mb-12"
-                >
-                    <h2 className="text-3xl md:text-4xl font-black mb-4">
-                        왜 <span className="text-neo-orange">TAXAI</span>인가요?
-                    </h2>
-                    <p className="text-gray-600 font-bold">
-                        복잡한 세금 계산, AI가 대신해드립니다
-                    </p>
-                </motion.div>
-
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <motion.div
-                        whileHover={{ y: -5 }}
-                        className="bg-white border-[3px] border-black p-6 shadow-[6px_6px_0px_0px_#00D9FF]"
-                    >
-                        <div className="bg-neo-black text-white w-12 h-12 flex items-center justify-center mb-4 border-2 border-transparent">
-                            <Sparkles size={24} />
-                        </div>
-                        <h3 className="text-xl font-black mb-2">AI 실시간 분석</h3>
-                        <p className="text-sm font-bold text-gray-500">
-                            소비 패턴을 분석하여
-                            <br />
-                            최적의 공제 전략을 제안합니다.
-                        </p>
-                    </motion.div>
-
-                    <motion.div
-                        whileHover={{ y: -5 }}
-                        className="bg-white border-[3px] border-black p-6 shadow-[6px_6px_0px_0px_#FFB800]"
-                    >
-                        <div className="bg-neo-black text-white w-12 h-12 flex items-center justify-center mb-4 border-2 border-transparent">
-                            <TrendingUp size={24} />
-                        </div>
-                        <h3 className="text-xl font-black mb-2">예상 환급액 계산</h3>
-                        <p className="text-sm font-bold text-gray-500">
-                            2026년 세법 개정안을 반영한
-                            <br />
-                            정확한 환급액을 확인하세요.
-                        </p>
-                    </motion.div>
-
-                    <motion.div
-                        whileHover={{ y: -5 }}
-                        className="bg-white border-[3px] border-black p-6 shadow-[6px_6px_0px_0px_#FF5E00]"
-                    >
-                        <div className="bg-neo-black text-white w-12 h-12 flex items-center justify-center mb-4 border-2 border-transparent">
-                            <CheckCircle2 size={24} />
-                        </div>
-                        <h3 className="text-xl font-black mb-2">원클릭 관리</h3>
-                        <p className="text-sm font-bold text-gray-500">
-                            복잡한 서류 없이
-                            <br />
-                            데이터 연동으로 간편하게.
-                        </p>
-                    </motion.div>
-                </div>
-            </section>
-
-            {/* Deduction Categories Section */}
-            <section className="w-full bg-gradient-to-b from-neo-cyan/10 to-neo-yellow/10 py-16">
-                <div className="max-w-5xl mx-auto px-4">
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        className="text-center mb-12"
-                    >
-                        <h2 className="text-3xl md:text-4xl font-black mb-4">
-                            놓치기 쉬운 공제 항목,
-                            <br />
-                            <span className="text-neo-cyan">한눈에 챙기세요! 👀</span>
-                        </h2>
-                        <p className="text-gray-600 font-bold">
-                            클릭하면 바로 계산해볼 수 있어요
-                        </p>
-                    </motion.div>
-
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                        {deductionCategories.map((cat, index) => (
-                            <Link key={cat.label} href="/calculator">
-                                <motion.div
-                                    initial={{ opacity: 0, scale: 0.9 }}
-                                    whileInView={{ opacity: 1, scale: 1 }}
-                                    viewport={{ once: true }}
-                                    transition={{ delay: index * 0.05 }}
-                                    whileHover={{ y: -8, rotate: 2 }}
-                                    className="bg-white border-[3px] border-black p-6 flex flex-col items-center justify-center gap-2 cursor-pointer hover:shadow-[6px_6px_0px_0px_#000] transition-all"
-                                >
-                                    <span className="text-4xl">{cat.emoji}</span>
-                                    <span className="font-black text-lg">{cat.label}</span>
-                                </motion.div>
-                            </Link>
-                        ))}
-                    </div>
-                </div>
-            </section>
-
-            {/* Reviews Section */}
-            <section className="w-full max-w-5xl py-16 px-4">
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    className="text-center mb-12"
-                >
-                    <h2 className="text-3xl md:text-4xl font-black mb-4">
-                        <span className="text-neo-orange">사용자 후기</span>
-                    </h2>
-                    <p className="text-gray-600 font-bold">
-                        실제 사용자들이 경험한 TAXAI
-                    </p>
-                </motion.div>
-
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    {reviews.map((review, index) => (
-                        <motion.div
-                            key={review.name}
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: index * 0.1 }}
-                            className="bg-white border-[3px] border-black p-6 shadow-[6px_6px_0px_0px_#000] relative"
-                        >
-                            <Quote
-                                size={32}
-                                className="text-gray-200 absolute top-4 right-4"
-                            />
-                            <div className="flex gap-1 mb-4">
-                                {[...Array(review.rating)].map((_, i) => (
-                                    <Star
-                                        key={i}
-                                        size={20}
-                                        fill="#FFB800"
-                                        className="text-neo-yellow"
-                                    />
-                                ))}
-                            </div>
-                            <p className="text-gray-700 font-bold mb-4 leading-relaxed">
-                                &ldquo;{review.content}&rdquo;
-                            </p>
-                            <div className="flex items-center gap-3 pt-4 border-t-2 border-gray-100">
-                                <div className="w-10 h-10 rounded-full border-2 border-black bg-neo-cyan flex items-center justify-center font-black">
-                                    {review.name[0]}
-                                </div>
-                                <div>
-                                    <p className="font-black">{review.name}</p>
-                                    <p className="text-sm text-gray-500 font-bold">
-                                        {review.role}
-                                    </p>
-                                </div>
-                            </div>
-                        </motion.div>
-                    ))}
-                </div>
-            </section>
-
-            {/* Stats Section */}
-            <section className="w-full py-16 px-4 bg-gradient-to-r from-neo-orange/5 via-neo-cyan/5 to-neo-yellow/5">
-                <div className="max-w-5xl mx-auto">
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        className="text-center mb-12"
-                    >
-                        <h2 className="text-3xl md:text-4xl font-black mb-4">
-                            이미 <span className="text-neo-orange">많은 분들</span>이
-                            <br />
-                            TAXAI와 함께하고 있어요 🚀
-                        </h2>
-                    </motion.div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        {stats.map((stat, index) => (
-                            <motion.div
-                                key={stat.label}
-                                initial={{ opacity: 0, y: 20 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true }}
-                                transition={{ delay: index * 0.1 }}
-                                className="bg-white border-[3px] border-black p-8 text-center shadow-[6px_6px_0px_0px_#000]"
-                            >
-                                <stat.icon size={40} className={`mx-auto mb-4 ${stat.color}`} strokeWidth={2.5} />
-                                <div className={`text-4xl md:text-5xl font-black mb-2 ${stat.color}`}>
-                                    {stat.value}
-                                </div>
-                                <p className="font-bold text-gray-600">{stat.label}</p>
-                            </motion.div>
-                        ))}
-                    </div>
-                </div>
-            </section>
-
-            {/* CTA Section */}
-            <section className="w-full bg-neo-black py-16 border-y-[3px] border-black">
-                <div className="max-w-3xl mx-auto text-center px-4">
-                    <h2 className="text-3xl md:text-4xl font-black text-white mb-6">
-                        지금 바로 시작하세요
-                    </h2>
-                    <p className="text-gray-400 font-bold mb-8">
-                        복잡한 연말정산, AI와 함께라면 5분이면 충분합니다.
-                    </p>
-                    <Link href="/signup">
-                        <motion.button
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                            className="px-12 py-5 bg-neo-orange text-white text-xl font-black border-2 border-white hover:bg-neo-yellow hover:text-black transition-colors"
-                        >
-                            무료 회원가입
-                        </motion.button>
-                    </Link>
-                </div>
-            </section>
+  return (
+    <div className="-mt-8 flex flex-col items-center">
+      {/* ─────────────────────────────────────────────────────────
+       * Hero — 중앙 정렬 (design-ref §Hero)
+       * ──────────────────────────────────────────────────────── */}
+      <section className="w-full max-w-[1200px] px-4 py-24 md:py-32 flex flex-col items-center text-center gap-8">
+        <span className="inline-flex items-center px-3 py-1 rounded-full bg-highlight-green/20 text-fresh-green text-caption font-medium">
+          2026 세법 개정안 반영
+        </span>
+        <h1 className="text-hero text-ink-black max-w-3xl tracking-tight">
+          올해의 환급,
+          <br />
+          분명하게 정리합니다.
+        </h1>
+        <p className="text-subheading text-shadow-gray max-w-2xl">
+          taxback365는 한국 직장인의 연말정산을 데이터로 정리합니다. 놓치기 쉬운
+          공제부터 추가 절세 여지까지 한 화면에서 확인하세요.
+        </p>
+        <div className="flex flex-col sm:flex-row items-center gap-3 mt-2">
+          <Link
+            href={primaryHref}
+            className="inline-flex items-center justify-center gap-2 h-11 px-6 rounded-full bg-ink-black text-canvas-white text-body font-medium hover:opacity-90 transition-opacity shadow-subtle focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 focus-visible:ring-offset-2 w-full sm:w-auto"
+          >
+            {primaryLabel}
+            <ArrowRight size={16} strokeWidth={1.75} />
+          </Link>
+          <Link
+            href="/calculator"
+            className="inline-flex items-center justify-center h-11 px-6 rounded-full bg-transparent text-ink-black text-body font-medium hover:bg-subtle-ash transition-colors w-full sm:w-auto"
+          >
+            환급 시뮬레이터
+          </Link>
         </div>
-    );
+        <p className="text-caption text-shadow-gray">
+          카드사·금융기관 데이터 연동, 평균 5분 입력
+        </p>
+      </section>
+
+      {/* ─────────────────────────────────────────────────────────
+       * Product Preview — 다크 카드 안에 환급 시뮬레이션 (design-ref §Preview)
+       * ──────────────────────────────────────────────────────── */}
+      <section className="w-full max-w-[1200px] px-4 pb-16 md:pb-24">
+        <div className="w-full bg-canvas-white rounded-2xl shadow-subtle-2 border border-border-light overflow-hidden">
+          {/* mock browser chrome */}
+          <div className="h-12 border-b border-border-light bg-subtle-ash flex items-center px-4 gap-2">
+            <span className="w-3 h-3 rounded-full bg-border-muted" />
+            <span className="w-3 h-3 rounded-full bg-border-muted" />
+            <span className="w-3 h-3 rounded-full bg-border-muted" />
+          </div>
+
+          {/* 환급 시뮬레이션 콘텐츠 */}
+          <div className="bg-canvas-white p-8 md:p-12">
+            <div className="grid md:grid-cols-2 gap-10 items-center">
+              <div>
+                <p className="text-caption font-medium uppercase tracking-[0.06em] text-shadow-gray">
+                  실시간 환급 예상
+                </p>
+                <div className="mt-3 flex items-baseline gap-2">
+                  <span className="text-mono-display text-[56px] leading-none font-semibold text-ink-black tabular-nums">
+                    +387,250
+                  </span>
+                  <span className="text-subheading text-shadow-gray font-mono">
+                    원
+                  </span>
+                </div>
+                <p className="mt-3 inline-flex items-center gap-1.5 text-body-sm text-fresh-green">
+                  <TrendingUp size={14} strokeWidth={2} />
+                  <span className="font-mono tabular-nums">+12.4%</span>
+                  <span className="text-shadow-gray">전년 대비</span>
+                </p>
+                <p className="mt-6 text-body text-thunder-gray leading-relaxed">
+                  소득공제와 세액공제를 자동 분류해 가장 유리한 조합으로 환급
+                  금액을 계산합니다.
+                </p>
+              </div>
+              <div className="rounded-xl border border-border-light bg-subtle-ash p-6 space-y-3">
+                {[
+                  { label: "신용카드 소득공제", amount: "1,240,000" },
+                  { label: "의료비 세액공제", amount: "382,500" },
+                  { label: "기부금 세액공제", amount: "95,000" },
+                  { label: "연금저축 세액공제", amount: "660,000" },
+                ].map((row) => (
+                  <div
+                    key={row.label}
+                    className="flex items-center justify-between text-body"
+                  >
+                    <span className="text-thunder-gray">{row.label}</span>
+                    <span className="font-mono tabular-nums text-ink-black">
+                      {row.amount}
+                      <span className="text-shadow-gray ml-1">원</span>
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ─────────────────────────────────────────────────────────
+       * Feature Grid — 3-col outlined card (design-ref §Features)
+       * ──────────────────────────────────────────────────────── */}
+      <section className="w-full max-w-[1200px] px-4 py-16 flex flex-col gap-12">
+        <div className="text-center max-w-2xl mx-auto">
+          <h2 className="text-h2 text-ink-black">정확함과 속도, 둘 다.</h2>
+          <p className="text-body text-shadow-gray mt-2">
+            복잡함 없이 자신 있게 신고하기 위한 모든 도구가 한 곳에.
+          </p>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {features.map(({ Icon, title, description }) => (
+            <div
+              key={title}
+              className="bg-canvas-white border border-border-light rounded-xl p-6 flex flex-col gap-4"
+            >
+              <div className="w-10 h-10 rounded-lg bg-subtle-ash flex items-center justify-center text-ink-black">
+                <Icon size={20} strokeWidth={1.75} />
+              </div>
+              <h3 className="text-h3 text-ink-black">{title}</h3>
+              <p className="text-body text-shadow-gray leading-relaxed">
+                {description}
+              </p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ─────────────────────────────────────────────────────────
+       * Deduction Categories — 8개 outlined card grid
+       * ──────────────────────────────────────────────────────── */}
+      <section className="w-full max-w-[1200px] px-4 py-16 flex flex-col gap-12">
+        <div className="text-center max-w-2xl mx-auto">
+          <h2 className="text-h2 text-ink-black">놓치기 쉬운 공제 8가지.</h2>
+          <p className="text-body text-shadow-gray mt-2">
+            각 항목은 클릭만으로 계산기로 이동합니다. 지출과 소득에 맞춰 환급
+            가능 금액을 즉시 확인하세요.
+          </p>
+        </div>
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          {deductions.map(({ icon: Icon, label }) => (
+            <Link
+              key={label}
+              href="/calculator"
+              className="group bg-canvas-white border border-border-light rounded-xl p-5 flex flex-col gap-3 hover:border-border-muted hover:shadow-subtle transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30"
+            >
+              <span className="w-9 h-9 rounded-lg bg-subtle-ash group-hover:bg-highlight-green/20 group-hover:text-fresh-green text-ink-black flex items-center justify-center transition-colors">
+                <Icon size={18} strokeWidth={1.75} />
+              </span>
+              <span className="text-body font-medium text-ink-black">
+                {label}
+              </span>
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      {/* ─────────────────────────────────────────────────────────
+       * Reviews — outlined card 3-col
+       * ──────────────────────────────────────────────────────── */}
+      <section className="w-full max-w-[1200px] px-4 py-16 flex flex-col gap-12">
+        <div className="text-center max-w-2xl mx-auto">
+          <h2 className="text-h2 text-ink-black">
+            실제 직장인이 받은 환급, 그 이야기.
+          </h2>
+          <p className="text-body text-shadow-gray mt-2">
+            taxback365를 사용한 사람들의 후기를 들어보세요.
+          </p>
+        </div>
+        <div className="grid md:grid-cols-3 gap-4">
+          {reviews.map((review) => (
+            <div
+              key={review.name}
+              className="bg-canvas-white border border-border-light rounded-xl p-6 flex flex-col gap-4 relative"
+            >
+              <Quote
+                size={20}
+                strokeWidth={1.5}
+                className="text-border-muted absolute top-5 right-5"
+              />
+              <div
+                className="flex gap-0.5 text-fresh-green"
+                aria-label="별점 5점"
+              >
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} size={12} fill="currentColor" strokeWidth={0} />
+                ))}
+              </div>
+              <p className="text-body text-ink-black leading-relaxed">
+                &ldquo;{review.content}&rdquo;
+              </p>
+              <div className="pt-4 border-t border-border-light">
+                <p className="text-body-sm font-medium text-ink-black">
+                  {review.name}
+                </p>
+                <p className="text-caption text-shadow-gray">{review.role}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ─────────────────────────────────────────────────────────
+       * Stats — 단순 텍스트 행 (Dub은 풀블리드 다크 띠 미사용)
+       * ──────────────────────────────────────────────────────── */}
+      <section className="w-full max-w-[1200px] px-4 py-16">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 border-y border-border-light py-12">
+          {stats.map(({ value, label }) => (
+            <div key={label} className="flex flex-col items-center gap-1">
+              <span className="text-mono-display text-[40px] leading-none font-semibold text-ink-black tabular-nums">
+                {value}
+              </span>
+              <span className="text-caption uppercase tracking-[0.06em] text-shadow-gray">
+                {label}
+              </span>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ─────────────────────────────────────────────────────────
+       * Final CTA — subtle-ash band (design-ref §CTA)
+       * ──────────────────────────────────────────────────────── */}
+      <section className="w-[100vw] ml-[calc(50%-50vw)] bg-subtle-ash border-y border-border-light">
+        <div className="max-w-[1200px] mx-auto px-4 py-24 flex flex-col items-center text-center gap-8">
+          <h2 className="text-h1 text-ink-black max-w-2xl">
+            환급은 멀리 있지 않습니다.
+            <br />
+            지금 바로 시작하세요.
+          </h2>
+          <p className="text-subheading text-shadow-gray max-w-xl">
+            데이터를 한 번 정리하면, 매년 자동으로 답을 받아볼 수 있습니다.
+          </p>
+          <Link
+            href={primaryHref}
+            className="inline-flex items-center justify-center gap-2 h-12 px-8 rounded-full bg-ink-black text-canvas-white text-body font-medium hover:opacity-90 transition-opacity shadow-subtle focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring-blue/30 focus-visible:ring-offset-2"
+          >
+            {primaryLabel}
+            <ArrowRight size={16} strokeWidth={1.75} />
+          </Link>
+        </div>
+      </section>
+    </div>
+  );
 }

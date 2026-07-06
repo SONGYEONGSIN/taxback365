@@ -5,1021 +5,1203 @@ import Link from "next/link";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeSanitize from "rehype-sanitize";
-import { TrendingUp, Sparkles, Bell, Target, ChevronUp, ChevronDown, AlertCircle, CheckCircle2, Lightbulb, PiggyBank, CreditCard, Home, Heart, GraduationCap, Gift, Building, Loader2, Users } from "lucide-react";
+import {
+  Sparkles,
+  Bell,
+  Target,
+  ChevronUp,
+  ChevronDown,
+  AlertCircle,
+  CheckCircle2,
+  Lightbulb,
+  PiggyBank,
+  CreditCard,
+  Home,
+  Heart,
+  GraduationCap,
+  Gift,
+  Building,
+  Loader2,
+  Users,
+  ArrowRight,
+  X,
+} from "lucide-react";
+import clsx from "clsx";
+import { Card } from "@/components/ui/Card";
+import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
-import { loadTaxData, loadAdminData, generateDeductionAnalysis, DeductionAnalysis } from "@/lib/tax-store";
-import { generateRecommendations, getDefaultRecommendations, calculateTotalPotentialSaving, AIRecommendation, generateRecommendationsFromAnalysis } from "@/lib/ai-recommendation";
+import {
+  loadTaxData,
+  loadAdminData,
+  generateDeductionAnalysis,
+  DeductionAnalysis,
+} from "@/lib/tax-store";
+import {
+  generateRecommendations,
+  getDefaultRecommendations,
+  calculateTotalPotentialSaving,
+  AIRecommendation,
+  generateRecommendationsFromAnalysis,
+} from "@/lib/ai-recommendation";
 import { calculateTax, convertAdminToTaxInputs } from "@/lib/tax-calculator";
+import { formatKRW } from "@/lib/number-format";
 
 interface NewsArticle {
-    id: string;
-    title: string;
-    source: string;
-    time: string;
-    url: string;
-    isNew: boolean;
+  id: string;
+  title: string;
+  source: string;
+  time: string;
+  url: string;
+  isNew: boolean;
 }
 
 interface DeductionItem {
-    id: string;
-    category: string;
-    type: "소득공제" | "세액공제";
-    amount: number;
-    limit: number;
-    icon: React.ElementType;
-    status: "optimal" | "good" | "warning" | "critical";
+  id: string;
+  category: string;
+  type: "소득공제" | "세액공제";
+  amount: number;
+  limit: number;
+  icon: React.ElementType;
+  status: "optimal" | "good" | "warning" | "critical";
 }
 
 const MOCK_DEDUCTIONS: DeductionItem[] = [
-    {
-        id: "1",
-        category: "신용카드 등 사용금액",
-        type: "소득공제",
-        amount: 2500000,
-        limit: 3000000,
-        icon: CreditCard,
-        status: "good",
-    },
-    {
-        id: "2",
-        category: "주택마련저축",
-        type: "소득공제",
-        amount: 2400000,
-        limit: 3000000,
-        icon: Home,
-        status: "good",
-    },
-    {
-        id: "3",
-        category: "의료비",
-        type: "세액공제",
-        amount: 850000,
-        limit: 7000000,
-        icon: Heart,
-        status: "warning",
-    },
-    {
-        id: "4",
-        category: "교육비",
-        type: "세액공제",
-        amount: 3000000,
-        limit: 3000000,
-        icon: GraduationCap,
-        status: "optimal",
-    },
-    {
-        id: "5",
-        category: "기부금",
-        type: "세액공제",
-        amount: 200000,
-        limit: 1000000,
-        icon: Gift,
-        status: "critical",
-    },
-    {
-        id: "6",
-        category: "연금저축/IRP",
-        type: "세액공제",
-        amount: 4000000,
-        limit: 7000000,
-        icon: PiggyBank,
-        status: "warning",
-    },
-    {
-        id: "7",
-        category: "보험료",
-        type: "세액공제",
-        amount: 1000000,
-        limit: 1000000,
-        icon: Building,
-        status: "optimal",
-    },
+  {
+    id: "1",
+    category: "신용카드 등 사용금액",
+    type: "소득공제",
+    amount: 2500000,
+    limit: 3000000,
+    icon: CreditCard,
+    status: "good",
+  },
+  {
+    id: "2",
+    category: "주택마련저축",
+    type: "소득공제",
+    amount: 2400000,
+    limit: 3000000,
+    icon: Home,
+    status: "good",
+  },
+  {
+    id: "3",
+    category: "의료비",
+    type: "세액공제",
+    amount: 850000,
+    limit: 7000000,
+    icon: Heart,
+    status: "warning",
+  },
+  {
+    id: "4",
+    category: "교육비",
+    type: "세액공제",
+    amount: 3000000,
+    limit: 3000000,
+    icon: GraduationCap,
+    status: "optimal",
+  },
+  {
+    id: "5",
+    category: "기부금",
+    type: "세액공제",
+    amount: 200000,
+    limit: 1000000,
+    icon: Gift,
+    status: "critical",
+  },
+  {
+    id: "6",
+    category: "연금저축/IRP",
+    type: "세액공제",
+    amount: 4000000,
+    limit: 7000000,
+    icon: PiggyBank,
+    status: "warning",
+  },
+  {
+    id: "7",
+    category: "보험료",
+    type: "세액공제",
+    amount: 1000000,
+    limit: 1000000,
+    icon: Building,
+    status: "optimal",
+  },
 ];
 
 const MOCK_NEWS_ARTICLES = [
-    {
-        id: "1",
-        title: "2026년 결혼세액공제 신설, 신혼부부 최대 100만원 환급",
-        source: "한국경제",
-        time: "2시간 전",
-        isNew: true,
-        url: "https://www.google.com/search?q=2026+결혼세액공제",
-    },
-    {
-        id: "2",
-        title: "청약저축 소득공제 한도 300만원으로 상향...연말정산 혜택 확대",
-        source: "매일경제",
-        time: "3시간 전",
-        isNew: true,
-        url: "https://www.google.com/search?q=청약저축+소득공제+한도+상향",
-    },
-    {
-        id: "3",
-        title: "연금저축 세액공제, 2026년부터 이렇게 바뀝니다",
-        source: "조선비즈",
-        time: "5시간 전",
-        isNew: false,
-        url: "https://www.google.com/search?q=연금저축+세액공제+2026",
-    },
-    {
-        id: "4",
-        title: "ISA 만기자금 연금계좌 전환 시 추가 세액공제 혜택",
-        source: "머니투데이",
-        time: "6시간 전",
-        isNew: false,
-        url: "https://www.google.com/search?q=ISA+연금계좌+전환+세액공제",
-    },
-    {
-        id: "5",
-        title: "신용카드 vs 체크카드, 연말정산 절세 전략 총정리",
-        source: "중앙일보",
-        time: "8시간 전",
-        isNew: false,
-        url: "https://www.google.com/search?q=신용카드+체크카드+연말정산",
-    },
-    {
-        id: "6",
-        title: "의료비 공제 문턱 3% 기준, 이렇게 활용하세요",
-        source: "한국경제",
-        time: "10시간 전",
-        isNew: false,
-        url: "https://www.google.com/search?q=의료비+공제+3%25+기준",
-    },
-    {
-        id: "7",
-        title: "자녀세액공제 확대...다자녀 가구 최대 혜택은?",
-        source: "동아일보",
-        time: "12시간 전",
-        isNew: false,
-        url: "https://www.google.com/search?q=자녀세액공제+다자녀",
-    },
-    {
-        id: "8",
-        title: "기부금 세액공제율 인상, 나눔의 가치 더 커졌다",
-        source: "매일경제",
-        time: "1일 전",
-        isNew: false,
-        url: "https://www.google.com/search?q=기부금+세액공제율+인상",
-    },
-    {
-        id: "9",
-        title: "월세 세액공제 한도 상향, 무주택 세입자 절세 팁",
-        source: "SBS뉴스",
-        time: "1일 전",
-        isNew: false,
-        url: "https://www.google.com/search?q=월세+세액공제+한도",
-    },
-    {
-        id: "10",
-        title: "퇴직연금 IRP 납입, 연말 전 꼭 챙겨야 할 이유",
-        source: "KBS뉴스",
-        time: "2일 전",
-        isNew: false,
-        url: "https://www.google.com/search?q=퇴직연금+IRP+연말정산",
-    },
+  {
+    id: "1",
+    title: "2026년 결혼세액공제 신설, 신혼부부 최대 100만원 환급",
+    source: "한국경제",
+    time: "2시간 전",
+    isNew: true,
+    url: "https://www.google.com/search?q=2026+결혼세액공제",
+  },
+  {
+    id: "2",
+    title: "청약저축 소득공제 한도 300만원으로 상향...연말정산 혜택 확대",
+    source: "매일경제",
+    time: "3시간 전",
+    isNew: true,
+    url: "https://www.google.com/search?q=청약저축+소득공제+한도+상향",
+  },
+  {
+    id: "3",
+    title: "연금저축 세액공제, 2026년부터 이렇게 바뀝니다",
+    source: "조선비즈",
+    time: "5시간 전",
+    isNew: false,
+    url: "https://www.google.com/search?q=연금저축+세액공제+2026",
+  },
+  {
+    id: "4",
+    title: "ISA 만기자금 연금계좌 전환 시 추가 세액공제 혜택",
+    source: "머니투데이",
+    time: "6시간 전",
+    isNew: false,
+    url: "https://www.google.com/search?q=ISA+연금계좌+전환+세액공제",
+  },
+  {
+    id: "5",
+    title: "신용카드 vs 체크카드, 연말정산 절세 전략 총정리",
+    source: "중앙일보",
+    time: "8시간 전",
+    isNew: false,
+    url: "https://www.google.com/search?q=신용카드+체크카드+연말정산",
+  },
+  {
+    id: "6",
+    title: "의료비 공제 문턱 3% 기준, 이렇게 활용하세요",
+    source: "한국경제",
+    time: "10시간 전",
+    isNew: false,
+    url: "https://www.google.com/search?q=의료비+공제+3%25+기준",
+  },
+  {
+    id: "7",
+    title: "자녀세액공제 확대...다자녀 가구 최대 혜택은?",
+    source: "동아일보",
+    time: "12시간 전",
+    isNew: false,
+    url: "https://www.google.com/search?q=자녀세액공제+다자녀",
+  },
+  {
+    id: "8",
+    title: "기부금 세액공제율 인상, 나눔의 가치 더 커졌다",
+    source: "매일경제",
+    time: "1일 전",
+    isNew: false,
+    url: "https://www.google.com/search?q=기부금+세액공제율+인상",
+  },
+  {
+    id: "9",
+    title: "월세 세액공제 한도 상향, 무주택 세입자 절세 팁",
+    source: "SBS뉴스",
+    time: "1일 전",
+    isNew: false,
+    url: "https://www.google.com/search?q=월세+세액공제+한도",
+  },
+  {
+    id: "10",
+    title: "퇴직연금 IRP 납입, 연말 전 꼭 챙겨야 할 이유",
+    source: "KBS뉴스",
+    time: "2일 전",
+    isNew: false,
+    url: "https://www.google.com/search?q=퇴직연금+IRP+연말정산",
+  },
 ];
 
-function formatNumber(num: number): string {
-    return Math.round(num).toLocaleString("ko-KR");
+function getUtilizationFill(rate: number): string {
+  if (rate >= 90) return "bg-fresh-green";
+  if (rate >= 70) return "bg-fresh-green";
+  if (rate >= 40) return "bg-warm-orange";
+  return "bg-warm-orange";
 }
 
-function getUtilizationColor(rate: number): string {
-    if (rate >= 90) return "bg-neo-cyan";
-    if (rate >= 70) return "bg-neo-yellow";
-    if (rate >= 40) return "bg-neo-orange";
-    return "bg-red-400";
-}
+function StatusBadge({
+  status,
+  utilizationRate,
+}: {
+  status: DeductionItem["status"];
+  utilizationRate?: number;
+}) {
+  const effectiveStatus =
+    utilizationRate !== undefined
+      ? utilizationRate >= 95
+        ? "optimal"
+        : utilizationRate >= 70
+          ? "good"
+          : utilizationRate >= 40
+            ? "warning"
+            : "critical"
+      : status;
 
-function getStatusBadge(status: DeductionItem["status"], utilizationRate?: number) {
-    // 활용률 기준으로 상태 결정: 95% 이상=최적, 70% 이상=양호, 40% 이상=개선, 40% 미만=미달
-    const effectiveStatus = utilizationRate !== undefined
-        ? (utilizationRate >= 95 ? "optimal" : utilizationRate >= 70 ? "good" : utilizationRate >= 40 ? "warning" : "critical")
-        : status;
-
-    switch (effectiveStatus) {
-        case "optimal":
-            return <span className="inline-block px-2 py-1 text-xs font-bold bg-neo-cyan border-2 border-black whitespace-nowrap">최적</span>;
-        case "good":
-            return <span className="inline-block px-2 py-1 text-xs font-bold bg-neo-yellow border-2 border-black whitespace-nowrap">양호</span>;
-        case "warning":
-            return <span className="inline-block px-2 py-1 text-xs font-bold bg-neo-orange border-2 border-black whitespace-nowrap">개선</span>;
-        case "critical":
-            return <span className="inline-block px-2 py-1 text-xs font-bold bg-red-400 border-2 border-black text-white whitespace-nowrap">미달</span>;
-    }
-}
-
-function ArrowRight({
-    size = 24,
-    ...props
-}: React.SVGProps<SVGSVGElement> & { size?: number }) {
-    return (
-        <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width={size}
-            height={size}
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="3"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            {...props}
-        >
-            <path d="M5 12h14" />
-            <path d="m12 5 7 7-7 7" />
-        </svg>
-    );
+  switch (effectiveStatus) {
+    case "optimal":
+      return <Badge variant="success">최적</Badge>;
+    case "good":
+      return <Badge variant="success">양호</Badge>;
+    case "warning":
+      return <Badge variant="warning">개선</Badge>;
+    case "critical":
+      return <Badge variant="danger">미달</Badge>;
+  }
 }
 
 export default function DashboardPage() {
-    const [goalAmount, setGoalAmount] = useState(1200000);
-    const [newsArticles, setNewsArticles] = useState<NewsArticle[]>([]);
-    const [newsLoading, setNewsLoading] = useState(true);
-    const [showAllNews, setShowAllNews] = useState(false);  // 더보기 상태
-    const [aiRecommendations, setAiRecommendations] = useState<AIRecommendation[]>([]);
-    const [hasUserData, setHasUserData] = useState(false);
-    const [deductionItems, setDeductionItems] = useState<DeductionAnalysis[]>([]);
-    const [hasAdminData, setHasAdminData] = useState(false);
-    const [currentAmount, setCurrentAmount] = useState(0);
-    const [totalPrepaidTax, setTotalPrepaidTax] = useState(0); // 기납부세액 총액 (목표 상한선)
-    const [totalSalary, setTotalSalary] = useState(0); // 총급여
+  const [goalAmount, setGoalAmount] = useState(1200000);
+  const [newsArticles, setNewsArticles] = useState<NewsArticle[]>([]);
+  const [newsLoading, setNewsLoading] = useState(true);
+  const [showAllNews, setShowAllNews] = useState(false);
+  const [aiRecommendations, setAiRecommendations] = useState<
+    AIRecommendation[]
+  >([]);
+  const [hasUserData, setHasUserData] = useState(false);
+  const [deductionItems, setDeductionItems] = useState<DeductionAnalysis[]>([]);
+  const [hasAdminData, setHasAdminData] = useState(false);
+  const [currentAmount, setCurrentAmount] = useState(0);
+  const [totalPrepaidTax, setTotalPrepaidTax] = useState(0);
+  const [totalSalary, setTotalSalary] = useState(0);
 
-    // AI 개인화 조언 상태
-    const [aiAdvice, setAiAdvice] = useState<string>("");
-    const [aiAdviceLoading, setAiAdviceLoading] = useState(false);
-    const [aiAdviceError, setAiAdviceError] = useState<string>("");
-    const [showAiModal, setShowAiModal] = useState(false);
+  const [aiAdvice, setAiAdvice] = useState<string>("");
+  const [aiAdviceLoading, setAiAdviceLoading] = useState(false);
+  const [aiAdviceError, setAiAdviceError] = useState<string>("");
+  const [showAiModal, setShowAiModal] = useState(false);
 
-    const goalProgress = Math.min(100, Math.round((currentAmount / goalAmount) * 100));
+  const goalProgress = Math.min(
+    100,
+    Math.round((currentAmount / goalAmount) * 100),
+  );
+  const totalPotentialSaving = calculateTotalPotentialSaving(aiRecommendations);
 
-    const totalPotentialSaving = calculateTotalPotentialSaving(aiRecommendations);
+  useEffect(() => {
+    const loadData = async () => {
+      let adminData = await loadAdminData(2026);
+      if (!adminData) adminData = await loadAdminData(2025);
 
-    // Admin 데이터로 공제 분석, 환급액 계산, AI 추천 생성 (통합)
-    useEffect(() => {
-        const loadData = async () => {
-            // 2026년 우선, 없으면 2025년 데이터 사용
-            let adminData = await loadAdminData(2026);
-            if (!adminData) {
-                adminData = await loadAdminData(2025);
-            }
-            if (adminData) {
-                const analysis = generateDeductionAnalysis(adminData);
-                setDeductionItems(analysis);
-                setHasAdminData(true);
+      if (adminData) {
+        const analysis = generateDeductionAnalysis(adminData);
+        setDeductionItems(analysis);
+        setHasAdminData(true);
 
-                // 공통 세금 계산 모듈 사용
-                const taxInputs = convertAdminToTaxInputs(adminData);
-                const taxResult = calculateTax(taxInputs);
+        const taxInputs = convertAdminToTaxInputs(adminData);
+        const taxResult = calculateTax(taxInputs);
 
-                // 기납부세액 저장 (목표 상한선)
-                const withheldTax = adminData.salary.prepaidTax || 0;
-                setTotalPrepaidTax(withheldTax);
+        const withheldTax = adminData.salary.prepaidTax || 0;
+        setTotalPrepaidTax(withheldTax);
+        setCurrentAmount(taxResult.refund);
+        if (withheldTax > 0) setGoalAmount(withheldTax);
 
-                // 환급액 설정 (Calculator와 동일한 계산 결과)
-                setCurrentAmount(taxResult.refund);
+        const calculatedSalary =
+          (adminData.salary.totalSalary || 0) +
+          (adminData.salary.bonus || 0) +
+          (adminData.salary.childTuition || 0);
+        setTotalSalary(calculatedSalary);
 
-                // 목표 금액 초기화: 최대 환급 가능 금액 (기납부세액)
-                if (withheldTax > 0) {
-                    setGoalAmount(withheldTax);
-                }
-
-                // AI 추천 생성 - 공제 항목별 상세 분석 결과 기반으로 생성
-                // 총급여 = 급여 + 상여금 + 자녀학자금 (연간 합계 사용)
-                const calculatedSalary = (adminData.salary.totalSalary || 0) +
-                    (adminData.salary.bonus || 0) +
-                    (adminData.salary.childTuition || 0);
-                setTotalSalary(calculatedSalary);
-                const recommendations = generateRecommendationsFromAnalysis(analysis);
-                if (recommendations.length > 0) {
-                    setAiRecommendations(recommendations);
-                    setHasUserData(true);
-                } else {
-                    setAiRecommendations(getDefaultRecommendations());
-                    setHasUserData(false);
-                }
-            } else {
-                // 데이터 없으면 기본 Mock 사용
-                setDeductionItems(MOCK_DEDUCTIONS.map(d => ({
-                    id: d.id,
-                    category: d.category,
-                    type: d.type,
-                    amount: d.amount,
-                    limit: d.limit,
-                    status: d.status,
-                })));
-                setHasAdminData(false);
-                setCurrentAmount(0);
-
-                // 기존 TaxData 확인 (Calculator 데이터가 있으면 사용)
-                const taxData = await loadTaxData();
-                if (taxData && taxData.salary > 0) {
-                    const recommendations = generateRecommendations(taxData);
-                    setAiRecommendations(recommendations);
-                    setHasUserData(true);
-                } else {
-                    setAiRecommendations(getDefaultRecommendations());
-                    setHasUserData(false);
-                }
-            }
-        };
-        loadData();
-    }, []);
-
-    // 뉴스 가져오기
-    useEffect(() => {
-        async function fetchNews() {
-            try {
-                const response = await fetch("/api/news");
-                const data = await response.json();
-                if (data.success && data.data.length > 0) {
-                    setNewsArticles(data.data);
-                } else {
-                    // API 실패 시 목업 데이터 사용
-                    setNewsArticles(MOCK_NEWS_ARTICLES);
-                }
-            } catch (error) {
-                console.error("News fetch error:", error);
-                setNewsArticles(MOCK_NEWS_ARTICLES);
-            } finally {
-                setNewsLoading(false);
-            }
+        const recommendations = generateRecommendationsFromAnalysis(analysis);
+        if (recommendations.length > 0) {
+          setAiRecommendations(recommendations);
+          setHasUserData(true);
+        } else {
+          setAiRecommendations(getDefaultRecommendations());
+          setHasUserData(false);
         }
-        fetchNews();
-    }, []);
+      } else {
+        setDeductionItems(
+          MOCK_DEDUCTIONS.map((d) => ({
+            id: d.id,
+            category: d.category,
+            type: d.type,
+            amount: d.amount,
+            limit: d.limit,
+            status: d.status,
+          })),
+        );
+        setHasAdminData(false);
+        setCurrentAmount(0);
 
-    // AI 개인화 조언 요청 함수
-    const fetchAiAdvice = async () => {
-        if (!hasAdminData || deductionItems.length === 0) return;
-
-        setShowAiModal(true);  // 모달 열기
-        setAiAdviceLoading(true);
-        setAiAdviceError("");
-
-        try {
-            const response = await fetch("/api/ai-advice", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    salary: totalSalary,
-                    deductionItems: deductionItems.map(item => ({
-                        category: item.category,
-                        type: item.type,
-                        amount: item.amount,
-                        limit: item.limit,
-                        status: item.status
-                    })),
-                    currentRefund: currentAmount,
-                    prepaidTax: totalPrepaidTax
-                })
-            });
-
-            const data = await response.json();
-
-            if (response.ok && data.advice) {
-                setAiAdvice(data.advice);
-            } else {
-                setAiAdviceError(data.error || "AI 조언 생성에 실패했습니다.");
-            }
-        } catch (error) {
-            console.error("AI Advice Error:", error);
-            setAiAdviceError("AI 조언 요청 중 오류가 발생했습니다.");
-        } finally {
-            setAiAdviceLoading(false);
+        const taxData = await loadTaxData();
+        if (taxData && taxData.salary > 0) {
+          const recommendations = generateRecommendations(taxData);
+          setAiRecommendations(recommendations);
+          setHasUserData(true);
+        } else {
+          setAiRecommendations(getDefaultRecommendations());
+          setHasUserData(false);
         }
+      }
     };
+    loadData();
+  }, []);
 
-    return (
-        <div className="space-y-8 animate-fade-in">
-            {/* Summary Card with Goal Setting */}
-            <div className="neo-card bg-neo-white relative overflow-hidden">
+  useEffect(() => {
+    async function fetchNews() {
+      try {
+        const response = await fetch("/api/news");
+        const data = await response.json();
+        if (data.success && data.data.length > 0) {
+          setNewsArticles(data.data);
+        } else {
+          setNewsArticles(MOCK_NEWS_ARTICLES);
+        }
+      } catch (error) {
+        console.error("News fetch error:", error);
+        setNewsArticles(MOCK_NEWS_ARTICLES);
+      } finally {
+        setNewsLoading(false);
+      }
+    }
+    fetchNews();
+  }, []);
 
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-                    {/* Current Refund */}
-                    <div className="lg:col-span-2 relative">
-                        {/* 배경 장식 아이콘 */}
-                        <div className="absolute top-0 right-0 opacity-10 pointer-events-none">
-                            <TrendingUp size={120} />
-                        </div>
-                        <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
-                            <span className={`w-3 h-3 ${currentAmount >= 0 ? 'bg-neo-orange' : 'bg-red-500'} rounded-full`}></span>
-                            2026년 예상 {currentAmount >= 0 ? '환급액' : '추가납부액'}
-                        </h2>
-                        <div className="flex flex-col md:flex-row items-end gap-4 mb-4">
-                            {hasAdminData ? (
-                                <span className={`text-5xl md:text-7xl font-black tracking-tighter ${currentAmount >= 0 ? 'text-neo-black' : 'text-red-600'}`}>
-                                    {currentAmount > 0 ? '-' : currentAmount < 0 ? '+' : ''}{formatNumber(Math.abs(currentAmount))}
-                                    <span className="text-2xl text-gray-500 font-bold ml-1">원</span>
-                                </span>
-                            ) : (
-                                <span className="text-2xl md:text-3xl font-bold text-gray-400">
-                                    기초자료를 먼저 입력해주세요
-                                </span>
-                            )}
-                            {hasAdminData && currentAmount >= 0 && (
-                                <div className="neo-badge bg-neo-cyan text-black mb-2">
-                                    예상 환급
-                                </div>
-                            )}
-                            {hasAdminData && currentAmount < 0 && (
-                                <div className="neo-badge bg-red-400 text-white mb-2">
-                                    추가 납부 예상
-                                </div>
-                            )}
-                        </div>
+  const fetchAiAdvice = async () => {
+    if (!hasAdminData || deductionItems.length === 0) return;
 
-                        {/* Progress to Goal */}
-                        <div className="mt-4">
-                            <div className="flex justify-between items-center mb-2">
-                                <span className="text-sm font-bold">목표 달성률</span>
-                                <span className="text-sm font-bold">{currentAmount >= 0 ? `${goalProgress}%` : '-'}</span>
-                            </div>
-                            <div className="w-full bg-gray-200 h-4 border-2 border-black relative">
-                                <div
-                                    className={`absolute top-0 left-0 h-full ${currentAmount >= 0 ? 'bg-neo-orange' : 'bg-red-400'} border-r-2 border-black transition-all duration-500`}
-                                    style={{ width: currentAmount >= 0 ? `${goalProgress}%` : '0%' }}
-                                ></div>
-                            </div>
-                            {currentAmount >= 0 ? (
-                                <p className="text-xs font-bold mt-2 text-gray-600">
-                                    목표까지 <span className="text-neo-orange">{formatNumber(goalAmount - currentAmount)}원</span> 남음
-                                </p>
-                            ) : (
-                                <p className="text-xs font-bold mt-2 text-red-500">
-                                    ⚠️ 추가 공제 받을 수 있는 항목을 확인해 주세요.
-                                </p>
-                            )}
-                        </div>
-                    </div>
+    setShowAiModal(true);
+    setAiAdviceLoading(true);
+    setAiAdviceError("");
 
-                    {/* Goal Setting */}
-                    <div className="border-l-0 lg:border-l-4 border-black pl-0 lg:pl-6">
-                        <h3 className="text-lg font-bold mb-4 flex items-center gap-2">
-                            <Target size={20} className="text-neo-orange" />
-                            환급액 목표 설정
-                        </h3>
-                        <div className="space-y-3">
-                            {/* 기납부세액 표시 */}
-                            {totalPrepaidTax > 0 && (
-                                <div className="text-xs text-gray-500 font-bold bg-gray-100 px-2 py-1 border border-gray-300">
-                                    최대 환급 가능: <span className="font-bold text-neo-black">{formatNumber(totalPrepaidTax)}원</span>
-                                </div>
-                            )}
-                            <div className="flex items-center gap-2">
-                                <button
-                                    onClick={() => setGoalAmount(prev => Math.max(100000, prev - 100000))}
-                                    className="w-10 h-10 border-2 border-black bg-white hover:bg-gray-100 font-bold flex items-center justify-center"
-                                >
-                                    <ChevronDown size={20} />
-                                </button>
-                                <div className="flex-1 border-2 border-black p-3 bg-white text-center font-black text-xl">
-                                    {formatNumber(goalAmount)}원
-                                </div>
-                                <button
-                                    onClick={() => {
-                                        const maxGoal = totalPrepaidTax > 0 ? totalPrepaidTax : Infinity;
-                                        setGoalAmount(prev => Math.min(prev + 100000, maxGoal));
-                                    }}
-                                    disabled={totalPrepaidTax > 0 && goalAmount >= totalPrepaidTax}
-                                    className={`w-10 h-10 border-2 border-black font-bold flex items-center justify-center ${totalPrepaidTax > 0 && goalAmount >= totalPrepaidTax
-                                        ? "bg-gray-300 cursor-not-allowed"
-                                        : "bg-white hover:bg-gray-100"
-                                        }`}
-                                >
-                                    <ChevronUp size={20} />
-                                </button>
-                            </div>
-                            <div className="grid grid-cols-3 gap-2">
-                                {[800000, 1000000, 1500000].map((amount) => {
-                                    const isDisabled = totalPrepaidTax > 0 && amount > totalPrepaidTax;
-                                    return (
-                                        <button
-                                            key={amount}
-                                            onClick={() => !isDisabled && setGoalAmount(amount)}
-                                            disabled={isDisabled}
-                                            className={`py-2 border-2 border-black text-sm font-bold transition-all ${isDisabled
-                                                ? "bg-gray-200 text-gray-400 cursor-not-allowed"
-                                                : goalAmount === amount
-                                                    ? "bg-neo-yellow shadow-[2px_2px_0px_0px_#000]"
-                                                    : "bg-white hover:bg-gray-100"
-                                                }`}
-                                        >
-                                            {formatNumber(amount)}
-                                        </button>
-                                    );
-                                })}
-                            </div>
-                            {(() => {
-                                const optimizedAmount = currentAmount + totalPotentialSaving;
-                                if (optimizedAmount >= 0) {
-                                    return (
-                                        <p className="text-xs text-gray-600 font-bold">
-                                            AI 추천: 최적화 시 <span className="text-neo-orange font-bold">{formatNumber(optimizedAmount)}원</span> 달성 가능
-                                        </p>
-                                    );
-                                } else {
-                                    return (
-                                        <p className="text-xs text-gray-600 font-bold">
-                                            AI 추천: 최적화 시 추가납부 <span className="text-red-500 font-bold">{formatNumber(Math.abs(optimizedAmount))}원</span>으로 감소 가능
-                                        </p>
-                                    );
-                                }
-                            })()}
-                        </div>
-                    </div>
-                </div>
+    try {
+      const response = await fetch("/api/ai-advice", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          salary: totalSalary,
+          deductionItems: deductionItems.map((item) => ({
+            category: item.category,
+            type: item.type,
+            amount: item.amount,
+            limit: item.limit,
+            status: item.status,
+          })),
+          currentRefund: currentAmount,
+          prepaidTax: totalPrepaidTax,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok && data.advice) {
+        setAiAdvice(data.advice);
+      } else {
+        setAiAdviceError(data.error || "AI 조언 생성에 실패했습니다.");
+      }
+    } catch (error) {
+      console.error("AI Advice Error:", error);
+      setAiAdviceError("AI 조언 요청 중 오류가 발생했습니다.");
+    } finally {
+      setAiAdviceLoading(false);
+    }
+  };
+
+  const incomeDeductTotal = deductionItems
+    .filter((d) => d.type === "소득공제")
+    .reduce((sum, d) => sum + d.amount, 0);
+  const incomeDeductLimit = deductionItems
+    .filter((d) => d.type === "소득공제")
+    .reduce((sum, d) => sum + d.limit, 0);
+  const taxDeductTotal = deductionItems
+    .filter((d) => d.type === "세액공제")
+    .reduce((sum, d) => sum + d.amount, 0);
+  const taxDeductLimit = deductionItems
+    .filter((d) => d.type === "세액공제")
+    .reduce((sum, d) => sum + d.limit, 0);
+
+  return (
+    <div className="space-y-6 animate-fade-in max-w-[1200px] mx-auto">
+      {/* Hero Summary Card */}
+      <Card variant="raised" padding="lg">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {/* Current Refund */}
+          <div className="lg:col-span-2">
+            <div className="flex items-center gap-2 mb-2">
+              <span
+                className={clsx(
+                  "w-1.5 h-1.5 rounded-full",
+                  currentAmount >= 0 ? "bg-fresh-green" : "bg-warm-orange",
+                )}
+              />
+              <span className="text-caption font-semibold text-shadow-gray uppercase tracking-[0.06em]">
+                2026년 예상 {currentAmount >= 0 ? "환급액" : "추가 납부액"}
+              </span>
             </div>
 
-            {/* AI Deduction Analysis Table */}
-            <div className="neo-card bg-white">
-                <h3 className="text-xl font-black mb-6 flex items-center gap-2 border-b-2 border-black pb-3">
-                    <Sparkles size={24} className="text-neo-orange" />
-                    AI 공제 항목별 상세 분석
-                    <span className="ml-auto text-sm font-bold text-gray-500">2026년 기준</span>
-                </h3>
-
-                {/* Table */}
-                <div className="overflow-x-auto">
-                    <table className="w-full border-collapse">
-                        <thead>
-                            <tr className="border-b-4 border-black">
-                                <th className="text-left py-3 px-4 font-black">공제 항목</th>
-                                <th className="text-center py-3 px-4 font-black hidden sm:table-cell">구분</th>
-                                <th className="text-right py-3 px-4 font-black">공제 금액</th>
-                                <th className="text-right py-3 px-4 font-black hidden md:table-cell">최대한도</th>
-                                <th className="text-center py-3 px-4 font-black">활용률</th>
-                                <th className="text-center py-3 px-4 font-black">상태</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {deductionItems.map((item, index) => {
-                                const iconMap: Record<string, React.ElementType> = {
-                                    "기본공제 (인적공제)": Users,
-                                    "4대보험": Building,
-                                    "신용카드 등 사용금액": CreditCard,
-                                    "주택자금\n(청약저축+임차차입금)": Home,
-                                    "주택자금\n(장기주택저당차입금이자상환)": Home,
-                                    "월세": Home,
-                                    "의료비": Heart,
-                                    "교육비": GraduationCap,
-                                    "기부금": Gift,
-                                    "연금저축/IRP": PiggyBank,
-                                    "보험료": Building,
-                                    "자녀": Users,
-                                };
-                                const Icon = iconMap[item.category] || CreditCard;
-                                const maxValue = item.maxBenefit || item.limit;
-                                const utilizationRate = maxValue > 0
-                                    ? Math.min(100, Math.round((item.amount / maxValue) * 100))
-                                    : (item.amount > 0 ? 100 : 0); // 한도 없는 항목은 공제액이 있으면 100%
-                                return (
-                                    <tr
-                                        key={item.id}
-                                        className={`border-b-2 border-black hover:bg-gray-50 transition-colors ${index % 2 === 0 ? "bg-white" : "bg-gray-50"
-                                            }`}
-                                    >
-                                        <td className="py-4 px-4">
-                                            <div className="flex items-center gap-3">
-                                                <div className="w-10 h-10 border-2 border-black bg-neo-yellow flex items-center justify-center">
-                                                    <Icon size={20} />
-                                                </div>
-                                                <span className="font-bold whitespace-pre-line">{item.category}</span>
-                                            </div>
-                                        </td>
-                                        <td className="text-center py-4 px-2 sm:px-4 hidden sm:table-cell">
-                                            <span className={`px-2 py-1 text-xs font-bold border-2 border-black whitespace-nowrap ${item.type === "소득공제" ? "bg-neo-cyan" : "bg-neo-orange"
-                                                }`}>
-                                                {item.type}
-                                            </span>
-                                        </td>
-                                        <td className="text-right py-3 px-2 sm:px-4 text-sm sm:text-base">
-                                            <div className="font-bold whitespace-nowrap">{formatNumber(Math.round(item.amount))}원</div>
-                                            {item.thresholdInfo && (
-                                                <div className="text-xs text-gray-400 mt-0.5 whitespace-pre-line text-right">{item.thresholdInfo}</div>
-                                            )}
-                                        </td>
-                                        <td className="text-right py-4 px-4 text-gray-500 hidden md:table-cell whitespace-pre-line">
-                                            {item.category === "교육비" ? (
-                                                <span className="text-xs">본인: 한도 없음{"\n"}미취학: 1인당 3,000,000원{"\n"}초중고: 1인당 3,000,000원{"\n"}대학: 1인당 9,000,000원</span>
-                                            ) : item.category === "의료비" ? (
-                                                <span className="text-xs">난임시술비: 한도 없음{"\n"}미숙아·선천성: 한도 없음{"\n"}본인/장애/만65/6세: 한도 없음{"\n"}그 밖의 부양가족: 7,000,000원</span>
-                                            ) : item.category === "기부금" && item.donationLimits ? (
-                                                <span className="text-xs">
-                                                    정치자금: {formatNumber(item.donationLimits.politicalFund)}원{"\n"}
-                                                    고향사랑/특별재난: {formatNumber(item.donationLimits.hometownDisaster)}원{"\n"}
-                                                    특례기부금: {formatNumber(item.donationLimits.specialDonation)}원{"\n"}
-                                                    우리사주조합: {formatNumber(item.donationLimits.employeeStock)}원{"\n"}
-                                                    일반기부(종교): {formatNumber(item.donationLimits.generalReligious)}원{"\n"}
-                                                    일반기부(종교 외): {formatNumber(item.donationLimits.generalNonReligious)}원
-                                                </span>
-                                            ) : item.category === "자녀" && item.childLimits ? (
-                                                <span className="text-xs">
-                                                    자녀 세액공제:{"\n"}
-                                                    1명: {formatNumber(item.childLimits.first)}원{"\n"}
-                                                    2명: {formatNumber(item.childLimits.second)}원{"\n"}
-                                                    3명 이상: {formatNumber(item.childLimits.thirdPlus)}원{"\n"}
-                                                    ───{"\n"}
-                                                    출생·입양 공제:{"\n"}
-                                                    첫째: {formatNumber(item.childLimits.birthFirst)}원{"\n"}
-                                                    둘째: {formatNumber(item.childLimits.birthSecond)}원{"\n"}
-                                                    셋째 이상: 1인당 {formatNumber(item.childLimits.birthThirdPlus)}원
-                                                </span>
-                                            ) : (
-                                                <>{formatNumber(item.limit)}원</>
-                                            )}
-                                        </td>
-                                        <td className="py-3 px-1 sm:px-4">
-                                            <div className="flex items-center justify-center gap-1 sm:gap-2">
-                                                <div className="w-12 sm:w-20 h-3 bg-gray-200 border border-black relative">
-                                                    <div
-                                                        className={`h-full ${getUtilizationColor(utilizationRate)} transition-all`}
-                                                        style={{ width: `${Math.min(100, utilizationRate)}%` }}
-                                                    ></div>
-                                                </div>
-                                                <span className="text-xs sm:text-sm font-bold w-10 sm:w-12 text-right">{utilizationRate}%</span>
-                                            </div>
-                                        </td>
-                                        <td className="text-center py-3 px-1 sm:px-4">
-                                            {getStatusBadge(item.status, utilizationRate)}
-                                        </td>
-                                    </tr>
-                                );
-                            })}
-                        </tbody>
-                    </table>
-                </div>
-
-                {/* Summary */}
-                <div className="mt-6 p-4 border-2 border-black bg-gray-50">
-                    <div className="flex flex-col gap-4">
-                        <div className="flex items-center gap-3">
-                            <CheckCircle2 size={24} className="text-neo-cyan flex-shrink-0" />
-                            <div>
-                                <p className="font-bold">전체 공제 활용률</p>
-                                <p className="text-sm text-gray-600">{deductionItems.length}개 항목 중 {deductionItems.filter(d => d.status === "optimal").length}개 최적화 완료</p>
-                            </div>
-                        </div>
-
-                        {/* 소득공제 / 세액공제 분리 */}
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-3 border-t-2 border-gray-300">
-                            {/* 소득공제 */}
-                            <div className="p-4 bg-neo-cyan border-2 border-black">
-                                <div className="flex items-center gap-2 mb-3">
-                                    <span className="px-2 py-1 text-xs font-bold bg-white border-2 border-black">소득공제</span>
-                                    <span className="text-sm font-bold">과세표준 감소</span>
-                                </div>
-                                <div className="flex justify-between items-end">
-                                    <div>
-                                        <p className="text-xs text-gray-700">현재 공제액</p>
-                                        <p className="text-xl sm:text-2xl font-black">{formatNumber(deductionItems.filter(d => d.type === "소득공제").reduce((sum, d) => sum + d.amount, 0))}원</p>
-                                    </div>
-                                    <div className="text-right">
-                                        <p className="text-xs text-gray-700">최대 한도</p>
-                                        <p className="text-lg font-bold text-gray-800">{formatNumber(deductionItems.filter(d => d.type === "소득공제").reduce((sum, d) => sum + d.limit, 0))}원</p>
-                                    </div>
-                                </div>
-                                <div className="mt-2 w-full bg-white h-2 border border-black">
-                                    <div
-                                        className="h-full bg-neo-black"
-                                        style={{
-                                            width: `${(() => {
-                                                const total = deductionItems.filter(d => d.type === "소득공제").reduce((sum, d) => sum + d.limit, 0);
-                                                return total > 0 ? Math.round(deductionItems.filter(d => d.type === "소득공제").reduce((sum, d) => sum + d.amount, 0) / total * 100) : 0;
-                                            })()}%`
-                                        }}
-                                    ></div>
-                                </div>
-                            </div>
-
-                            {/* 세액공제 */}
-                            <div className="p-4 bg-neo-orange border-2 border-black">
-                                <div className="flex items-center gap-2 mb-3">
-                                    <span className="px-2 py-1 text-xs font-bold bg-white border-2 border-black">세액공제</span>
-                                    <span className="text-sm font-bold text-white">납부세액 직접 감소</span>
-                                </div>
-                                <div className="flex justify-between items-end">
-                                    <div>
-                                        <p className="text-xs text-gray-800">현재 공제액</p>
-                                        <p className="text-xl sm:text-2xl font-black text-white">{formatNumber(deductionItems.filter(d => d.type === "세액공제").reduce((sum, d) => sum + d.amount, 0))}원</p>
-                                    </div>
-                                    <div className="text-right">
-                                        <p className="text-xs text-gray-800">최대 한도</p>
-                                        <p className="text-lg font-bold text-white">{formatNumber(deductionItems.filter(d => d.type === "세액공제").reduce((sum, d) => sum + d.limit, 0))}원</p>
-                                    </div>
-                                </div>
-                                <div className="mt-2 w-full bg-white h-2 border border-black">
-                                    <div
-                                        className="h-full bg-neo-black"
-                                        style={{
-                                            width: `${(() => {
-                                                const total = deductionItems.filter(d => d.type === "세액공제").reduce((sum, d) => sum + d.limit, 0);
-                                                return total > 0 ? Math.round(deductionItems.filter(d => d.type === "세액공제").reduce((sum, d) => sum + d.amount, 0) / total * 100) : 0;
-                                            })()}%`
-                                        }}
-                                    ></div>
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* 전체 합계 */}
-                        <div className="flex flex-col sm:flex-row justify-between items-center gap-2 pt-3 border-t-2 border-gray-300">
-                            <div className="text-center sm:text-left">
-                                <span className="text-sm font-bold text-gray-600">전체 합계: </span>
-                                <span className="font-black text-lg">{formatNumber(deductionItems.reduce((sum, d) => sum + d.amount, 0))}원</span>
-                                <span className="text-gray-500"> / </span>
-                                <span className="font-bold text-gray-600">{formatNumber(deductionItems.reduce((sum, d) => sum + d.limit, 0))}원</span>
-                            </div>
-                            <div className="flex items-center gap-2 text-sm">
-                                <span className="w-3 h-3 bg-neo-cyan border border-black"></span>
-                                <span>소득공제</span>
-                                <span className="w-3 h-3 bg-neo-orange border border-black ml-2"></span>
-                                <span>세액공제</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {/* AI Recommendations */}
-                <div className="neo-card bg-white">
-                    <div className="flex items-center justify-between mb-6 border-b-2 border-black pb-2">
-                        <h3 className="text-xl font-black flex items-center gap-2">
-                            <Lightbulb size={20} className="text-neo-yellow" />
-                            AI 절세 추천
-                            {hasAdminData && (
-                                <button
-                                    onClick={fetchAiAdvice}
-                                    disabled={aiAdviceLoading}
-                                    className={`ml-2 px-3 py-1.5 font-bold border-2 border-black text-xs transition-all flex items-center gap-1 ${aiAdviceLoading
-                                        ? "bg-gray-300 cursor-not-allowed"
-                                        : "bg-gradient-to-r from-neo-cyan to-cyan-400 hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_0px_#000]"
-                                        }`}
-                                >
-                                    <Sparkles size={14} />
-                                    {aiAdviceLoading ? "분석 중..." : "제미니 분석 요청"}
-                                </button>
-                            )}
-                        </h3>
-                        <span className="neo-badge bg-neo-orange text-white text-sm">
-                            -{formatNumber(totalPotentialSaving)}원 가능
-                        </span>
-                    </div>
-                    <div className="space-y-4">
-                        {aiRecommendations.length === 0 ? (
-                            <div className="text-center py-8 text-gray-500">
-                                <Lightbulb size={32} className="mx-auto mb-2 text-gray-300" />
-                                <p>계산기에서 데이터를 입력하면 AI 추천을 받을 수 있습니다.</p>
-                            </div>
-                        ) : (
-                            aiRecommendations.map((rec) => (
-                                <div
-                                    key={rec.id}
-                                    className="border-2 border-black p-4 hover:translate-x-1 hover:translate-y-1 hover:shadow-[2px_2px_0px_0px_#000] transition-all cursor-pointer bg-white"
-                                >
-                                    <div className="flex justify-between items-start mb-2">
-                                        <Badge type={rec.priority} />
-                                        {rec.potentialSaving > 0 && (
-                                            <span className="text-lg font-black text-neo-cyan">
-                                                -{formatNumber(rec.potentialSaving)}원
-                                            </span>
-                                        )}
-                                    </div>
-                                    <h4 className="font-bold text-lg leading-tight mb-1">
-                                        {rec.message}
-                                    </h4>
-                                    <p className="text-sm text-gray-600">{rec.detail}</p>
-                                    {rec.action && (
-                                        <p className="text-xs text-neo-orange font-bold mt-2">
-                                            💡 {rec.action}
-                                        </p>
-                                    )}
-                                </div>
-                            ))
-                        )}
-                        {!hasUserData && (
-                            <Link href="/calculator">
-                                <button className="w-full py-3 font-bold border-2 border-black bg-neo-yellow hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_0px_#000] transition-all">
-                                    계산기로 이동 →
-                                </button>
-                            </Link>
-                        )}
-                    </div>
-                </div>
-                {/* 연말정산 뉴스 */}
-                <div className="neo-card bg-neo-black text-white">
-                    <div className="flex items-center justify-between mb-4 border-b-2 border-white pb-2">
-                        <h3 className="text-xl font-black flex items-center gap-2 text-white">
-                            <Bell size={20} className="text-neo-yellow" />
-                            연말정산 뉴스
-                        </h3>
-                        <div className="flex items-center gap-3">
-                            <span className="text-xs text-gray-400 flex items-center gap-1">
-                                <span className="w-2 h-2 bg-neo-cyan rounded-full animate-pulse"></span>
-                                3시간마다 업데이트
-                            </span>
-                            <button
-                                onClick={() => setShowAllNews(!showAllNews)}
-                                className="text-sm font-bold text-neo-yellow hover:text-white transition-colors flex items-center gap-1"
-                            >
-                                {showAllNews ? '접기 -' : '더보기 +'}
-                            </button>
-                        </div>
-                    </div>
-                    <div className="space-y-2">
-                        {newsLoading ? (
-                            <div className="flex items-center justify-center py-12">
-                                <Loader2 size={32} className="text-neo-yellow animate-spin" />
-                                <span className="ml-3 text-gray-400">뉴스를 불러오는 중...</span>
-                            </div>
-                        ) : newsArticles.length > 0 ? (
-                            <>
-                                {/* 10일 이내 뉴스 (항상 표시) */}
-                                {newsArticles
-                                    .filter(article => {
-                                        // "N일 전" 형식에서 일수 추출
-                                        const dayMatch = article.time.match(/(\d+)일/);
-                                        if (dayMatch) {
-                                            return parseInt(dayMatch[1]) <= 10;
-                                        }
-                                        // "N시간 전" 또는 "NEW"는 항상 표시
-                                        return true;
-                                    })
-                                    .map((article) => (
-                                        <a
-                                            key={article.id}
-                                            href={article.url}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className="block bg-gray-900 border border-gray-700 p-3 hover:bg-gray-800 transition-colors cursor-pointer group"
-                                        >
-                                            <div className="flex items-start justify-between gap-2">
-                                                <div className="flex-1 min-w-0">
-                                                    <div className="flex items-center gap-2 mb-1">
-                                                        {article.isNew && (
-                                                            <span className="px-1.5 py-0.5 text-[10px] font-bold bg-neo-orange text-white border border-neo-orange">NEW</span>
-                                                        )}
-                                                        <span className="text-xs text-gray-400">{article.source}</span>
-                                                        <span className="text-xs text-gray-500">•</span>
-                                                        <span className="text-xs text-gray-500">{article.time}</span>
-                                                    </div>
-                                                    <h4 className="font-bold text-sm text-white group-hover:text-neo-yellow transition-colors line-clamp-2">
-                                                        {article.title}
-                                                    </h4>
-                                                </div>
-                                                <ArrowRight size={16} className="text-gray-500 group-hover:text-neo-yellow transition-colors flex-shrink-0 mt-1" />
-                                            </div>
-                                        </a>
-                                    ))}
-
-                                {/* 10일 이후 뉴스 (더보기 클릭 시만 표시) */}
-                                {showAllNews && newsArticles
-                                    .filter(article => {
-                                        const dayMatch = article.time.match(/(\d+)일/);
-                                        return dayMatch && parseInt(dayMatch[1]) > 10;
-                                    })
-                                    .map((article) => (
-                                        <a
-                                            key={article.id}
-                                            href={article.url}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className="block bg-gray-800 border border-gray-600 p-3 hover:bg-gray-700 transition-colors cursor-pointer group opacity-80"
-                                        >
-                                            <div className="flex items-start justify-between gap-2">
-                                                <div className="flex-1 min-w-0">
-                                                    <div className="flex items-center gap-2 mb-1">
-                                                        <span className="text-xs text-gray-400">{article.source}</span>
-                                                        <span className="text-xs text-gray-500">•</span>
-                                                        <span className="text-xs text-gray-500">{article.time}</span>
-                                                    </div>
-                                                    <h4 className="font-bold text-sm text-gray-300 group-hover:text-neo-yellow transition-colors line-clamp-2">
-                                                        {article.title}
-                                                    </h4>
-                                                </div>
-                                                <ArrowRight size={16} className="text-gray-500 group-hover:text-neo-yellow transition-colors flex-shrink-0 mt-1" />
-                                            </div>
-                                        </a>
-                                    ))}
-                            </>
-                        ) : (
-                            <div className="text-center py-8 text-gray-400">
-                                뉴스를 불러올 수 없습니다.
-                            </div>
-                        )}
-                    </div>
-                </div>
-            </div>
-
-            {/* Quick Actions */}
-            <div className="neo-card bg-neo-yellow">
-                <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-                    <div className="flex items-center gap-3">
-                        <AlertCircle size={32} className="text-neo-black" />
-                        <div>
-                            <h3 className="text-xl font-black">지금 바로 절세 최적화를 시작하세요!</h3>
-                            <p className="text-sm font-bold">AI가 분석한 추천 항목을 실행하면 최대 <span className="font-bold">{formatNumber(totalPotentialSaving)}원</span> 추가 환급 가능</p>
-                        </div>
-                    </div>
-                    <Link href="/calculator">
-                        <button className="px-8 py-4 bg-neo-black text-white font-black text-lg border-2 border-black shadow-[4px_4px_0px_0px_#000] hover:shadow-[6px_6px_0px_0px_#000] hover:-translate-x-0.5 hover:-translate-y-0.5 active:shadow-none active:translate-x-1 active:translate-y-1 transition-all">
-                            절세 시뮬레이션 시작
-                        </button>
-                    </Link>
-                </div>
-            </div>
-
-            {/* Gemini AI 분석 모달 */}
-            {showAiModal && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-                    {/* 배경 오버레이 */}
-                    <div
-                        className="absolute inset-0 bg-black/50 backdrop-blur-sm"
-                        onClick={() => !aiAdviceLoading && setShowAiModal(false)}
-                    />
-
-                    {/* 모달 컨텐츠 */}
-                    <div className="relative w-full max-w-2xl max-h-[80vh] bg-white border-4 border-black shadow-[8px_8px_0px_0px_#000] overflow-hidden flex flex-col m-auto">
-                        {/* 모달 헤더 */}
-                        <div className="flex items-center justify-between p-4 bg-gradient-to-r from-neo-cyan to-cyan-400 border-b-2 border-black">
-                            <h3 className="text-xl font-black flex items-center gap-2">
-                                <Sparkles size={24} />
-                                🤖 Gemini AI 맞춤 절세 분석
-                            </h3>
-                            {!aiAdviceLoading && (
-                                <button
-                                    onClick={() => setShowAiModal(false)}
-                                    className="w-10 h-10 flex items-center justify-center font-black text-2xl border-2 border-black bg-white hover:bg-gray-100 transition-colors"
-                                >
-                                    ×
-                                </button>
-                            )}
-                        </div>
-
-                        {/* 모달 바디 */}
-                        <div className="flex-1 overflow-y-auto p-4">
-                            {aiAdviceLoading ? (
-                                <div className="flex flex-col items-center justify-center py-16">
-                                    <Loader2 size={48} className="text-neo-cyan animate-spin mb-4" />
-                                    <p className="font-bold text-lg">Gemini AI가 분석 중입니다...</p>
-                                    <p className="text-sm text-gray-600 mt-1">잠시만 기다려주세요</p>
-                                </div>
-                            ) : aiAdviceError ? (
-                                <div className="p-4 bg-red-100 border-2 border-red-500">
-                                    <p className="text-red-700 font-bold flex items-center gap-2">
-                                        <AlertCircle size={20} />
-                                        {aiAdviceError}
-                                    </p>
-                                    <button
-                                        onClick={fetchAiAdvice}
-                                        className="mt-3 px-4 py-2 font-bold border-2 border-black bg-white hover:bg-gray-100"
-                                    >
-                                        다시 시도
-                                    </button>
-                                </div>
-                            ) : aiAdvice ? (
-                                <div className="text-neo-black leading-relaxed">
-                                    <ReactMarkdown
-                                        remarkPlugins={[remarkGfm]}
-                                        rehypePlugins={[rehypeSanitize]}
-                                        components={{
-                                            h1: ({ children }) => <h2 className="font-black text-xl mt-4 mb-2 border-b-2 border-black pb-1">{children}</h2>,
-                                            h2: ({ children }) => <h3 className="font-black text-xl mt-4 mb-2 border-b-2 border-black pb-1">{children}</h3>,
-                                            h3: ({ children }) => <h4 className="font-black text-lg mt-4 mb-2 text-neo-cyan">{children}</h4>,
-                                            h4: ({ children }) => <h5 className="font-black text-base mt-3 mb-1 text-neo-cyan">{children}</h5>,
-                                            strong: ({ children }) => <strong className="font-bold">{children}</strong>,
-                                            p: ({ children }) => <p className="mb-2">{children}</p>,
-                                            ul: ({ children }) => <ul className="list-disc pl-6 mb-2">{children}</ul>,
-                                            ol: ({ children }) => <ol className="list-decimal pl-6 mb-2">{children}</ol>,
-                                            li: ({ children }) => <li className="mb-1">{children}</li>,
-                                            code: ({ children }) => <code className="px-1 py-0.5 bg-gray-200 font-mono text-sm">{children}</code>,
-                                        }}
-                                    >
-                                        {aiAdvice}
-                                    </ReactMarkdown>
-                                </div>
-                            ) : null}
-                        </div>
-
-                        {/* 모달 푸터 */}
-                        {!aiAdviceLoading && aiAdvice && (
-                            <div className="p-4 bg-gray-100 border-t-2 border-black flex justify-end gap-2">
-                                <button
-                                    onClick={fetchAiAdvice}
-                                    className="px-4 py-2 font-bold border-2 border-black bg-white hover:bg-gray-50"
-                                >
-                                    다시 분석
-                                </button>
-                                <button
-                                    onClick={() => setShowAiModal(false)}
-                                    className="px-4 py-2 font-bold border-2 border-black bg-neo-yellow hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_0px_#000] transition-all"
-                                >
-                                    닫기
-                                </button>
-                            </div>
-                        )}
-                    </div>
-                </div>
+            {hasAdminData ? (
+              <div className="flex items-baseline gap-2 flex-wrap">
+                <span
+                  className={clsx(
+                    "text-mono-display text-[48px] md:text-[56px] leading-[1] font-semibold",
+                    currentAmount >= 0 ? "text-ink-black" : "text-warm-orange",
+                  )}
+                >
+                  {currentAmount > 0 ? "+" : currentAmount < 0 ? "-" : ""}
+                  {formatKRW(Math.abs(currentAmount))}
+                </span>
+                <span className="text-h3 text-shadow-gray font-normal">원</span>
+                {currentAmount >= 0 ? (
+                  <Badge variant="success">예상 환급</Badge>
+                ) : (
+                  <Badge variant="danger">추가 납부 예상</Badge>
+                )}
+              </div>
+            ) : (
+              <p className="text-h3 text-steel-gray">
+                기초자료를 먼저 입력해주세요
+              </p>
             )}
-        </div >
-    );
+
+            {/* Progress to Goal */}
+            <div className="mt-6">
+              <div className="flex justify-between items-center mb-2">
+                <span className="text-body-sm text-shadow-gray">
+                  목표 달성률
+                </span>
+                <span className="text-body-sm font-mono tabular-nums text-ink-black">
+                  {currentAmount >= 0 ? `${goalProgress}%` : "—"}
+                </span>
+              </div>
+              <div className="w-full bg-subtle-ash h-1.5 rounded-full overflow-hidden">
+                <div
+                  className={clsx(
+                    "h-full transition-all duration-500 rounded-full",
+                    currentAmount >= 0 ? "bg-fresh-green" : "bg-warm-orange",
+                  )}
+                  style={{
+                    width: currentAmount >= 0 ? `${goalProgress}%` : "0%",
+                  }}
+                />
+              </div>
+              {currentAmount >= 0 ? (
+                <p className="text-caption text-shadow-gray mt-2">
+                  목표까지{" "}
+                  <span className="text-ink-black font-mono tabular-nums">
+                    {formatKRW(goalAmount - currentAmount)}원
+                  </span>{" "}
+                  남음
+                </p>
+              ) : (
+                <p className="text-caption text-warm-orange mt-2">
+                  추가 공제 받을 수 있는 항목을 확인해주세요.
+                </p>
+              )}
+            </div>
+          </div>
+
+          {/* Goal Setting */}
+          <div className="border-t pt-6 lg:border-t-0 lg:border-l lg:pt-0 lg:pl-6 border-border-light">
+            <div className="flex items-center gap-2 mb-4">
+              <Target size={16} strokeWidth={1.75} className="text-ink-black" />
+              <h3 className="text-body-sm font-semibold text-ink-black">
+                환급액 목표 설정
+              </h3>
+            </div>
+            <div className="space-y-3">
+              {totalPrepaidTax > 0 && (
+                <p className="text-caption text-shadow-gray">
+                  최대 환급 가능:{" "}
+                  <span className="font-mono tabular-nums text-ink-black">
+                    {formatKRW(totalPrepaidTax)}원
+                  </span>
+                </p>
+              )}
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() =>
+                    setGoalAmount((prev) => Math.max(100000, prev - 100000))
+                  }
+                  className="w-9 h-9 rounded-md border border-border-light bg-canvas-white hover:bg-subtle-ash flex items-center justify-center text-thunder-gray transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring-blue"
+                  aria-label="목표 금액 감소"
+                >
+                  <ChevronDown size={16} strokeWidth={1.75} />
+                </button>
+                <div className="flex-1 h-9 rounded-md border border-border-light bg-canvas-white flex items-center justify-center text-mono-display text-[18px] font-semibold tabular-nums text-ink-black">
+                  {formatKRW(goalAmount)}
+                  <span className="text-caption text-shadow-gray ml-1">원</span>
+                </div>
+                <button
+                  onClick={() => {
+                    const maxGoal =
+                      totalPrepaidTax > 0 ? totalPrepaidTax : Infinity;
+                    setGoalAmount((prev) => Math.min(prev + 100000, maxGoal));
+                  }}
+                  disabled={
+                    totalPrepaidTax > 0 && goalAmount >= totalPrepaidTax
+                  }
+                  className="w-9 h-9 rounded-md border border-border-light bg-canvas-white hover:bg-subtle-ash disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center text-thunder-gray transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring-blue"
+                  aria-label="목표 금액 증가"
+                >
+                  <ChevronUp size={16} strokeWidth={1.75} />
+                </button>
+              </div>
+              <div className="grid grid-cols-3 gap-1.5">
+                {[800000, 1000000, 1500000].map((amount) => {
+                  const isDisabled =
+                    totalPrepaidTax > 0 && amount > totalPrepaidTax;
+                  return (
+                    <button
+                      key={amount}
+                      onClick={() => !isDisabled && setGoalAmount(amount)}
+                      disabled={isDisabled}
+                      className={clsx(
+                        "h-8 rounded-md border text-caption font-mono tabular-nums transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring-blue",
+                        isDisabled
+                          ? "border-border-light bg-subtle-ash text-steel-gray cursor-not-allowed"
+                          : goalAmount === amount
+                            ? "border-ink-black bg-ink-black/5 text-ink-black font-semibold"
+                            : "border-border-light bg-canvas-white text-thunder-gray hover:bg-subtle-ash",
+                      )}
+                    >
+                      {formatKRW(amount)}
+                    </button>
+                  );
+                })}
+              </div>
+              {(() => {
+                const optimizedAmount = currentAmount + totalPotentialSaving;
+                if (optimizedAmount >= 0) {
+                  return (
+                    <p className="text-caption text-shadow-gray">
+                      최적화 시{" "}
+                      <span className="text-fresh-green font-mono tabular-nums">
+                        {formatKRW(optimizedAmount)}원
+                      </span>{" "}
+                      달성 가능
+                    </p>
+                  );
+                } else {
+                  return (
+                    <p className="text-caption text-shadow-gray">
+                      최적화 시 추가 납부{" "}
+                      <span className="text-warm-orange font-mono tabular-nums">
+                        {formatKRW(Math.abs(optimizedAmount))}원
+                      </span>
+                      으로 감소 가능
+                    </p>
+                  );
+                }
+              })()}
+            </div>
+          </div>
+        </div>
+      </Card>
+
+      {/* AI Deduction Analysis */}
+      <Card padding="lg">
+        <div className="flex items-center justify-between mb-5 pb-4 border-b border-border-light">
+          <div className="flex items-center gap-2">
+            <Sparkles size={16} strokeWidth={1.75} className="text-ink-black" />
+            <h3 className="text-h3 text-ink-black">AI 공제 항목별 분석</h3>
+          </div>
+          <span className="text-caption text-shadow-gray">2026년 기준</span>
+        </div>
+
+        <div className="overflow-x-auto -mx-2">
+          <table className="w-full text-body-sm">
+            <thead>
+              <tr className="border-b border-border-light">
+                <th className="text-left py-2.5 px-3 font-semibold text-caption text-shadow-gray uppercase tracking-[0.06em]">
+                  공제 항목
+                </th>
+                <th className="text-center py-2.5 px-3 font-semibold text-caption text-shadow-gray uppercase tracking-[0.06em] hidden sm:table-cell">
+                  구분
+                </th>
+                <th className="text-right py-2.5 px-3 font-semibold text-caption text-shadow-gray uppercase tracking-[0.06em]">
+                  공제 금액
+                </th>
+                <th className="text-right py-2.5 px-3 font-semibold text-caption text-shadow-gray uppercase tracking-[0.06em] hidden md:table-cell">
+                  최대 한도
+                </th>
+                <th className="text-center py-2.5 px-3 font-semibold text-caption text-shadow-gray uppercase tracking-[0.06em]">
+                  활용률
+                </th>
+                <th className="text-center py-2.5 px-3 font-semibold text-caption text-shadow-gray uppercase tracking-[0.06em]">
+                  상태
+                </th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-border-light">
+              {deductionItems.map((item) => {
+                const iconMap: Record<string, React.ElementType> = {
+                  "기본공제 (인적공제)": Users,
+                  "4대보험": Building,
+                  "신용카드 등 사용금액": CreditCard,
+                  "주택자금\n(청약저축+임차차입금)": Home,
+                  "주택자금\n(장기주택저당차입금이자상환)": Home,
+                  월세: Home,
+                  의료비: Heart,
+                  교육비: GraduationCap,
+                  기부금: Gift,
+                  "연금저축/IRP": PiggyBank,
+                  보험료: Building,
+                  자녀: Users,
+                };
+                const Icon = iconMap[item.category] || CreditCard;
+                const maxValue = item.maxBenefit || item.limit;
+                const utilizationRate =
+                  maxValue > 0
+                    ? Math.min(100, Math.round((item.amount / maxValue) * 100))
+                    : item.amount > 0
+                      ? 100
+                      : 0;
+                return (
+                  <tr
+                    key={item.id}
+                    className="hover:bg-subtle-ash transition-colors"
+                  >
+                    <td className="py-3 px-3">
+                      <div className="flex items-center gap-2.5">
+                        <span className="w-7 h-7 rounded-md bg-subtle-ash text-thunder-gray flex items-center justify-center flex-shrink-0">
+                          <Icon size={14} strokeWidth={1.75} />
+                        </span>
+                        <span className="text-body-sm font-medium text-ink-black whitespace-pre-line">
+                          {item.category}
+                        </span>
+                      </div>
+                    </td>
+                    <td className="text-center py-3 px-3 hidden sm:table-cell">
+                      <Badge
+                        variant={
+                          item.type === "소득공제" ? "neutral" : "outline"
+                        }
+                      >
+                        {item.type}
+                      </Badge>
+                    </td>
+                    <td className="text-right py-3 px-3 font-mono tabular-nums text-ink-black">
+                      {formatKRW(Math.round(item.amount))}
+                      {item.thresholdInfo && (
+                        <div className="text-caption text-steel-gray mt-0.5 whitespace-pre-line text-right font-sans">
+                          {item.thresholdInfo}
+                        </div>
+                      )}
+                    </td>
+                    <td className="text-right py-3 px-3 text-shadow-gray hidden md:table-cell whitespace-pre-line">
+                      {item.category === "교육비" ? (
+                        <span className="text-caption">
+                          본인: 한도 없음{"\n"}미취학: 1인당 3,000,000원{"\n"}
+                          초중고: 1인당 3,000,000원{"\n"}대학: 1인당 9,000,000원
+                        </span>
+                      ) : item.category === "의료비" ? (
+                        <span className="text-caption">
+                          난임시술비: 한도 없음{"\n"}미숙아·선천성: 한도 없음
+                          {"\n"}본인/장애/만65/6세: 한도 없음{"\n"}그 밖의
+                          부양가족: 7,000,000원
+                        </span>
+                      ) : item.category === "기부금" && item.donationLimits ? (
+                        <span className="text-caption font-mono tabular-nums">
+                          정치자금:{" "}
+                          {formatKRW(item.donationLimits.politicalFund)}
+                          {"\n"}고향사랑/특별재난:{" "}
+                          {formatKRW(item.donationLimits.hometownDisaster)}
+                          {"\n"}특례기부금:{" "}
+                          {formatKRW(item.donationLimits.specialDonation)}
+                          {"\n"}우리사주조합:{" "}
+                          {formatKRW(item.donationLimits.employeeStock)}
+                          {"\n"}일반기부(종교):{" "}
+                          {formatKRW(item.donationLimits.generalReligious)}
+                          {"\n"}일반기부(종교 외):{" "}
+                          {formatKRW(item.donationLimits.generalNonReligious)}
+                        </span>
+                      ) : item.category === "자녀" && item.childLimits ? (
+                        <span className="text-caption font-mono tabular-nums">
+                          자녀 세액공제:{"\n"}
+                          1명: {formatKRW(item.childLimits.first)}
+                          {"\n"}
+                          2명: {formatKRW(item.childLimits.second)}
+                          {"\n"}
+                          3명 이상: {formatKRW(item.childLimits.thirdPlus)}
+                          {"\n"}───{"\n"}
+                          출생·입양:{"\n"}
+                          첫째: {formatKRW(item.childLimits.birthFirst)}
+                          {"\n"}
+                          둘째: {formatKRW(item.childLimits.birthSecond)}
+                          {"\n"}
+                          셋째 이상:{" "}
+                          {formatKRW(item.childLimits.birthThirdPlus)}
+                        </span>
+                      ) : (
+                        <span className="font-mono tabular-nums">
+                          {formatKRW(item.limit)}원
+                        </span>
+                      )}
+                    </td>
+                    <td className="py-3 px-3">
+                      <div className="flex items-center justify-center gap-2">
+                        <div className="w-12 sm:w-16 h-1.5 bg-subtle-ash rounded-full overflow-hidden">
+                          <div
+                            className={clsx(
+                              "h-full rounded-full",
+                              getUtilizationFill(utilizationRate),
+                            )}
+                            style={{
+                              width: `${Math.min(100, utilizationRate)}%`,
+                            }}
+                          />
+                        </div>
+                        <span className="text-caption font-mono tabular-nums text-ink-black w-9 text-right">
+                          {utilizationRate}%
+                        </span>
+                      </div>
+                    </td>
+                    <td className="text-center py-3 px-3">
+                      <StatusBadge
+                        status={item.status}
+                        utilizationRate={utilizationRate}
+                      />
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+
+        {/* Summary */}
+        <div className="mt-6 grid md:grid-cols-2 gap-4">
+          <div className="rounded-md border border-border-light bg-subtle-ash p-4">
+            <div className="flex items-center justify-between mb-3">
+              <span className="text-caption font-semibold text-shadow-gray uppercase tracking-[0.06em]">
+                소득공제
+              </span>
+              <Badge variant="neutral">과세표준 감소</Badge>
+            </div>
+            <div className="flex items-end justify-between">
+              <div>
+                <p className="text-caption text-shadow-gray">현재 공제액</p>
+                <p className="text-mono-display text-[20px] font-semibold text-ink-black">
+                  {formatKRW(incomeDeductTotal)}
+                </p>
+              </div>
+              <div className="text-right">
+                <p className="text-caption text-shadow-gray">최대 한도</p>
+                <p className="text-body-sm font-mono tabular-nums text-thunder-gray">
+                  {formatKRW(incomeDeductLimit)}
+                </p>
+              </div>
+            </div>
+            <div className="mt-3 w-full bg-canvas-white h-1 rounded-full overflow-hidden">
+              <div
+                className="h-full bg-ink-black"
+                style={{
+                  width: `${incomeDeductLimit > 0 ? Math.round((incomeDeductTotal / incomeDeductLimit) * 100) : 0}%`,
+                }}
+              />
+            </div>
+          </div>
+
+          <div className="rounded-md border border-border-light bg-subtle-ash p-4">
+            <div className="flex items-center justify-between mb-3">
+              <span className="text-caption font-semibold text-shadow-gray uppercase tracking-[0.06em]">
+                세액공제
+              </span>
+              <Badge variant="success">납부세액 직접 감소</Badge>
+            </div>
+            <div className="flex items-end justify-between">
+              <div>
+                <p className="text-caption text-shadow-gray">현재 공제액</p>
+                <p className="text-mono-display text-[20px] font-semibold text-ink-black">
+                  {formatKRW(taxDeductTotal)}
+                </p>
+              </div>
+              <div className="text-right">
+                <p className="text-caption text-shadow-gray">최대 한도</p>
+                <p className="text-body-sm font-mono tabular-nums text-thunder-gray">
+                  {formatKRW(taxDeductLimit)}
+                </p>
+              </div>
+            </div>
+            <div className="mt-3 w-full bg-canvas-white h-1 rounded-full overflow-hidden">
+              <div
+                className="h-full bg-fresh-green"
+                style={{
+                  width: `${taxDeductLimit > 0 ? Math.round((taxDeductTotal / taxDeductLimit) * 100) : 0}%`,
+                }}
+              />
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-4 flex items-center gap-2 text-caption text-shadow-gray">
+          <CheckCircle2
+            size={14}
+            strokeWidth={1.75}
+            className="text-fresh-green"
+          />
+          {deductionItems.length}개 항목 중{" "}
+          <span className="font-mono tabular-nums text-ink-black">
+            {deductionItems.filter((d) => d.status === "optimal").length}
+          </span>
+          개 최적화 완료
+        </div>
+      </Card>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {/* AI Recommendations */}
+        <Card padding="lg">
+          <div className="flex items-start justify-between mb-5 pb-4 border-b border-border-light gap-2">
+            <div className="flex items-center gap-2 flex-wrap">
+              <Lightbulb
+                size={16}
+                strokeWidth={1.75}
+                className="text-warm-orange"
+              />
+              <h3 className="text-h3 text-ink-black">AI 절세 추천</h3>
+              {hasAdminData && (
+                <Button
+                  variant="secondary"
+                  size="sm"
+                  onClick={fetchAiAdvice}
+                  disabled={aiAdviceLoading}
+                >
+                  <Sparkles size={12} strokeWidth={1.75} />
+                  {aiAdviceLoading ? "분석 중…" : "Gemini 분석 요청"}
+                </Button>
+              )}
+            </div>
+            <Badge variant="success" className="flex-shrink-0">
+              <span className="font-mono tabular-nums">
+                -{formatKRW(totalPotentialSaving)}원
+              </span>
+            </Badge>
+          </div>
+          <div className="space-y-3">
+            {aiRecommendations.length === 0 ? (
+              <div className="text-center py-8">
+                <Lightbulb
+                  size={28}
+                  strokeWidth={1.5}
+                  className="mx-auto mb-2 text-steel-gray"
+                />
+                <p className="text-body-sm text-shadow-gray">
+                  계산기에서 데이터를 입력하면 AI 추천을 받을 수 있습니다.
+                </p>
+              </div>
+            ) : (
+              aiRecommendations.map((rec) => (
+                <div
+                  key={rec.id}
+                  className="rounded-md border border-border-light bg-canvas-white p-4 hover:border-border-muted hover:shadow-subtle transition-all"
+                >
+                  <div className="flex items-start justify-between gap-2 mb-2">
+                    <Badge type={rec.priority} />
+                    {rec.potentialSaving > 0 && (
+                      <span className="text-mono-display text-[18px] font-semibold text-fresh-green">
+                        -{formatKRW(rec.potentialSaving)}
+                        <span className="text-caption text-shadow-gray ml-1">
+                          원
+                        </span>
+                      </span>
+                    )}
+                  </div>
+                  <h4 className="text-body-sm font-semibold text-ink-black leading-tight mb-1">
+                    {rec.message}
+                  </h4>
+                  <p className="text-caption text-shadow-gray">{rec.detail}</p>
+                  {rec.action && (
+                    <p className="text-caption text-fresh-green font-medium mt-2">
+                      {rec.action}
+                    </p>
+                  )}
+                </div>
+              ))
+            )}
+            {!hasUserData && (
+              <Link href="/calculator" className="block">
+                <Button variant="secondary" size="md" className="w-full">
+                  계산기로 이동
+                  <ArrowRight size={14} strokeWidth={1.75} />
+                </Button>
+              </Link>
+            )}
+          </div>
+        </Card>
+
+        {/* News */}
+        <Card padding="lg">
+          <div className="flex items-center justify-between mb-5 pb-4 border-b border-border-light gap-2">
+            <div className="flex items-center gap-2">
+              <Bell size={16} strokeWidth={1.75} className="text-ink-black" />
+              <h3 className="text-h3 text-ink-black">연말정산 뉴스</h3>
+            </div>
+            <button
+              onClick={() => setShowAllNews(!showAllNews)}
+              className="text-caption text-shadow-gray hover:text-ink-black transition-colors"
+            >
+              {showAllNews ? "접기" : "더보기"}
+            </button>
+          </div>
+          <div className="space-y-1.5">
+            {newsLoading ? (
+              <div className="flex items-center justify-center py-12">
+                <Loader2
+                  size={20}
+                  strokeWidth={1.75}
+                  className="text-ink-black animate-spin"
+                />
+                <span className="ml-3 text-body-sm text-shadow-gray">
+                  뉴스를 불러오는 중…
+                </span>
+              </div>
+            ) : newsArticles.length > 0 ? (
+              <>
+                {newsArticles
+                  .filter((article) => {
+                    const dayMatch = article.time.match(/(\d+)일/);
+                    if (dayMatch) return parseInt(dayMatch[1]) <= 10;
+                    return true;
+                  })
+                  .map((article) => (
+                    <a
+                      key={article.id}
+                      href={article.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block rounded-md border border-border-light bg-canvas-white p-3 hover:bg-subtle-ash hover:border-border-muted transition-colors group"
+                    >
+                      <div className="flex items-start justify-between gap-2">
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-1.5 mb-1 flex-wrap">
+                            {article.isNew && (
+                              <Badge variant="success">NEW</Badge>
+                            )}
+                            <span className="text-caption text-shadow-gray">
+                              {article.source}
+                            </span>
+                            <span className="text-caption text-steel-gray">
+                              ·
+                            </span>
+                            <span className="text-caption text-shadow-gray font-mono">
+                              {article.time}
+                            </span>
+                          </div>
+                          <h4 className="text-body-sm font-medium text-ink-black group-hover:text-ink-black line-clamp-2 transition-colors">
+                            {article.title}
+                          </h4>
+                        </div>
+                        <ArrowRight
+                          size={14}
+                          strokeWidth={1.75}
+                          className="text-steel-gray group-hover:text-ink-black transition-colors flex-shrink-0 mt-1"
+                        />
+                      </div>
+                    </a>
+                  ))}
+
+                {showAllNews &&
+                  newsArticles
+                    .filter((article) => {
+                      const dayMatch = article.time.match(/(\d+)일/);
+                      return dayMatch && parseInt(dayMatch[1]) > 10;
+                    })
+                    .map((article) => (
+                      <a
+                        key={article.id}
+                        href={article.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="block rounded-md border border-border-light bg-subtle-ash p-3 hover:bg-canvas-white hover:border-border-muted transition-colors group opacity-90"
+                      >
+                        <div className="flex items-start justify-between gap-2">
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center gap-1.5 mb-1 flex-wrap">
+                              <span className="text-caption text-shadow-gray">
+                                {article.source}
+                              </span>
+                              <span className="text-caption text-steel-gray">
+                                ·
+                              </span>
+                              <span className="text-caption text-shadow-gray font-mono">
+                                {article.time}
+                              </span>
+                            </div>
+                            <h4 className="text-body-sm text-thunder-gray group-hover:text-ink-black line-clamp-2 transition-colors">
+                              {article.title}
+                            </h4>
+                          </div>
+                          <ArrowRight
+                            size={14}
+                            strokeWidth={1.75}
+                            className="text-steel-gray group-hover:text-ink-black transition-colors flex-shrink-0 mt-1"
+                          />
+                        </div>
+                      </a>
+                    ))}
+              </>
+            ) : (
+              <div className="text-center py-8 text-body-sm text-shadow-gray">
+                뉴스를 불러올 수 없습니다.
+              </div>
+            )}
+          </div>
+        </Card>
+      </div>
+
+      {/* Quick Action */}
+      <Card
+        variant="raised"
+        padding="lg"
+        className="bg-ink-black text-canvas-white border-ink-black"
+      >
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+          <div>
+            <h3 className="text-h3 text-canvas-white mb-1.5">
+              절세 최적화를 시작하세요
+            </h3>
+            <p className="text-body-sm text-canvas-white/70">
+              추천 항목을 실행하면 최대{" "}
+              <span className="font-mono tabular-nums text-canvas-white font-semibold">
+                {formatKRW(totalPotentialSaving)}원
+              </span>{" "}
+              추가 환급 가능
+            </p>
+          </div>
+          <Link href="/calculator" className="flex-shrink-0">
+            <span className="inline-flex items-center justify-center gap-2 h-11 px-5 rounded-md bg-canvas-white text-ink-black text-body-sm font-semibold hover:bg-canvas-white/90 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-card focus-visible:ring-offset-2 focus-visible:ring-offset-primary">
+              절세 시뮬레이션
+              <ArrowRight size={14} strokeWidth={1.75} />
+            </span>
+          </Link>
+        </div>
+      </Card>
+
+      {/* Gemini AI Modal */}
+      {showAiModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          <div
+            className="absolute inset-0 bg-ink-black/40 backdrop-blur-sm"
+            onClick={() => !aiAdviceLoading && setShowAiModal(false)}
+          />
+          <div className="relative w-full max-w-2xl max-h-[80vh] bg-canvas-white rounded-lg shadow-md overflow-hidden flex flex-col">
+            <div className="flex items-center justify-between p-5 border-b border-border-light">
+              <h3 className="text-h3 text-ink-black flex items-center gap-2">
+                <Sparkles
+                  size={18}
+                  strokeWidth={1.75}
+                  className="text-ink-black"
+                />
+                Gemini AI 맞춤 절세 분석
+              </h3>
+              {!aiAdviceLoading && (
+                <button
+                  onClick={() => setShowAiModal(false)}
+                  className="w-8 h-8 rounded-md hover:bg-subtle-ash flex items-center justify-center text-shadow-gray hover:text-ink-black transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring-blue"
+                  aria-label="모달 닫기"
+                >
+                  <X size={16} strokeWidth={1.75} />
+                </button>
+              )}
+            </div>
+
+            <div className="flex-1 overflow-y-auto p-6">
+              {aiAdviceLoading ? (
+                <div className="flex flex-col items-center justify-center py-16">
+                  <Loader2
+                    size={28}
+                    strokeWidth={1.75}
+                    className="text-ink-black animate-spin mb-4"
+                  />
+                  <p className="text-body font-medium text-ink-black">
+                    Gemini AI가 분석 중입니다…
+                  </p>
+                  <p className="text-body-sm text-shadow-gray mt-1">
+                    잠시만 기다려주세요
+                  </p>
+                </div>
+              ) : aiAdviceError ? (
+                <div className="rounded-md border border-warm-orange/30 bg-warm-orange/8 p-4">
+                  <p className="text-body-sm text-warm-orange flex items-center gap-2">
+                    <AlertCircle size={16} strokeWidth={1.75} />
+                    {aiAdviceError}
+                  </p>
+                  <Button
+                    variant="secondary"
+                    size="sm"
+                    onClick={fetchAiAdvice}
+                    className="mt-3"
+                  >
+                    다시 시도
+                  </Button>
+                </div>
+              ) : aiAdvice ? (
+                <div className="text-ink-black leading-[1.7]">
+                  <ReactMarkdown
+                    remarkPlugins={[remarkGfm]}
+                    rehypePlugins={[rehypeSanitize]}
+                    components={{
+                      h1: ({ children }) => (
+                        <h2 className="text-h3 text-ink-black mt-4 mb-2 pb-2 border-b border-border-light">
+                          {children}
+                        </h2>
+                      ),
+                      h2: ({ children }) => (
+                        <h3 className="text-h3 text-ink-black mt-4 mb-2 pb-2 border-b border-border-light">
+                          {children}
+                        </h3>
+                      ),
+                      h3: ({ children }) => (
+                        <h4 className="text-body font-semibold mt-4 mb-2 text-ink-black">
+                          {children}
+                        </h4>
+                      ),
+                      h4: ({ children }) => (
+                        <h5 className="text-body-sm font-semibold mt-3 mb-1 text-ink-black">
+                          {children}
+                        </h5>
+                      ),
+                      strong: ({ children }) => (
+                        <strong className="font-semibold text-ink-black">
+                          {children}
+                        </strong>
+                      ),
+                      p: ({ children }) => (
+                        <p className="mb-3 text-body">{children}</p>
+                      ),
+                      ul: ({ children }) => (
+                        <ul className="list-disc pl-6 mb-3 space-y-1">
+                          {children}
+                        </ul>
+                      ),
+                      ol: ({ children }) => (
+                        <ol className="list-decimal pl-6 mb-3 space-y-1">
+                          {children}
+                        </ol>
+                      ),
+                      li: ({ children }) => (
+                        <li className="text-body">{children}</li>
+                      ),
+                      code: ({ children }) => (
+                        <code className="px-1 py-0.5 bg-subtle-ash rounded font-mono text-[13px]">
+                          {children}
+                        </code>
+                      ),
+                    }}
+                  >
+                    {aiAdvice}
+                  </ReactMarkdown>
+                </div>
+              ) : null}
+            </div>
+
+            {!aiAdviceLoading && aiAdvice && (
+              <div className="p-5 bg-subtle-ash border-t border-border-light flex justify-end gap-2">
+                <Button variant="secondary" size="md" onClick={fetchAiAdvice}>
+                  다시 분석
+                </Button>
+                <Button
+                  variant="primary"
+                  size="md"
+                  onClick={() => setShowAiModal(false)}
+                >
+                  닫기
+                </Button>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+    </div>
+  );
 }
